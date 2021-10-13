@@ -4,35 +4,17 @@ import ClearCompleted from './TodoClearCompl';
 import React from 'react';
 
 class Footer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.isCompletedAny = this.props.todos.some(item => item.isDone);
-    this.countActiveTodos = this.props.todos.filter(item => !item.isDone).length;
-  }
-  UNSAFE_componentWillUpdate() {
-    this.isCompletedAny = this.props.todos.some(item => item.isDone);
-    this.countActiveTodos = this.props.todos.filter(item => !item.isDone).length;
-  }
-  // componentDidUpdate() {
-  //   const status = this.props.todos.some(item => item.isDone);
-  //   console.log(status, this.isCompletedAny);
-  //   const num = this.props.todos.filter(item => !item.isDone).length;
-  //   if (this.isCompletedAny !== status) {
-  //     this.isCompletedAny = status;
-  //   }
-  //   if (this.countActiveTodos !== num) {
-  //     this.countActiveTodos = num;
-  //   }
-  // }
   render() {
+    const isAnyCompleted = this.props.todos.some(item => item.isDone);
+    const countActiveTodos = this.props.todos.filter(item => !item.isDone).length;
     return (
       <div className="footer">
-        <Counter count={this.countActiveTodos} />
+        <Counter count={countActiveTodos} />
         <SortButtons
           activeFilter={this.props.activeFilter}
           changeFilter={this.props.changeFilter}
         />
-        {this.isCompletedAny ? (
+        {isAnyCompleted ? (
           <ClearCompleted clearCompletedTodo={this.props.clearCompletedTodo} />
         ) : (
           ''

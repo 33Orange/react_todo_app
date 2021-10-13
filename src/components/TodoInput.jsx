@@ -7,11 +7,6 @@ class TodoInput extends React.Component {
       value: '',
     };
     this.handleAddTodo = this.handleAddTodo.bind(this);
-    this.isAllDone = !this.props.todos.some(item => !item.isDone);
-  }
-  UNSAFE_componentWillUpdate() {
-    const todos = [...this.props.todos];
-    this.isAllDone = !todos.some(item => !item.isDone);
   }
   handleChange = e => {
     this.setState({
@@ -29,12 +24,14 @@ class TodoInput extends React.Component {
   };
 
   render() {
+    const todos = [...this.props.todos];
+    const isAllDone = !todos.some(item => !item.isDone);
     return (
       <div className="main-input-container">
         <input
           type="checkbox"
           className="complete-all"
-          checked={this.isAllDone}
+          checked={isAllDone}
           onChange={() => this.props.todoCompleteAll()}
         />
         <input
