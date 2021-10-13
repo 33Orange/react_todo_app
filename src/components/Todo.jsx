@@ -1,4 +1,5 @@
 import React from 'react';
+import TodoTitle from './TodoTitle';
 
 class Todo extends React.Component {
   render() {
@@ -10,9 +11,13 @@ class Todo extends React.Component {
           checked={!!this.props.todo.isDone}
           onChange={() => this.props.todoComplete(this.props.todo)}
         ></input>
-        <p className="todo-title">
-          {!this.props.todo.isDone ? this.props.todo.value : <s>{this.props.todo.value}</s>}
-        </p>
+        <TodoTitle
+          todoDelete={this.props.todoDelete}
+          todoId={this.props.todo.id}
+          todoEdit={this.props.todoEdit}
+          todoisDone={this.props.todo.isDone}
+          todoTitle={this.props.todo.value}
+        />
         <button
           onClick={() => this.props.todoDelete(this.props.todo.id)}
           className="todo-delete"

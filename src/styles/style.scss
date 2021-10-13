@@ -73,8 +73,8 @@ body {
   .main {
     width: 100%;
     .todo {
-      padding: 10px 0;
       width: 100%;
+      height: 40px;
       display: flex;
       border-bottom: 1px solid rgba(0, 0, 0, 0.4);
       justify-content: space-between;
@@ -84,6 +84,7 @@ body {
         opacity: 0.5;
       }
       .todo-delete {
+        z-index: 10;
         position: absolute;
         right: 5%;
         width: 13px;
@@ -101,9 +102,30 @@ body {
           opacity: 0.9;
         }
       }
-      .todo-title {
+      .todo-title-cont {
         width: 85%;
-        font-size: 20px;
+        height: 40px;
+        position: relative;
+        .todo-title {
+          position: absolute;
+          left: 0;
+          top: 8px;
+          font-size: 20px;
+          width: 100%;
+        }
+        .todo-title-edit {
+          font-size: 20px;
+          font-weight: 400;
+          position: absolute;
+          left: 0;
+          height: 40px;
+          border: none;
+          background: none;
+          &:focus {
+            outline: 1px solid rgba(0, 0, 0, 0.4);
+            box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.2);
+          }
+        }
       }
       .todo-complete {
         margin-left: 2%;
@@ -131,11 +153,41 @@ body {
   .footer {
     width: 100%;
     display: flex;
-    .clear-cont {
-      margin-left: 5%;
-    }
+    padding-top: 10px;
+    font-size: 14px;
     .counter-cont {
-      margin-right: 5%;
+      width: 25%;
+      display: flex;
+      align-items: center;
+    }
+    .sort-cont {
+      width: 40%;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .sort-all,
+      .sort-active,
+      .sort-completed {
+        cursor: pointer;
+        padding: 3px 5px;
+        border-radius: 6px;
+        &.active {
+          outline: 1px solid rgba(255, 0, 0, 0.2);
+        }
+      }
+    }
+    .clear-cont {
+      width: 35%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      .clear-btn {
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

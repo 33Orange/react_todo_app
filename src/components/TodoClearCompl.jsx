@@ -4,7 +4,9 @@ class ClearCompleted extends React.Component {
   render() {
     return (
       <div className="clear-cont">
-        <span className="clear-btn">Clear completed</span>
+        <span className="clear-btn" onClick={this.props.clearCompletedTodo}>
+          Clear completed
+        </span>
       </div>
     );
   }

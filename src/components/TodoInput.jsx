@@ -1,49 +1,53 @@
 import React from 'react';
 
-class MainInput extends React.Component {
+class TodoInput extends React.Component {
   constructor(props) {
     super(props);
-    this.props = props;
     this.state = {
-      defaultValue: '',
-      value: this.props.addTodoValue,
-      isDoneAll: this.props.todoCheckAll,
+      value: '',
     };
-    this.addTodo = this.addTodo.bind(this);
+    this.handleAddTodo = this.handleAddTodo.bind(this);
+    this.isAllDone = !this.props.todos.some(item => !item.isDone);
+  }
+  UNSAFE_componentWillUpdate() {
+    const todos = [...this.props.todos];
+    this.isAllDone = !todos.some(item => !item.isDone);
   }
   handleChange = e => {
     this.setState({
       value: e.target.value,
     });
   };
-  addTodo = () => {
+  handleAddTodo = () => {
     this.props.addNewTodo(this.state.value);
     this.setState({ value: '' });
   };
+  handleEnterPress = e => {
+    if (e.code == 'Enter') {
+      this.handleAddTodo();
+    }
+  };
+
   render() {
     return (
       <div className="main-input-container">
         <input
           type="checkbox"
           className="complete-all"
-          checked={!!this.props.todoIsDoneAll}
+          checked={this.isAllDone}
           onChange={() => this.props.todoCompleteAll()}
-        ></input>
+        />
         <input
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
-          onKeyPress={e => {
-            if (e.code == 'Enter') {
-              this.addTodo();
-            }
-          }}
+          onKeyPress={this.handleEnterPress}
           className="main-input"
-          placeholder="What's to do?"
-        ></input>
+          placeholder="What needs to be done?"
+        />
       </div>
     );
   }
 }
 
-export default MainInput;
+export default TodoInput;
