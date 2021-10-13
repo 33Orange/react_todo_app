@@ -13,6 +13,17 @@ class Footer extends React.Component {
     this.isCompletedAny = this.props.todos.some(item => item.isDone);
     this.countActiveTodos = this.props.todos.filter(item => !item.isDone).length;
   }
+  // componentDidUpdate() {
+  //   const status = this.props.todos.some(item => item.isDone);
+  //   console.log(status, this.isCompletedAny);
+  //   const num = this.props.todos.filter(item => !item.isDone).length;
+  //   if (this.isCompletedAny !== status) {
+  //     this.isCompletedAny = status;
+  //   }
+  //   if (this.countActiveTodos !== num) {
+  //     this.countActiveTodos = num;
+  //   }
+  // }
   render() {
     return (
       <div className="footer">
