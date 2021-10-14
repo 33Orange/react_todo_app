@@ -1,12 +1,32 @@
 import React from 'react';
-import '../styles/TodoList.scss';
+import './style.scss';
+import styled from 'styled-components';
 //Header / Main Input and Complete all button
-import TodoInput from './Header/TodoInput';
-//Main / Todo UL
-import Todo from './Main/Todo';
+import Header from './Header';
+//Todo UL
+import Todo from './Todo';
 //Footer / Status Bar
-import Footer from './Footer/TodoFooter.jsx';
+import Footer from './Footer';
 
+const Container = styled.div`
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const AppTitle = styled.h1`
+  text-align: center;
+  font-size: 80px;
+  font-weight: 300;
+  color: rgba(255, 0, 0, 0.2);
+  width: 100%;
+  margin: 30px 0;
+`;
+const MainSection = styled.div`
+  width: 100%;
+  background: #fff;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
+`;
 class TodosList extends React.Component {
   constructor(props) {
     super(props);
@@ -46,7 +66,7 @@ class TodosList extends React.Component {
     this.setState({ todos });
   };
 
-  handleDoneTodo = todo => {
+  handleCompleteTodo = todo => {
     const todos = [...this.state.todos];
     todos.map(item => {
       if (item.id == todo.id) {
@@ -67,7 +87,7 @@ class TodosList extends React.Component {
     this.setState({ todos });
   };
 
-  handleEditTodoTitle = (todo, value) => {
+  handleEditTodo = (todo, value) => {
     const todos = [...this.state.todos];
     const index = todos.findIndex(item => item.id == todo);
     todos[index].value = value;
@@ -87,31 +107,31 @@ class TodosList extends React.Component {
     };
     const filteredTodos = filterMap[this.state.filter];
     return (
-      <div className="container">
-        <h1 className="todos-app-title">todos</h1>
-        <TodoInput
+      <Container>
+        <AppTitle>todos</AppTitle>
+        <Header
           todos={this.state.todos}
-          addNewTodo={this.handleAddTodo}
-          todoCompleteAll={this.handleCompleteAllTodos}
+          onAddTodo={this.handleAddTodo}
+          onCompleteAllTodos={this.handleCompleteAllTodos}
         />
-        <div className="main">
+        <MainSection>
           {filteredTodos.map((todo, index) => (
             <Todo
               key={todo.id}
               todo={todo}
-              todoDelete={this.handleDeleteTodo}
-              todoComplete={this.handleDoneTodo}
-              todoEdit={this.handleEditTodoTitle}
+              onDeleteTodo={this.handleDeleteTodo}
+              onCompletetodo={this.handleCompleteTodo}
+              onEditTodo={this.handleEditTodo}
             />
           ))}
-        </div>
+        </MainSection>
         <Footer
           todos={this.state.todos}
           activeFilter={this.state.filter}
-          changeFilter={this.handleChangeFilter}
-          clearCompletedTodo={this.handleClearCompletedTodo}
+          onChangeFilter={this.handleChangeFilter}
+          onClearCompletedTodo={this.handleClearCompletedTodo}
         />
-      </div>
+      </Container>
     );
   }
 }
