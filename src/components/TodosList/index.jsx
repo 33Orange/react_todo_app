@@ -1,6 +1,5 @@
 import React from 'react';
 import './style.scss';
-import styled from 'styled-components';
 //Header / Main Input and Complete all button
 import Header from './Header';
 //Todo UL
@@ -8,25 +7,6 @@ import Todo from './Todo';
 //Footer / Status Bar
 import Footer from './Footer';
 
-const Container = styled.div`
-  width: 450px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-const AppTitle = styled.h1`
-  text-align: center;
-  font-size: 80px;
-  font-weight: 300;
-  color: rgba(255, 0, 0, 0.2);
-  width: 100%;
-  margin: 30px 0;
-`;
-const MainSection = styled.div`
-  width: 100%;
-  background: #fff;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
-`;
 class TodosList extends React.Component {
   constructor(props) {
     super(props);
@@ -107,14 +87,14 @@ class TodosList extends React.Component {
     };
     const filteredTodos = filterMap[this.state.filter];
     return (
-      <Container>
-        <AppTitle>todos</AppTitle>
+      <div className="container">
+        <h1 className="todos-app-title">todos</h1>
         <Header
           todos={this.state.todos}
           onAddTodo={this.handleAddTodo}
           onCompleteAllTodos={this.handleCompleteAllTodos}
         />
-        <MainSection>
+        <div className="main">
           {filteredTodos.map((todo, index) => (
             <Todo
               key={todo.id}
@@ -124,14 +104,14 @@ class TodosList extends React.Component {
               onEditTodo={this.handleEditTodo}
             />
           ))}
-        </MainSection>
+        </div>
         <Footer
           todos={this.state.todos}
           activeFilter={this.state.filter}
           onChangeFilter={this.handleChangeFilter}
           onClearCompletedTodo={this.handleClearCompletedTodo}
         />
-      </Container>
+      </div>
     );
   }
 }

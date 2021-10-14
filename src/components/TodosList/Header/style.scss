@@ -1,0 +1,52 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  height: 50px;
+  background: #fff;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
+  .main-input-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    .main-input {
+      width: 95%;
+      height: 40px;
+      border: none;
+      outline: none;
+      background: none;
+      font-size: 25px;
+      &::-webkit-input-placeholder {
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.2);
+        font-style: italic;
+      }
+    }
+    .complete-all {
+      left: 0;
+      width: 10%;
+      border: none;
+      position: absolute;
+      opacity: 0;
+      z-index: -1;
+    }
+    .complete-all + label {
+      width: 5%;
+      margin-left: 3%;
+      margin-right: 5%;
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
+    }
+    .complete-all + label::before {
+      content: '❯';
+      transform: rotate(90deg);
+      opacity: 0.2;
+    }
+    .complete-all:checked + label::before {
+      opacity: 0.65;
+    }
+  }
+}

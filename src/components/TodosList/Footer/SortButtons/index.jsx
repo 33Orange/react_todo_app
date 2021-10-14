@@ -1,14 +1,6 @@
 import React from 'react';
+import './style.scss';
 import Button from './SortButton';
-import styled from 'styled-components';
-
-const SortButtonsContainer = styled.div`
-  width: 45%;
-  text-align: center;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`;
 
 class SortButtons extends React.Component {
   constructor(props) {
@@ -17,7 +9,7 @@ class SortButtons extends React.Component {
   }
   render() {
     return (
-      <SortButtonsContainer>
+      <div className="sort-cont">
         {this.buttons.map((button, index) => (
           <Button
             key={button[index]}
@@ -26,7 +18,7 @@ class SortButtons extends React.Component {
             onChangeFilter={this.props.onChangeFilter}
           />
         ))}
-      </SortButtonsContainer>
+      </div>
     );
   }
 }

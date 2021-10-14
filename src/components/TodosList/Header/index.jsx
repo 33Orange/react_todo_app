@@ -1,59 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const HeaderContainer = styled.div`
-  width: 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  height: 50px;
-  background: #fff;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
-`;
-const MainInputContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  position: relative;
-`;
-const MainInput = styled.input`
-  width: 95%;
-  height: 40px;
-  border: none;
-  outline: none;
-  background: none;
-  font-size: 25px;
-  &::-webkit-input-placeholder {
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.2);
-    font-style: italic;
-  }
-`;
-const CompleteAllCheckBox = styled.input`
-  left: 0;
-  width: 10%;
-  border: none;
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
-`;
-
-const CompleteAllLabel = styled.label`
-  width: 5%;
-  margin-left: 3%;
-  margin-right: 5%;
-  display: inline-flex;
-  align-items: center;
-  user-select: none;
-  &::before {
-    content: '❯';
-    transform: rotate(90deg);
-    opacity: 0.2;
-  }
-  ${CompleteAllCheckBox}:checked + &::before {
-    opacity: 0.65;
-  }
-`;
+import './style.scss';
 
 class TodoInput extends React.Component {
   constructor(props) {
@@ -81,16 +27,17 @@ class TodoInput extends React.Component {
     const todos = [...this.props.todos];
     const isAllDone = !todos.some(item => !item.isDone);
     return (
-      <HeaderContainer>
-        <MainInputContainer>
-          <CompleteAllCheckBox
+      <div className="header">
+        <div className="main-input-container">
+          <input
             type="checkbox"
+            className="complete-all"
             id="complete-all"
             checked={isAllDone}
             onChange={this.props.onCompleteAllTodos}
           />
-          <CompleteAllLabel htmlFor="complete-all" />
-          <MainInput
+          <label htmlFor="complete-all" />
+          <input
             type="text"
             value={this.state.value}
             onChange={this.handleChange}
@@ -98,8 +45,8 @@ class TodoInput extends React.Component {
             className="main-input"
             placeholder="What needs to be done?"
           />
-        </MainInputContainer>
-      </HeaderContainer>
+        </div>
+      </div>
     );
   }
 }
