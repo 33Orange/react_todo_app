@@ -1,0 +1,34 @@
+.todo {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  &:hover .todo-delete {
+    opacity: 0.5;
+  }
+  .todo-delete {
+    z-index: 10;
+    position: absolute;
+    right: 5%;
+    width: 13px;
+    height: 13px;
+    background: none;
+    background-image: url(../../image/close.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    &:hover {
+      opacity: 0.9;
+    }
+    .active {
+      display: none;
+    }
+  }
+}

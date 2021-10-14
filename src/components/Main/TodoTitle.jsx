@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../styles/Main/TodoTitle.scss';
 
 class TodoTitle extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class TodoTitle extends React.Component {
       displayText: false,
       displayInput: true,
     });
+    this.props.hiddenDeleteButton();
   };
   closeEditor = () => {
     this.setState({
@@ -27,6 +29,7 @@ class TodoTitle extends React.Component {
       displayText: true,
       displayInput: false,
     });
+    this.props.showDeleteButton();
   };
   editTodo = () => {
     if (!this.state.displayInput) {
@@ -37,7 +40,7 @@ class TodoTitle extends React.Component {
     this.props.todoEdit(todoId, value);
     this.closeEditor();
   };
-  handleEnterPress = e => {
+  handlePressEnter = e => {
     if (e.code == 'Enter') {
       this.editTodo();
     }
@@ -45,15 +48,19 @@ class TodoTitle extends React.Component {
   render() {
     return (
       <div className="todo-title-cont">
-        <p className="todo-title" onDoubleClick={this.openEditor} hidden={!this.state.displayText}>
-          {!this.props.todoisDone ? this.props.todoTitle : <s>{this.props.todoTitle}</s>}
+        <p
+          className={this.props.todoisDone ? 'todo-title active' : 'todo-title'}
+          onDoubleClick={this.openEditor}
+          hidden={!this.state.displayText}
+        >
+          {this.props.todoTitle}
         </p>
         <input
           className="todo-title-edit"
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
-          onKeyPress={this.handleEnterPress}
+          onKeyPress={this.handlePressEnter}
           onBlur={this.editTodo}
           hidden={!this.state.displayInput}
           ref={input => input && input.focus()}

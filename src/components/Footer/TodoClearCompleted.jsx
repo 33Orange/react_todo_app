@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../styles/Footer/TodoClearCompleted.scss';
 
 class ClearCompleted extends React.Component {
   render() {

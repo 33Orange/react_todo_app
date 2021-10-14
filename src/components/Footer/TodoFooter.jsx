@@ -1,7 +1,8 @@
 import Counter from './TodoCounter';
 import SortButtons from './TodoSortBtns';
-import ClearCompleted from './TodoClearCompl';
+import ClearCompleted from './TodoClearCompleted';
 import React from 'react';
+import '../../styles/Footer/TodoFooter.scss';
 
 class Footer extends React.Component {
   render() {

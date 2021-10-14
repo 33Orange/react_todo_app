@@ -1,8 +1,11 @@
 import React from 'react';
-import Todo from './Todo';
-import TodoInput from './TodoInput';
-//Status bar
-import Footer from './TodoFooter.jsx';
+import '../styles/TodoList.scss';
+//Header / Main Input and Complete all button
+import TodoInput from './Header/TodoInput';
+//Main / Todo UL
+import Todo from './Main/Todo';
+//Footer / Status Bar
+import Footer from './Footer/TodoFooter.jsx';
 
 class TodosList extends React.Component {
   constructor(props) {
@@ -11,10 +14,8 @@ class TodosList extends React.Component {
     this.todos = this.todosJson ? JSON.parse(this.todosJson) : [];
     this.state = {
       todos: this.todos,
-      filteredTodos: this.todos,
       filter: 'All',
     };
-    this.filter = 'All';
   }
   pushToLocalStorage = array => {
     localStorage.setItem('todos', JSON.stringify([...array]));
@@ -57,7 +58,7 @@ class TodosList extends React.Component {
     this.setState({ todos });
   };
 
-  handleDoneAllTodo = () => {
+  handleCompleteAllTodos = () => {
     const todos = [...this.state.todos];
     todos.some(item => !item.isDone)
       ? todos.map(item => (item.isDone = true))
@@ -76,30 +77,25 @@ class TodosList extends React.Component {
 
   handleChangeFilter = value => {
     this.setState({ filter: value });
-    this.filter = value;
   };
 
-  filteredData = () => {
+  render() {
     const filterMap = {
       All: this.state.todos,
       Active: this.state.todos.filter(item => !item.isDone),
       Completed: this.state.todos.filter(item => item.isDone),
     };
-    return filterMap[this.filter];
-  };
-
-  render() {
+    const filteredTodos = filterMap[this.state.filter];
     return (
       <div className="container">
-        <div className="header">
-          <TodoInput
-            todos={this.state.todos}
-            addNewTodo={this.handleAddTodo}
-            todoCompleteAll={this.handleDoneAllTodo}
-          />
-        </div>
+        <h1 className="todos-app-title">todos</h1>
+        <TodoInput
+          todos={this.state.todos}
+          addNewTodo={this.handleAddTodo}
+          todoCompleteAll={this.handleCompleteAllTodos}
+        />
         <div className="main">
-          {this.filteredData().map((todo, index) => (
+          {filteredTodos.map((todo, index) => (
             <Todo
               key={todo.id}
               todo={todo}

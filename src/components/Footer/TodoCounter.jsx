@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../styles/Footer/TodoCounter.scss';
 
 class Counter extends React.Component {
   render() {
