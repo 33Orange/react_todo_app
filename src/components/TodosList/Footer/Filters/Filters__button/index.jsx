@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 
-class SortButton extends React.Component {
+class FiltersButton extends React.Component {
   handleChangeFilter = () => {
     this.props.onChangeFilter(this.props.value);
   };
@@ -10,7 +10,7 @@ class SortButton extends React.Component {
     return (
       <span
         onClick={this.handleChangeFilter}
-        className={filter == this.props.value ? 'sort-btn active' : 'sort-btn'}
+        className={filter == this.props.value ? 'filters__button active' : 'filters__button'}
       >
         {this.props.value}
       </span>
@@ -18,4 +18,4 @@ class SortButton extends React.Component {
   }
 }
 
-export default SortButton;
+export default FiltersButton;

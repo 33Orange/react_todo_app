@@ -1,5 +1,5 @@
 import Counter from './Counter';
-import SortButtons from './SortButtons';
+import Filters from './Filters';
 import ClearCompletedTodos from './ClearCompleted';
 import React from 'react';
 import './style.scss';
@@ -11,7 +11,7 @@ class Footer extends React.Component {
     return (
       <div className="footer">
         <Counter count={countActiveTodos} />
-        <SortButtons
+        <Filters
           activeFilter={this.props.activeFilter}
           onChangeFilter={this.props.onChangeFilter}
         />

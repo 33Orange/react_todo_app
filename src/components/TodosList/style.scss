@@ -11,12 +11,12 @@ body {
   background: rgba(0, 0, 0, 0.15);
 }
 
-.container {
+.todolist {
   width: 450px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  .todos-app-title {
+  .todolist__title {
     text-align: center;
     font-size: 80px;
     font-weight: 300;

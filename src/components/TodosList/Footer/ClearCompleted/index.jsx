@@ -4,8 +4,8 @@ import './style.scss';
 class ClearCompleted extends React.Component {
   render() {
     return (
-      <div className="clear-cont">
-        <span className="clear-btn" onClick={this.props.onClearCompletedTodo}>
+      <div className="clearCompleted">
+        <span className="clearCompleted__button" onClick={this.props.onClearCompletedTodo}>
           Clear completed
         </span>
       </div>

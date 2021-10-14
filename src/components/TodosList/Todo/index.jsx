@@ -26,22 +26,22 @@ class Todo extends React.Component {
     return (
       <div className="todo">
         <input
-          className="todo-complete"
+          className="todo__complete"
           type="checkbox"
           checked={isDone}
           onChange={this.handleCompleteTodo}
         />
         <TodoTitle
-          hiddenDeleteButton={this.handleHiddenDeleteButton}
-          showDeleteButton={this.handleShowDeleteButton}
-          todoDelete={this.props.onDeleteTodo}
+          onHiddenDeleteButton={this.handleHiddenDeleteButton}
+          onShowDeleteButton={this.handleShowDeleteButton}
+          onDeleteTodo={this.props.onDeleteTodo}
           todoId={this.props.todo.id}
           todoEdit={this.props.onEditTodo}
           todoisDone={this.props.todo.isDone}
           todoTitle={this.props.todo.value}
         />
         <button
-          className="todo-delete"
+          className="todo__delete"
           onClick={this.handleDeleteTodo}
           hidden={this.state.hiddenDeleteButton}
         ></button>

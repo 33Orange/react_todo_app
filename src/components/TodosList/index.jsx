@@ -87,8 +87,8 @@ class TodosList extends React.Component {
     };
     const filteredTodos = filterMap[this.state.filter];
     return (
-      <div className="container">
-        <h1 className="todos-app-title">todos</h1>
+      <div className="todolist">
+        <h1 className="todolist__title">todos</h1>
         <Header
           todos={this.state.todos}
           onAddTodo={this.handleAddTodo}

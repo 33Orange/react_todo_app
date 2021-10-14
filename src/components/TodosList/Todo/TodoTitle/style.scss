@@ -1,20 +1,20 @@
-.todo-title-cont {
+.todo-title {
   width: 87%;
   height: 100%;
   position: relative;
-  .todo-title {
+  .todo-title__text {
     position: absolute;
     left: 0;
     top: 10px;
     font-size: 25px;
     width: 100%;
     opacity: 0.8;
+    &.active {
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
   }
-  .todo-title.active {
-    opacity: 0.5;
-    text-decoration: line-through;
-  }
-  .todo-title-edit {
+  .todo-title__editInput {
     font-size: 25px;
     font-weight: 400;
     position: absolute;

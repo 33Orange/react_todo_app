@@ -4,14 +4,14 @@
   height: 50px;
   background: #fff;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
-  .main-input-container {
+  .header__input-container {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     position: relative;
-    .main-input {
+    .header__input {
       width: 95%;
       height: 40px;
       border: none;
@@ -24,7 +24,7 @@
         font-style: italic;
       }
     }
-    .complete-all {
+    .header__completeAll-btn {
       left: 0;
       width: 10%;
       border: none;

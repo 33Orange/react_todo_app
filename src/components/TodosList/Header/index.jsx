@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 
-class TodoInput extends React.Component {
+class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,21 +28,21 @@ class TodoInput extends React.Component {
     const isAllDone = !todos.some(item => !item.isDone);
     return (
       <div className="header">
-        <div className="main-input-container">
+        <div className="header__input-container">
           <input
             type="checkbox"
-            className="complete-all"
-            id="complete-all"
+            className="header__completeAll-btn"
+            id="header__completeAll-btn"
             checked={isAllDone}
             onChange={this.props.onCompleteAllTodos}
           />
-          <label htmlFor="complete-all" />
+          <label htmlFor="header__completeAll-btn" />
           <input
             type="text"
             value={this.state.value}
             onChange={this.handleChange}
             onKeyPress={this.handleEnterPress}
-            className="main-input"
+            className="header__input"
             placeholder="What needs to be done?"
           />
         </div>
@@ -51,4 +51,4 @@ class TodoInput extends React.Component {
   }
 }
 
-export default TodoInput;
+export default Header;

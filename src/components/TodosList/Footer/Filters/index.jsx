@@ -1,15 +1,15 @@
 import React from 'react';
 import './style.scss';
-import Button from './SortButton';
+import Button from './Filters__button';
 
-class SortButtons extends React.Component {
+class Filters extends React.Component {
   constructor(props) {
     super(props);
     this.buttons = ['All', 'Active', 'Completed'];
   }
   render() {
     return (
-      <div className="sort-cont">
+      <div className="filters">
         {this.buttons.map((button, index) => (
           <Button
             key={button[index]}
@@ -23,4 +23,4 @@ class SortButtons extends React.Component {
   }
 }
 
-export default SortButtons;
+export default Filters;

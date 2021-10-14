@@ -21,7 +21,7 @@ class TodoTitle extends React.Component {
       displayText: false,
       displayInput: true,
     });
-    this.props.hiddenDeleteButton();
+    this.props.onHiddenDeleteButton();
   };
   closeEditor = () => {
     this.setState({
@@ -29,7 +29,7 @@ class TodoTitle extends React.Component {
       displayText: true,
       displayInput: false,
     });
-    this.props.showDeleteButton();
+    this.props.onShowDeleteButton();
   };
   editTodo = () => {
     if (!this.state.displayInput) {
@@ -37,7 +37,9 @@ class TodoTitle extends React.Component {
     }
     const todoId = this.props.todoId;
     const value = this.state.value;
-    this.props.todoEdit(todoId, value);
+    this.state.value.length > 0
+      ? this.props.todoEdit(todoId, value)
+      : this.props.onDeleteTodo(todoId);
     this.closeEditor();
   };
   handlePressEnter = e => {
@@ -47,16 +49,16 @@ class TodoTitle extends React.Component {
   };
   render() {
     return (
-      <div className="todo-title-cont">
+      <div className="todo-title">
         <p
-          className={this.props.todoisDone ? 'todo-title active' : 'todo-title'}
+          className={this.props.todoisDone ? 'todo-title__text active' : 'todo-title__text'}
           onDoubleClick={this.openEditor}
           hidden={!this.state.displayText}
         >
           {this.props.todoTitle}
         </p>
         <input
-          className="todo-title-edit"
+          className="todo-title__editInput"
           type="text"
           value={this.state.value}
           onChange={this.handleChange}

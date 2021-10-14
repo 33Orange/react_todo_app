@@ -5,7 +5,7 @@ import './style.scss';
 class Counter extends React.Component {
   render() {
     return (
-      <div className="counter-cont">
+      <div className="counter">
         <span>{this.props.count} items left</span>
       </div>
     );

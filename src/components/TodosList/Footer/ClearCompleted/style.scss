@@ -1,10 +1,10 @@
-.clear-cont {
+.clearCompleted {
   width: 25%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   margin-left: 3%;
-  .clear-btn {
+  .clearCompleted__button {
     cursor: pointer;
     &:hover {
       text-decoration: underline;
