@@ -32,7 +32,7 @@
       opacity: 0;
       z-index: -1;
     }
-    .complete-all + label {
+    .header__completeAll-btn + label {
       width: 5%;
       margin-left: 3%;
       margin-right: 5%;
@@ -40,12 +40,12 @@
       align-items: center;
       user-select: none;
     }
-    .complete-all + label::before {
+    .header__completeAll-btn + label::before {
       content: '❯';
       transform: rotate(90deg);
       opacity: 0.2;
     }
-    .complete-all:checked + label::before {
+    .header__completeAll-btn:checked + label::before {
       opacity: 0.65;
     }
   }
