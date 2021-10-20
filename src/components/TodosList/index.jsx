@@ -6,73 +6,179 @@ import Header from './Header';
 import Todo from './Todo';
 //Footer / Status Bar
 import Footer from './Footer';
+import { createUrl } from '../../utils/createQueryString';
 
 class TodosList extends React.Component {
   constructor(props) {
     super(props);
-    this.todosJson = localStorage.getItem('todos');
-    this.todos = this.todosJson ? JSON.parse(this.todosJson) : [];
+    this.url = 'http://localhost:5000/todos';
     this.state = {
-      todos: this.todos,
+      todos: [],
       filter: 'All',
     };
   }
-  pushToLocalStorage = array => {
-    localStorage.setItem('todos', JSON.stringify([...array]));
+  componentDidMount() {
+    this.getTodosFromData();
+  }
+
+  getTodosFromData = () => {
+    fetch(this.url)
+      .then(response => response.json())
+      .then(response => this.setState({ todos: response }));
+  };
+
+  addTodoToData = value => {
+    const todoToSend = JSON.stringify({ value, isDone: false });
+    fetch(this.url, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: todoToSend,
+    })
+      .then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          console.log('Status: ' + resp.status);
+          return new Error();
+        }
+      })
+      .then(newTodo => {
+        this.setState(prevState => ({
+          todos: [...prevState.todos, newTodo],
+        }));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  deleteTodoFromData = todoId => {
+    fetch(`${this.url}/${todoId}`, {
+      method: 'delete',
+    })
+      .then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          console.log('Status: ' + resp.status);
+          return new Error();
+        }
+      })
+      .then(deletedTodo => {
+        this.setState(prevState => ({
+          todos: [...prevState.todos].filter(item => item._id != deletedTodo._id),
+        }));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  updateTodoAtData = todo => {
+    const todoToSend = JSON.stringify(todo);
+    fetch(this.url, {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: todoToSend,
+    })
+      .then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          console.log('Status: ' + resp.status);
+          return new Error();
+        }
+      })
+      .then(updatedTodo => {
+        this.setState(prevState => ({
+          todos: [...prevState.todos].map(item => {
+            if (item._id == updatedTodo._id) {
+              item = updatedTodo;
+            }
+            return item;
+          }),
+        }));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  clearCompletedTodoAtData = () => {
+    fetch(createUrl(this.url, { cleardone: true }), {
+      method: 'delete',
+    })
+      .then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          console.log('Status: ' + resp.status);
+          return new Error();
+        }
+      })
+      .then(newTodoList => {
+        this.setState({ todos: newTodoList });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  toggleStatusAllTodosAtData = (before, after) => {
+    const todoToSend = JSON.stringify({ before, after });
+    fetch(`${this.url}/completeall`, {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: todoToSend,
+    })
+      .then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          console.log('Status: ' + resp.status);
+          return new Error();
+        }
+      })
+      .then(updatedList => {
+        this.setState({ todos: updatedList });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   handleAddTodo = value => {
     if (value) {
-      const todos = [...this.state.todos];
-      todos.push({
-        id: Math.random().toString(36).substr(2, 9),
-        value: value,
-        isDone: false,
-      });
-      this.pushToLocalStorage(todos);
-      this.setState({ todos });
+      this.addTodoToData(value);
     }
   };
 
-  handleDeleteTodo = todo => {
-    const todos = this.state.todos.filter(item => item.id !== todo);
-    this.pushToLocalStorage(todos);
-    this.setState({ todos });
+  handleDeleteTodo = todoId => {
+    this.deleteTodoFromData(todoId);
   };
 
   handleClearCompletedTodo = () => {
-    const todos = this.state.todos.filter(item => !item.isDone);
-    this.pushToLocalStorage(todos);
-    this.setState({ todos });
+    this.clearCompletedTodoAtData();
   };
 
   handleCompleteTodo = todo => {
-    const todos = [...this.state.todos];
-    todos.map(item => {
-      if (item.id == todo.id) {
-        item.isDone = !item.isDone;
-      }
-      return item;
-    });
-    this.pushToLocalStorage(todos);
-    this.setState({ todos });
+    todo.isDone = !todo.isDone;
+    this.updateTodoAtData(todo);
   };
 
   handleCompleteAllTodos = () => {
     const todos = [...this.state.todos];
     todos.some(item => !item.isDone)
-      ? todos.map(item => (item.isDone = true))
-      : todos.map(item => (item.isDone = false));
-    this.pushToLocalStorage(todos);
-    this.setState({ todos });
+      ? this.toggleStatusAllTodosAtData(false, true)
+      : this.toggleStatusAllTodosAtData(true, false);
   };
 
-  handleEditTodo = (todo, value) => {
+  handleEditTodo = (todoId, value) => {
     const todos = [...this.state.todos];
-    const index = todos.findIndex(item => item.id == todo);
-    todos[index].value = value;
-    this.pushToLocalStorage(todos);
-    this.setState({ todos });
+    const index = todos.findIndex(item => item._id == todoId);
+    const editedTodo = todos[index];
+    editedTodo.value = value;
+    this.updateTodoAtData(editedTodo);
   };
 
   handleChangeFilter = value => {
@@ -97,7 +203,7 @@ class TodosList extends React.Component {
         <div className="main">
           {filteredTodos.map((todo, index) => (
             <Todo
-              key={todo.id}
+              key={index}
               todo={todo}
               onDeleteTodo={this.handleDeleteTodo}
               onCompletetodo={this.handleCompleteTodo}
