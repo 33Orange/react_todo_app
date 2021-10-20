@@ -1,0 +1,48 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,300italic,regular,italic,500,500italic,700,700italic);
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Ubuntu';
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.todolist {
+  width: 450px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.todolist .todolist__title {
+  text-align: center;
+  font-size: 80px;
+  font-weight: 300;
+  color: rgba(255, 0, 0, 0.2);
+  width: 100%;
+  margin: 30px 0;
+}
+
+.todolist .main {
+  width: 100%;
+  background: #fff;
+  -webkit-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
+          box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
+}
+/*# sourceMappingURL=style.css.map */

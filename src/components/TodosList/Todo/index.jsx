@@ -19,7 +19,7 @@ class Todo extends React.Component {
     this.props.onCompletetodo(this.props.todo);
   };
   handleDeleteTodo = () => {
-    this.props.onDeleteTodo(this.props.todo.id);
+    this.props.onDeleteTodo(this.props.todo._id);
   };
   render() {
     const isDone = this.props.todo.isDone;
@@ -35,7 +35,7 @@ class Todo extends React.Component {
           onHiddenDeleteButton={this.handleHiddenDeleteButton}
           onShowDeleteButton={this.handleShowDeleteButton}
           onDeleteTodo={this.props.onDeleteTodo}
-          todoId={this.props.todo.id}
+          todoId={this.props.todo._id}
           todoEdit={this.props.onEditTodo}
           todoisDone={this.props.todo.isDone}
           todoTitle={this.props.todo.value}

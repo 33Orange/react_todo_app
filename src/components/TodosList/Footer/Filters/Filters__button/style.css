@@ -1,0 +1,14 @@
+.filters__button {
+  cursor: pointer;
+  padding: 3px 5px;
+  border-radius: 5px;
+}
+
+.filters__button:hover {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.filters__button.active {
+  outline: 1px solid rgba(255, 0, 0, 0.4);
+}
+/*# sourceMappingURL=style.css.map */
