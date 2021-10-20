@@ -7,6 +7,7 @@ import Todo from './Todo';
 //Footer / Status Bar
 import Footer from './Footer';
 import { createUrl } from '../../utils/createQueryString';
+import { connect } from 'react-redux';
 
 class TodosList extends React.Component {
   constructor(props) {
@@ -24,7 +25,11 @@ class TodosList extends React.Component {
   getTodosFromData = () => {
     fetch(this.url)
       .then(response => response.json())
-      .then(response => this.setState({ todos: response }));
+      .then(response => {
+        // console.log(response);
+        return this.props.onGetTodos(response);
+        // return this.setState({ todos: response });
+      });
   };
 
   addTodoToData = value => {
@@ -43,9 +48,10 @@ class TodosList extends React.Component {
         }
       })
       .then(newTodo => {
-        this.setState(prevState => ({
-          todos: [...prevState.todos, newTodo],
-        }));
+        this.props.onAddTodo(newTodo);
+        // this.setState(prevState => ({
+        //   todos: [...prevState.todos, newTodo],
+        // }));
       })
       .catch(err => {
         console.log(err);
@@ -65,9 +71,10 @@ class TodosList extends React.Component {
         }
       })
       .then(deletedTodo => {
-        this.setState(prevState => ({
-          todos: [...prevState.todos].filter(item => item._id != deletedTodo._id),
-        }));
+        // this.setState(prevState => ({
+        //   todos: [...prevState.todos].filter(item => item._id != deletedTodo._id),
+        // }));
+        this.props.onDeleteTodo(deletedTodo);
       })
       .catch(err => {
         console.log(err);
@@ -90,14 +97,15 @@ class TodosList extends React.Component {
         }
       })
       .then(updatedTodo => {
-        this.setState(prevState => ({
-          todos: [...prevState.todos].map(item => {
-            if (item._id == updatedTodo._id) {
-              item = updatedTodo;
-            }
-            return item;
-          }),
-        }));
+        // this.setState(prevState => ({
+        //   todos: [...prevState.todos].map(item => {
+        //     if (item._id == updatedTodo._id) {
+        //       item = updatedTodo;
+        //     }
+        //     return item;
+        //   }),
+        // }));
+        this.props.onUpdateTodo(updatedTodo);
       })
       .catch(err => {
         console.log(err);
@@ -117,7 +125,8 @@ class TodosList extends React.Component {
         }
       })
       .then(newTodoList => {
-        this.setState({ todos: newTodoList });
+        this.props.onGetTodos(newTodoList);
+        // this.setState({ todos: newTodoList });
       })
       .catch(err => {
         console.log(err);
@@ -140,7 +149,9 @@ class TodosList extends React.Component {
         }
       })
       .then(updatedList => {
-        this.setState({ todos: updatedList });
+        console.log(updatedList);
+        this.props.onGetTodos(updatedList);
+        // this.setState({ todos: updatedList });
       })
       .catch(err => {
         console.log(err);
@@ -167,14 +178,14 @@ class TodosList extends React.Component {
   };
 
   handleCompleteAllTodos = () => {
-    const todos = [...this.state.todos];
+    const todos = [...this.props.state.todos];
     todos.some(item => !item.isDone)
       ? this.toggleStatusAllTodosAtData(false, true)
       : this.toggleStatusAllTodosAtData(true, false);
   };
 
   handleEditTodo = (todoId, value) => {
-    const todos = [...this.state.todos];
+    const todos = [...this.props.state.todos];
     const index = todos.findIndex(item => item._id == todoId);
     const editedTodo = todos[index];
     editedTodo.value = value;
@@ -187,16 +198,16 @@ class TodosList extends React.Component {
 
   render() {
     const filterMap = {
-      All: this.state.todos,
-      Active: this.state.todos.filter(item => !item.isDone),
-      Completed: this.state.todos.filter(item => item.isDone),
+      All: this.props.state.todos,
+      Active: this.props.state.todos.filter(item => !item.isDone),
+      Completed: this.props.state.todos.filter(item => item.isDone),
     };
     const filteredTodos = filterMap[this.state.filter];
     return (
       <div className="todolist">
         <h1 className="todolist__title">todos</h1>
         <Header
-          todos={this.state.todos}
+          todos={this.props.state.todos}
           onAddTodo={this.handleAddTodo}
           onCompleteAllTodos={this.handleCompleteAllTodos}
         />
@@ -212,7 +223,7 @@ class TodosList extends React.Component {
           ))}
         </div>
         <Footer
-          todos={this.state.todos}
+          todos={this.props.state.todos}
           activeFilter={this.state.filter}
           onChangeFilter={this.handleChangeFilter}
           onClearCompletedTodo={this.handleClearCompletedTodo}
@@ -222,4 +233,22 @@ class TodosList extends React.Component {
   }
 }
 
-export default TodosList;
+export default connect(
+  state => ({
+    state,
+  }),
+  dispatch => ({
+    onGetTodos: list => {
+      dispatch({ type: 'UPLOAD_TODOS', todosList: list });
+    },
+    onAddTodo: newTodo => {
+      dispatch({ type: 'ADD_TODO', newTodo });
+    },
+    onDeleteTodo: deletedTodo => {
+      dispatch({ type: 'DELETE_TODO', todoId: deletedTodo._id });
+    },
+    onUpdateTodo: updatedTodo => {
+      dispatch({ type: 'UPDATE_TODO', updatedTodo });
+    },
+  }),
+)(TodosList);
