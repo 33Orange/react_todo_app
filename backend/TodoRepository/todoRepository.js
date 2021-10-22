@@ -17,8 +17,8 @@ class TodosRepository {
     await Todo.deleteMany({ isDone: true });
     return Todo.find();
   }
-  async toggleStatus(before, after) {
-    await Todo.updateMany({ isDone: before }, { isDone: after });
+  async toggleStatus(status) {
+    await Todo.updateMany({ isDone: status });
     return Todo.find();
   }
 }

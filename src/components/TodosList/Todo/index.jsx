@@ -3,18 +3,6 @@ import TodoTitle from './TodoTitle';
 import './style.scss';
 
 class Todo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hiddenDeleteButton: false,
-    };
-  }
-  handleHiddenDeleteButton = () => {
-    this.setState({ hiddenDeleteButton: true });
-  };
-  handleShowDeleteButton = () => {
-    this.setState({ hiddenDeleteButton: false });
-  };
   handleCompleteTodo = () => {
     this.props.onCompletetodo(this.props.todo);
   };
@@ -22,29 +10,20 @@ class Todo extends React.Component {
     this.props.onDeleteTodo(this.props.todo._id);
   };
   render() {
-    const isDone = this.props.todo.isDone;
     return (
       <div className="todo">
         <input
           className="todo__complete"
           type="checkbox"
-          checked={isDone}
+          checked={this.props.todo.isDone}
           onChange={this.handleCompleteTodo}
         />
         <TodoTitle
-          onHiddenDeleteButton={this.handleHiddenDeleteButton}
-          onShowDeleteButton={this.handleShowDeleteButton}
+          todo={this.props.todo}
           onDeleteTodo={this.props.onDeleteTodo}
-          todoId={this.props.todo._id}
-          todoEdit={this.props.onEditTodo}
-          todoisDone={this.props.todo.isDone}
-          todoTitle={this.props.todo.value}
+          onEditTodo={this.props.onEditTodo}
         />
-        <button
-          className="todo__delete"
-          onClick={this.handleDeleteTodo}
-          hidden={this.state.hiddenDeleteButton}
-        ></button>
+        <button className="todo__delete" onClick={this.handleDeleteTodo}></button>
       </div>
     );
   }

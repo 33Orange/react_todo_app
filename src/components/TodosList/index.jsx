@@ -8,8 +8,13 @@ import Todo from './Todo';
 import Footer from './Footer';
 import { createUrl } from '../../utils/createQueryString';
 import { connect } from 'react-redux';
-import mapDispatchToProps from '../../redux/mapDispatchToProps';
-import mapStateToProps from '../../redux/mapStateToProps';
+import {
+  setTodoAction,
+  addTodoAction,
+  deleteTodoAction,
+  updateTodoAction,
+  changeFilter,
+} from '../../redux/actionCreators';
 
 class TodosList extends React.Component {
   constructor(props) {
@@ -18,18 +23,19 @@ class TodosList extends React.Component {
   }
 
   componentDidMount() {
-    this.getTodosFromData();
+    this.getTodos();
   }
 
-  getTodosFromData = () => {
+  getTodos = () => {
     fetch(this.url)
       .then(response => response.json())
       .then(response => {
-        return this.props.onGetTodos(response);
+        return this.props.setTodoAction(response);
       });
   };
 
-  addTodoToData = value => {
+  addTodo = value => {
+    if (!value) return null;
     const todoToSend = JSON.stringify({ value, isDone: false });
     fetch(this.url, {
       method: 'post',
@@ -45,14 +51,14 @@ class TodosList extends React.Component {
         }
       })
       .then(newTodo => {
-        this.props.onAddTodo(newTodo);
+        this.props.addTodoAction(newTodo);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  deleteTodoFromData = todoId => {
+  deleteTodo = todoId => {
     fetch(`${this.url}/${todoId}`, {
       method: 'delete',
     })
@@ -65,14 +71,14 @@ class TodosList extends React.Component {
         }
       })
       .then(deletedTodo => {
-        this.props.onDeleteTodo(deletedTodo);
+        this.props.deleteTodoAction(deletedTodo);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  updateTodoAtData = todo => {
+  updateTodo = todo => {
     const todoToSend = JSON.stringify(todo);
     fetch(this.url, {
       method: 'put',
@@ -88,14 +94,14 @@ class TodosList extends React.Component {
         }
       })
       .then(updatedTodo => {
-        this.props.onUpdateTodo(updatedTodo);
+        this.props.updateTodoAction(updatedTodo);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  clearCompletedTodoAtData = () => {
+  clearCompletedTodo = () => {
     fetch(createUrl(this.url, { cleardone: true }), {
       method: 'delete',
     })
@@ -108,15 +114,15 @@ class TodosList extends React.Component {
         }
       })
       .then(newTodoList => {
-        this.props.onGetTodos(newTodoList);
+        this.props.setTodoAction(newTodoList);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  toggleStatusAllTodosAtData = (before, after) => {
-    const todoToSend = JSON.stringify({ before, after });
+  toggleStatusAllTodos = status => {
+    const todoToSend = JSON.stringify({ status });
     fetch(`${this.url}/completeall`, {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
@@ -131,65 +137,47 @@ class TodosList extends React.Component {
         }
       })
       .then(updatedList => {
-        console.log(updatedList);
-        this.props.onGetTodos(updatedList);
+        this.props.setTodoAction(updatedList);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  handleAddTodo = value => {
-    if (value) {
-      this.addTodoToData(value);
-    }
-  };
-
-  handleDeleteTodo = todoId => {
-    this.deleteTodoFromData(todoId);
-  };
-
-  handleClearCompletedTodo = () => {
-    this.clearCompletedTodoAtData();
-  };
-
   handleCompleteTodo = todo => {
-    todo.isDone = !todo.isDone;
-    this.updateTodoAtData(todo);
+    const newTodo = todo;
+    newTodo.isDone = !todo.isDone;
+    this.updateTodo(newTodo);
   };
 
   handleCompleteAllTodos = () => {
-    const todos = [...this.props.state.todos];
+    const todos = [...this.props.todos];
     todos.some(item => !item.isDone)
-      ? this.toggleStatusAllTodosAtData(false, true)
-      : this.toggleStatusAllTodosAtData(true, false);
+      ? this.toggleStatusAllTodos(true)
+      : this.toggleStatusAllTodos(false);
   };
 
   handleEditTodo = (todoId, value) => {
-    const todos = [...this.props.state.todos];
+    const todos = [...this.props.todos];
     const index = todos.findIndex(item => item._id == todoId);
     const editedTodo = todos[index];
     editedTodo.value = value;
-    this.updateTodoAtData(editedTodo);
-  };
-
-  handleChangeFilter = value => {
-    this.props.onChangeFilter(value);
+    this.updateTodo(editedTodo);
   };
 
   render() {
     const filterMap = {
-      All: this.props.state.todos,
-      Active: this.props.state.todos.filter(item => !item.isDone),
-      Completed: this.props.state.todos.filter(item => item.isDone),
+      All: this.props.todos,
+      Active: this.props.todos.filter(item => !item.isDone),
+      Completed: this.props.todos.filter(item => item.isDone),
     };
-    const filteredTodos = filterMap[this.props.state.filter];
+    const filteredTodos = filterMap[this.props.filter];
     return (
       <div className="todolist">
         <h1 className="todolist__title">todos</h1>
         <Header
-          todos={this.props.state.todos}
-          onAddTodo={this.handleAddTodo}
+          todos={this.props.todos}
+          onAddTodo={this.addTodo}
           onCompleteAllTodos={this.handleCompleteAllTodos}
         />
         <div className="main">
@@ -197,21 +185,33 @@ class TodosList extends React.Component {
             <Todo
               key={index}
               todo={todo}
-              onDeleteTodo={this.handleDeleteTodo}
+              onDeleteTodo={this.deleteTodo}
               onCompletetodo={this.handleCompleteTodo}
               onEditTodo={this.handleEditTodo}
             />
           ))}
         </div>
         <Footer
-          todos={this.props.state.todos}
-          activeFilter={this.props.state.filter}
-          onChangeFilter={this.handleChangeFilter}
-          onClearCompletedTodo={this.handleClearCompletedTodo}
+          todos={this.props.todos}
+          activeFilter={this.props.filter}
+          onChangeFilter={this.props.changeFilter}
+          onClearCompletedTodo={this.clearCompletedTodo}
         />
       </div>
     );
   }
 }
+
+const mapDispatchToProps = {
+  setTodoAction,
+  addTodoAction,
+  deleteTodoAction,
+  updateTodoAction,
+  changeFilter,
+};
+const mapStateToProps = state => ({
+  todos: state.todos,
+  filter: state.filter,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodosList);

@@ -51,7 +51,7 @@ class TodosController {
 
   async toggleStatus(req, res) {
     try {
-      const updatedList = await TodoService.toggleStatus(req.body.before, req.body.after);
+      const updatedList = await TodoService.toggleStatus(req.body.status);
       return res.json(updatedList);
     } catch (e) {
       console.log(e);

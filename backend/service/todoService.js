@@ -32,8 +32,8 @@ class TodoService {
     return newTodoList;
   }
 
-  async toggleStatus(before, after) {
-    const updatedTodoList = await TodoRepository.toggleStatus(before, after);
+  async toggleStatus(status) {
+    const updatedTodoList = await TodoRepository.toggleStatus(status);
     return updatedTodoList;
   }
 }
