@@ -1,16 +1,21 @@
-import React from 'react';
+import * as React from 'react';
 import './style.scss';
 import Button from './Filters__button';
 
-class Filters extends React.Component {
-  constructor(props) {
+interface FiltersProps {
+  activeFilter: string;
+  onChangeFilter: () => void;
+}
+
+class Filters extends React.Component<FiltersProps> {
+  constructor(props: FiltersProps) {
     super(props);
-    this.buttons = ['All', 'Active', 'Completed'];
   }
+
   render() {
     return (
       <div className="filters">
-        {this.buttons.map((button, index) => (
+        {['All', 'Active', 'Completed'].map((button: string, index: number) => (
           <Button
             key={button[index]}
             value={button}

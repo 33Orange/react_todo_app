@@ -1,8 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import * as React from 'react';
 import './style.scss';
 
-class Counter extends React.Component {
+interface CounterProps {
+  count: number;
+}
+
+class Counter extends React.Component<CounterProps> {
   render() {
     return (
       <div className="counter">

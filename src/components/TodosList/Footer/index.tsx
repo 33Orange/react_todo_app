@@ -1,10 +1,23 @@
 import Counter from './Counter';
 import Filters from './Filters';
 import ClearCompletedTodos from './ClearCompleted';
-import React from 'react';
+import * as React from 'react';
 import './style.scss';
 
-class Footer extends React.Component {
+interface Itodo {
+  _id: string;
+  value: string;
+  isDone: boolean;
+}
+
+interface FooterProps {
+  todos: Array<Itodo>;
+  activeFilter: string;
+  onChangeFilter: () => void;
+  onClearCompletedTodo: () => void;
+}
+
+class Footer extends React.Component<FooterProps> {
   render() {
     const isAnyCompleted = this.props.todos.some(item => item.isDone);
     const countActiveTodos = this.props.todos.filter(item => !item.isDone).length;

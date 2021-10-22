@@ -1,7 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import './style.scss';
 
-class ClearCompleted extends React.Component {
+interface ClearCompletedProps {
+  onClearCompletedTodo: (e: React.MouseEvent) => void;
+}
+
+class ClearCompleted extends React.Component<ClearCompletedProps> {
   render() {
     return (
       <div className="clearCompleted">

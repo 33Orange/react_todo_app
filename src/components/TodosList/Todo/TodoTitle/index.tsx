@@ -1,8 +1,25 @@
-import React from 'react';
+import * as React from 'react';
 import './style.scss';
 
-class TodoTitle extends React.Component {
-  constructor(props) {
+interface Itodo {
+  _id: string;
+  value: string;
+  isDone: boolean;
+}
+
+interface TodoTitleProps {
+  onEditTodo: (arg0: string, arg1: string) => void;
+  onDeleteTodo: (arg0: string) => void;
+  todo: Itodo;
+}
+
+interface TodoTitleState {
+  value: string;
+  isEdit: boolean;
+}
+
+class TodoTitle extends React.Component<TodoTitleProps, TodoTitleState> {
+  constructor(props: TodoTitleProps) {
     super(props);
     this.state = {
       value: '',
@@ -10,15 +27,16 @@ class TodoTitle extends React.Component {
     };
   }
 
-  handleChange = e => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       value: e.target.value,
     });
   };
 
-  openEditor = e => {
+  openEditor = (e: React.MouseEvent<HTMLElement>) => {
+    const newValue = e.target as HTMLElement;
     this.setState({
-      value: e.target.textContent,
+      value: newValue.textContent,
       isEdit: true,
     });
   };
@@ -38,7 +56,7 @@ class TodoTitle extends React.Component {
     });
   };
 
-  handlePressEnter = e => {
+  handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code == 'Enter') {
       this.editTodo();
     }

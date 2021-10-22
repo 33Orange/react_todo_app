@@ -1,15 +1,31 @@
-import React from 'react';
+import * as React from 'react';
 import './style.scss';
 
-class Header extends React.Component {
-  constructor(props) {
+interface Itodo {
+  _id: string;
+  value: string;
+  isDone: boolean;
+}
+
+interface HeaderProps {
+  onAddTodo: (arg0: string) => void;
+  onCompleteAllTodos: () => void;
+  todos: Array<Itodo>;
+}
+
+interface HeaderState {
+  value: string;
+}
+
+class Header extends React.Component<HeaderProps, HeaderState> {
+  constructor(props: HeaderProps) {
     super(props);
     this.state = {
       value: '',
     };
     this.handleAddTodo = this.handleAddTodo.bind(this);
   }
-  handleChange = e => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       value: e.target.value,
     });
@@ -18,7 +34,8 @@ class Header extends React.Component {
     this.props.onAddTodo(this.state.value);
     this.setState({ value: '' });
   };
-  handleEnterPress = e => {
+
+  handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code == 'Enter') {
       this.handleAddTodo();
     }

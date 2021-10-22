@@ -1,7 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 import './style.scss';
 
-class FiltersButton extends React.Component {
+interface FilterButtonProps {
+  activeFilter: string;
+  value: string;
+  onChangeFilter: (arg0: string) => void;
+}
+
+class FiltersButton extends React.Component<FilterButtonProps> {
   handleChangeFilter = () => {
     this.props.onChangeFilter(this.props.value);
   };
