@@ -1,6 +1,6 @@
 import { ActionType, Action } from '../../../types/action';
 
-const initialState: string = 'All';
+const initialState: string = 'all';
 
 export const filterReducer = (state = initialState, action: Action) => {
   switch (action.type) {

@@ -15,7 +15,7 @@ class Filters extends React.Component<FiltersProps> {
   render() {
     return (
       <div className="filters">
-        {['All', 'Active', 'Completed'].map((button: string, index: number) => (
+        {['all', 'active', 'completed'].map((button: string, index: number) => (
           <Button
             key={button[index]}
             value={button}

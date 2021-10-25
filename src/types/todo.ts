@@ -8,3 +8,7 @@ export interface ITodoListState {
   todos: Array<ITodo>;
   filter: string;
 }
+
+export interface IFilterMap {
+  [key: string]: (item: ITodo) => void;
+}
