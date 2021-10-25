@@ -1,17 +1,20 @@
-const initialState = [];
+import { ITodo } from '../../../types';
+import { ActionType, Action } from '../../actionCreators';
 
-export const todoReducer = (state = initialState, action) => {
+const initialState: Array<ITodo> = [];
+
+export const todoReducer = (state: Array<ITodo> = initialState, action: Action) => {
   switch (action.type) {
-    case 'SET_TODOS':
+    case ActionType.SET_TODOS:
       return [...action.payload];
 
-    case 'ADD_TODO':
+    case ActionType.ADD_TODO:
       return [...state, action.payload];
 
-    case 'DELETE_TODO':
+    case ActionType.DELETE_TODO:
       return state.filter(item => item._id != action.payload._id);
 
-    case 'UPDATE_TODO':
+    case ActionType.UPDATE_TODO:
       return state.map(item => {
         if (item._id == action.payload._id) {
           item = action.payload;

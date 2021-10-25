@@ -7,6 +7,7 @@ import Todo from './Todo';
 //Footer / Status Bar
 import Footer from './Footer';
 import { createUrl } from '../../utils/createQueryString';
+//Redux
 import { connect } from 'react-redux';
 import {
   setTodoAction,
@@ -16,7 +17,7 @@ import {
   changeFilter,
 } from '../../redux/actionCreators';
 import { ITodo, ITodoListState } from '../../types/index';
-
+//Types
 interface IFilterMap {
   [key: string]: Array<ITodo>;
 }
