@@ -1,16 +1,11 @@
 import * as React from 'react';
 import './style.scss';
-
-interface Itodo {
-  _id: string;
-  value: string;
-  isDone: boolean;
-}
+import { ITodo } from '../../../../types/index';
 
 interface TodoTitleProps {
   onEditTodo: (arg0: string, arg1: string) => void;
   onDeleteTodo: (arg0: string) => void;
-  todo: Itodo;
+  todo: ITodo;
 }
 
 interface TodoTitleState {

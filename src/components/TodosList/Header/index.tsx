@@ -1,16 +1,11 @@
 import * as React from 'react';
 import './style.scss';
-
-interface Itodo {
-  _id: string;
-  value: string;
-  isDone: boolean;
-}
+import { ITodo } from '../../../types/index';
 
 interface HeaderProps {
   onAddTodo: (arg0: string) => void;
   onCompleteAllTodos: () => void;
-  todos: Array<Itodo>;
+  todos: Array<ITodo>;
 }
 
 interface HeaderState {

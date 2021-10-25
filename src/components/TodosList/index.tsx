@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import './style.scss';
 //Header / Main Input and Complete all button
 import Header from './Header';
@@ -15,29 +15,40 @@ import {
   updateTodoAction,
   changeFilter,
 } from '../../redux/actionCreators';
+import { ITodo, ITodoListState } from '../../types/index';
 
-class TodosList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.url = 'http://localhost:5000/todos';
-  }
+interface IFilterMap {
+  [key: string]: Array<ITodo>;
+}
 
+interface ITodoListProps {
+  todos: Array<ITodo>;
+  filter: string;
+  setTodoAction: (arg0: Array<ITodo>) => void;
+  addTodoAction: (arg0: ITodo) => void;
+  deleteTodoAction: (arg0: ITodo) => void;
+  updateTodoAction: (arg0: ITodo) => void;
+  changeFilter: (arg0: string) => void;
+}
+
+const url: string = 'http://localhost:5000/todos';
+
+class TodosList extends React.Component<ITodoListProps> {
   componentDidMount() {
     this.getTodos();
   }
 
   getTodos = () => {
-    fetch(this.url)
+    fetch(url)
       .then(response => response.json())
       .then(response => {
         return this.props.setTodoAction(response);
       });
   };
 
-  addTodo = value => {
-    if (!value) return null;
+  addTodo = (value: string) => {
     const todoToSend = JSON.stringify({ value, isDone: false });
-    fetch(this.url, {
+    fetch(url, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: todoToSend,
@@ -58,8 +69,8 @@ class TodosList extends React.Component {
       });
   };
 
-  deleteTodo = todoId => {
-    fetch(`${this.url}/${todoId}`, {
+  deleteTodo = (todoId: string) => {
+    fetch(`${url}/${todoId}`, {
       method: 'delete',
     })
       .then(resp => {
@@ -78,9 +89,9 @@ class TodosList extends React.Component {
       });
   };
 
-  updateTodo = todo => {
+  updateTodo = (todo: ITodo) => {
     const todoToSend = JSON.stringify(todo);
-    fetch(this.url, {
+    fetch(url, {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
       body: todoToSend,
@@ -102,7 +113,7 @@ class TodosList extends React.Component {
   };
 
   clearCompletedTodo = () => {
-    fetch(createUrl(this.url, { cleardone: true }), {
+    fetch(createUrl(url, { cleardone: true }), {
       method: 'delete',
     })
       .then(resp => {
@@ -121,9 +132,9 @@ class TodosList extends React.Component {
       });
   };
 
-  toggleStatusAllTodos = status => {
+  toggleStatusAllTodos = (status: boolean) => {
     const todoToSend = JSON.stringify({ status });
-    fetch(`${this.url}/completeall`, {
+    fetch(`${url}/completeall`, {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
       body: todoToSend,
@@ -144,7 +155,7 @@ class TodosList extends React.Component {
       });
   };
 
-  handleCompleteTodo = todo => {
+  handleCompleteTodo = (todo: ITodo) => {
     const newTodo = todo;
     newTodo.isDone = !todo.isDone;
     this.updateTodo(newTodo);
@@ -157,7 +168,7 @@ class TodosList extends React.Component {
       : this.toggleStatusAllTodos(false);
   };
 
-  handleEditTodo = (todoId, value) => {
+  handleEditTodo = (todoId: string, value: string) => {
     const todos = [...this.props.todos];
     const index = todos.findIndex(item => item._id == todoId);
     const editedTodo = todos[index];
@@ -166,7 +177,7 @@ class TodosList extends React.Component {
   };
 
   render() {
-    const filterMap = {
+    const filterMap: IFilterMap = {
       All: this.props.todos,
       Active: this.props.todos.filter(item => !item.isDone),
       Completed: this.props.todos.filter(item => item.isDone),
@@ -181,9 +192,9 @@ class TodosList extends React.Component {
           onCompleteAllTodos={this.handleCompleteAllTodos}
         />
         <div className="main">
-          {filteredTodos.map((todo, index) => (
+          {filteredTodos.map((todo: ITodo) => (
             <Todo
-              key={index}
+              key={todo._id}
               todo={todo}
               onDeleteTodo={this.deleteTodo}
               onCompletetodo={this.handleCompleteTodo}
@@ -209,7 +220,7 @@ const mapDispatchToProps = {
   updateTodoAction,
   changeFilter,
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state: ITodoListState) => ({
   todos: state.todos,
   filter: state.filter,
 });

@@ -3,17 +3,12 @@ import Filters from './Filters';
 import ClearCompletedTodos from './ClearCompleted';
 import * as React from 'react';
 import './style.scss';
-
-interface Itodo {
-  _id: string;
-  value: string;
-  isDone: boolean;
-}
+import { ITodo } from '../../../types/index';
 
 interface FooterProps {
-  todos: Array<Itodo>;
+  todos: Array<ITodo>;
   activeFilter: string;
-  onChangeFilter: () => void;
+  onChangeFilter: (arg0: string) => void;
   onClearCompletedTodo: () => void;
 }
 
