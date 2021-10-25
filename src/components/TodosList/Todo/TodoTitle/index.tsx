@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import './style.scss';
 import { ITodo } from '../../../../types/todo';
 
@@ -13,74 +14,59 @@ interface TodoTitleState {
   isEdit: boolean;
 }
 
-class TodoTitle extends React.Component<TodoTitleProps, TodoTitleState> {
-  constructor(props: TodoTitleProps) {
-    super(props);
-    this.state = {
-      value: '',
-      isEdit: false,
-    };
-  }
+const TodoTitle: React.FC<TodoTitleProps> = ({ todo, onEditTodo, onDeleteTodo }) => {
+  const [todoValue, setTodoValue] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
 
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      value: e.target.value,
-    });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodoValue(e.target.value);
   };
 
-  openEditor = (e: React.MouseEvent<HTMLElement>) => {
+  const openEditor = (e: React.MouseEvent<HTMLElement>) => {
     const newValue = e.target as HTMLElement;
-    this.setState({
-      value: newValue.textContent,
-      isEdit: true,
-    });
+    setTodoValue(newValue.textContent);
+    setIsEdit(true);
   };
 
-  editTodo = () => {
-    if (!this.state.isEdit) {
+  const editTodo = () => {
+    if (!isEdit) {
       return;
     }
-    const todoId = this.props.todo._id;
-    const value = this.state.value;
-    this.state.value.length > 0
-      ? this.props.onEditTodo(todoId, value)
-      : this.props.onDeleteTodo(todoId);
-    this.setState({
-      value: '',
-      isEdit: false,
-    });
+    const todoId = todo._id;
+    const value = todoValue;
+    todoValue.length > 0 ? onEditTodo(todoId, value) : onDeleteTodo(todoId);
+    setTodoValue('');
+    setIsEdit(false);
   };
 
-  handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code == 'Enter') {
-      this.editTodo();
+      editTodo();
     }
   };
 
-  render() {
-    return (
-      <div className="todo-title">
-        {this.state.isEdit ? (
-          <input
-            className="todo-title__editInput"
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-            onKeyPress={this.handlePressEnter}
-            onBlur={this.editTodo}
-            ref={input => input && input.focus()}
-          />
-        ) : (
-          <p
-            className={this.props.todo.isDone ? 'todo-title__text active' : 'todo-title__text'}
-            onDoubleClick={this.openEditor}
-          >
-            {this.props.todo.value}
-          </p>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="todo-title">
+      {isEdit ? (
+        <input
+          className="todo-title__editInput"
+          type="text"
+          value={todoValue}
+          onChange={handleChange}
+          onKeyPress={handlePressEnter}
+          onBlur={editTodo}
+          ref={input => input && input.focus()}
+        />
+      ) : (
+        <p
+          className={todo.isDone ? 'todo-title__text active' : 'todo-title__text'}
+          onDoubleClick={openEditor}
+        >
+          {todo.value}
+        </p>
+      )}
+    </div>
+  );
+};
 
 export default TodoTitle;

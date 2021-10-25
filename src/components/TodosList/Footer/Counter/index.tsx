@@ -5,14 +5,12 @@ interface CounterProps {
   count: number;
 }
 
-class Counter extends React.Component<CounterProps> {
-  render() {
-    return (
-      <div className="counter">
-        <span>{this.props.count} items left</span>
-      </div>
-    );
-  }
-}
+const Counter: React.FC<CounterProps> = ({ count }) => {
+  return (
+    <div className="counter">
+      <span>{count} items left</span>
+    </div>
+  );
+};
 
 export default Counter;

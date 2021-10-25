@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import './style.scss';
 //Header / Main Input and Complete all button
 import Header from './Header';
@@ -29,20 +30,28 @@ interface ITodoListProps {
   changeFilter: (filter: string) => void;
 }
 
-class TodosList extends React.Component<ITodoListProps> {
-  componentDidMount() {
-    this.getTodos();
-  }
+const TodosList: React.FC<ITodoListProps> = ({
+  todos,
+  filter,
+  setTodoAction,
+  addTodoAction,
+  deleteTodoAction,
+  updateTodoAction,
+  changeFilter,
+}) => {
+  useEffect(() => {
+    getTodos();
+  });
 
-  getTodos = () => {
+  const getTodos = () => {
     fetch(url)
       .then(response => response.json())
       .then(response => {
-        return this.props.setTodoAction(response);
+        return setTodoAction(response);
       });
   };
 
-  addTodo = (value: string) => {
+  const addTodo = (value: string) => {
     if (value) {
       const todoToSend = JSON.stringify({ value, isDone: false });
       fetch(url, {
@@ -59,7 +68,7 @@ class TodosList extends React.Component<ITodoListProps> {
           }
         })
         .then(newTodo => {
-          this.props.addTodoAction(newTodo);
+          addTodoAction(newTodo);
         })
         .catch(err => {
           console.log(err);
@@ -67,7 +76,7 @@ class TodosList extends React.Component<ITodoListProps> {
     }
   };
 
-  deleteTodo = (todoId: string) => {
+  const deleteTodo = (todoId: string) => {
     fetch(`${url}/${todoId}`, {
       method: 'delete',
     })
@@ -80,14 +89,14 @@ class TodosList extends React.Component<ITodoListProps> {
         }
       })
       .then(deletedTodo => {
-        this.props.deleteTodoAction(deletedTodo);
+        deleteTodoAction(deletedTodo);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  updateTodo = (todo: ITodo) => {
+  const updateTodo = (todo: ITodo) => {
     const todoToSend = JSON.stringify(todo);
     fetch(url, {
       method: 'put',
@@ -103,14 +112,14 @@ class TodosList extends React.Component<ITodoListProps> {
         }
       })
       .then(updatedTodo => {
-        this.props.updateTodoAction(updatedTodo);
+        updateTodoAction(updatedTodo);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  clearCompletedTodo = () => {
+  const clearCompletedTodo = () => {
     fetch(createUrl(url, { cleardone: true }), {
       method: 'delete',
     })
@@ -123,14 +132,14 @@ class TodosList extends React.Component<ITodoListProps> {
         }
       })
       .then(newTodoList => {
-        this.props.setTodoAction(newTodoList);
+        setTodoAction(newTodoList);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  toggleStatusAllTodos = (status: boolean) => {
+  const toggleStatusAllTodos = (status: boolean) => {
     const todoToSend = JSON.stringify({ status });
     fetch(`${url}/completeall`, {
       method: 'put',
@@ -146,70 +155,63 @@ class TodosList extends React.Component<ITodoListProps> {
         }
       })
       .then(updatedList => {
-        this.props.setTodoAction(updatedList);
+        setTodoAction(updatedList);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  handleCompleteTodo = (todo: ITodo) => {
+  const handleCompleteTodo = (todo: ITodo) => {
     const newTodo = todo;
     newTodo.isDone = !todo.isDone;
-    this.updateTodo(newTodo);
+    updateTodo(newTodo);
   };
 
-  handleCompleteAllTodos = () => {
-    const todos = [...this.props.todos];
-    todos.some(item => !item.isDone)
-      ? this.toggleStatusAllTodos(true)
-      : this.toggleStatusAllTodos(false);
+  const handleCompleteAllTodos = () => {
+    const newTodos = [...todos];
+    newTodos.some(item => !item.isDone) ? toggleStatusAllTodos(true) : toggleStatusAllTodos(false);
   };
 
-  handleEditTodo = (todoId: string, value: string) => {
-    const todos = [...this.props.todos];
-    const index = todos.findIndex(item => item._id == todoId);
-    const editedTodo = todos[index];
+  const handleEditTodo = (todoId: string, value: string) => {
+    const newTodos = [...todos];
+    const index = newTodos.findIndex(item => item._id == todoId);
+    const editedTodo = newTodos[index];
     editedTodo.value = value;
-    this.updateTodo(editedTodo);
+    updateTodo(editedTodo);
   };
 
-  render() {
-    const filterMap: IFilterMap = {
-      all: item => item,
-      active: item => !item.isDone,
-      completed: item => item.isDone,
-    };
-    const filteredTodoList = this.props.todos.filter(filterMap[this.props.filter]);
-    return (
-      <div className="todolist">
-        <h1 className="todolist__title">todos</h1>
-        <Header
-          todos={this.props.todos}
-          onAddTodo={this.addTodo}
-          onCompleteAllTodos={this.handleCompleteAllTodos}
-        />
-        <div className="main">
-          {filteredTodoList.map((todo: ITodo) => (
-            <Todo
-              key={todo._id}
-              todo={todo}
-              onDeleteTodo={this.deleteTodo}
-              onCompletetodo={this.handleCompleteTodo}
-              onEditTodo={this.handleEditTodo}
-            />
-          ))}
-        </div>
-        <Footer
-          todos={this.props.todos}
-          activeFilter={this.props.filter}
-          onChangeFilter={this.props.changeFilter}
-          onClearCompletedTodo={this.clearCompletedTodo}
-        />
+  const filterMap: IFilterMap = {
+    all: item => item,
+    active: item => !item.isDone,
+    completed: item => item.isDone,
+  };
+  const filteredTodoList = todos.filter(filterMap[filter]);
+
+  return (
+    <div className="todolist">
+      <h1 className="todolist__title">todos</h1>
+      <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
+      <div className="main">
+        {filteredTodoList.map((todo: ITodo) => (
+          <Todo
+            key={todo._id}
+            todo={todo}
+            onDeleteTodo={deleteTodo}
+            onCompletetodo={handleCompleteTodo}
+            onEditTodo={handleEditTodo}
+          />
+        ))}
       </div>
-    );
-  }
-}
+      <Footer
+        todos={todos}
+        activeFilter={filter}
+        onChangeFilter={changeFilter}
+        onClearCompletedTodo={clearCompletedTodo}
+      />
+    </div>
+  );
+};
 
 const mapDispatchToProps = {
   setTodoAction,

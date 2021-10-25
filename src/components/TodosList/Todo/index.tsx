@@ -10,31 +10,26 @@ interface TodoProps {
   onEditTodo: (todoId: string, value: string) => void;
 }
 
-class Todo extends React.Component<TodoProps> {
-  handleCompleteTodo = () => {
-    this.props.onCompletetodo(this.props.todo);
+const Todo: React.FC<TodoProps> = ({ todo, onCompletetodo, onDeleteTodo, onEditTodo }) => {
+  const handleCompleteTodo = () => {
+    onCompletetodo(todo);
   };
-  handleDeleteTodo = () => {
-    this.props.onDeleteTodo(this.props.todo._id);
+  const handleDeleteTodo = () => {
+    onDeleteTodo(todo._id);
   };
-  render() {
-    return (
-      <div className="todo">
-        <input
-          className="todo__complete"
-          type="checkbox"
-          checked={this.props.todo.isDone}
-          onChange={this.handleCompleteTodo}
-        />
-        <TodoTitle
-          todo={this.props.todo}
-          onDeleteTodo={this.props.onDeleteTodo}
-          onEditTodo={this.props.onEditTodo}
-        />
-        <button className="todo__delete" onClick={this.handleDeleteTodo}></button>
-      </div>
-    );
-  }
-}
+
+  return (
+    <div className="todo">
+      <input
+        className="todo__complete"
+        type="checkbox"
+        checked={todo.isDone}
+        onChange={handleCompleteTodo}
+      />
+      <TodoTitle todo={todo} onDeleteTodo={onDeleteTodo} onEditTodo={onEditTodo} />
+      <button className="todo__delete" onClick={handleDeleteTodo}></button>
+    </div>
+  );
+};
 
 export default Todo;

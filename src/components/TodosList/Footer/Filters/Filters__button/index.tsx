@@ -7,21 +7,19 @@ interface FilterButtonProps {
   onChangeFilter: (filter: string) => void;
 }
 
-class FiltersButton extends React.Component<FilterButtonProps> {
-  handleChangeFilter = () => {
-    this.props.onChangeFilter(this.props.value);
+const FiltersButton: React.FC<FilterButtonProps> = ({ onChangeFilter, value, activeFilter }) => {
+  const handleChangeFilter = () => {
+    onChangeFilter(value);
   };
-  render() {
-    const filter = this.props.activeFilter;
-    return (
-      <span
-        onClick={this.handleChangeFilter}
-        className={filter == this.props.value ? 'filters__button active' : 'filters__button'}
-      >
-        {this.props.value}
-      </span>
-    );
-  }
-}
+  const filter = activeFilter;
+  return (
+    <span
+      onClick={handleChangeFilter}
+      className={filter == value ? 'filters__button active' : 'filters__button'}
+    >
+      {value}
+    </span>
+  );
+};
 
 export default FiltersButton;
