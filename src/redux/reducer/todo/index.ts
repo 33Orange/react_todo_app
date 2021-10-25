@@ -1,5 +1,5 @@
 import { ITodo } from '../../../types';
-import { ActionType, Action } from '../../actionCreators';
+import { ActionType, Action } from '../../../types';
 
 const initialState: Array<ITodo> = [];
 
