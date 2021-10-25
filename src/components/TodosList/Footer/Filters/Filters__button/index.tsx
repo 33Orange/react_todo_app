@@ -17,7 +17,7 @@ const FiltersButton: React.FC<FilterButtonProps> = ({ onChangeFilter, value, act
       onClick={handleChangeFilter}
       className={filter == value ? 'filters__button active' : 'filters__button'}
     >
-      {value}
+      {value[0].toUpperCase() + value.slice(1)}
     </span>
   );
 };

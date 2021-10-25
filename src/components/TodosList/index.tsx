@@ -23,12 +23,13 @@ import {
 import { ITodo, IFilterMap } from '../../types/todo';
 
 const TodosList = () => {
-  const { todos, filter } = useTypedSelector(state => state);
-  const dispatch = useDispatch();
-
+  //Fetch todos on load
   useEffect(() => {
     getTodos();
   }, []);
+
+  const { todos, filter } = useTypedSelector(state => state);
+  const dispatch = useDispatch();
 
   const getTodos = () => {
     fetch(url)
