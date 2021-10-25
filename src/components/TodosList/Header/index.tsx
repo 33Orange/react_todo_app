@@ -1,9 +1,9 @@
 import * as React from 'react';
 import './style.scss';
-import { ITodo } from '../../../types/index';
+import { ITodo } from '../../../types/todo';
 
 interface HeaderProps {
-  onAddTodo: (arg0: string) => void;
+  onAddTodo: (value: string) => void;
   onCompleteAllTodos: () => void;
   todos: Array<ITodo>;
 }
@@ -36,8 +36,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     }
   };
   render() {
-    const todos = [...this.props.todos];
-    const isAllDone = !todos.some(item => !item.isDone);
+    const isAllDone = [...this.props.todos].some(item => !item.isDone);
     return (
       <div className="header">
         <div className="header__input-container">

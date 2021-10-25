@@ -4,7 +4,7 @@ import Button from './Filters__button';
 
 interface FiltersProps {
   activeFilter: string;
-  onChangeFilter: (arg0: string) => void;
+  onChangeFilter: (filter: string) => void;
 }
 
 class Filters extends React.Component<FiltersProps> {

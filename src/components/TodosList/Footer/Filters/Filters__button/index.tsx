@@ -4,7 +4,7 @@ import './style.scss';
 interface FilterButtonProps {
   activeFilter: string;
   value: string;
-  onChangeFilter: (arg0: string) => void;
+  onChangeFilter: (filter: string) => void;
 }
 
 class FiltersButton extends React.Component<FilterButtonProps> {

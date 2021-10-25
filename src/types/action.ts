@@ -1,15 +1,4 @@
-export interface ITodo {
-  _id: string;
-  value: string;
-  isDone: boolean;
-}
-
-export interface ITodoListState {
-  todos: Array<ITodo>;
-  filter: string;
-}
-
-//Redux
+import { ITodo } from './todo';
 
 export enum ActionType {
   SET_TODOS = 'SET_TODOS',
@@ -19,34 +8,34 @@ export enum ActionType {
   CHANGE_FILTER = 'CHANGE_FILTER',
 }
 
-interface setTodoAction {
+interface SetTodoAction {
   type: ActionType.SET_TODOS;
   payload: Array<ITodo>;
 }
 
-interface addTodoAction {
+interface AddTodoAction {
   type: ActionType.ADD_TODO;
   payload: ITodo;
 }
 
-interface deleteTodoAction {
+interface DeleteTodoAction {
   type: ActionType.DELETE_TODO;
   payload: ITodo;
 }
 
-interface updateTodoAction {
+interface UpdateTodoAction {
   type: ActionType.UPDATE_TODO;
   payload: ITodo;
 }
 
-interface changeFilter {
+interface ChangeFilter {
   type: ActionType.CHANGE_FILTER;
   payload: string;
 }
 
 export type Action =
-  | setTodoAction
-  | addTodoAction
-  | deleteTodoAction
-  | updateTodoAction
-  | changeFilter;
+  | SetTodoAction
+  | AddTodoAction
+  | DeleteTodoAction
+  | UpdateTodoAction
+  | ChangeFilter;

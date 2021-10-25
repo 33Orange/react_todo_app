@@ -1,5 +1,5 @@
-import { ITodo } from '../../types';
-import { ActionType } from '../../types';
+import { ITodo } from '../../types/todo';
+import { ActionType } from '../../types/action';
 
 export const setTodoAction = (payload: Array<ITodo>) => ({ type: ActionType.SET_TODOS, payload });
 export const addTodoAction = (payload: ITodo) => ({ type: ActionType.ADD_TODO, payload });

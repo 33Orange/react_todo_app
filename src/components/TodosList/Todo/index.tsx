@@ -1,13 +1,13 @@
 import * as React from 'react';
 import TodoTitle from './TodoTitle';
 import './style.scss';
-import { ITodo } from '../../../types/index';
+import { ITodo } from '../../../types/todo';
 
 interface TodoProps {
   todo: ITodo;
-  onCompletetodo: (arg0: Object) => void;
-  onDeleteTodo: (arg0: string) => void;
-  onEditTodo: (arg0: string, arg1: string) => void;
+  onCompletetodo: (todo: ITodo) => void;
+  onDeleteTodo: (todoId: string) => void;
+  onEditTodo: (todoId: string, value: string) => void;
 }
 
 class Todo extends React.Component<TodoProps> {

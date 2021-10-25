@@ -1,4 +1,4 @@
-import { ActionType, Action } from '../../../types';
+import { ActionType, Action } from '../../../types/action';
 
 const initialState: string = 'All';
 
