@@ -7,10 +7,12 @@ import Header from './Header';
 import Todo from './Todo';
 //Footer / Status Bar
 import Footer from './Footer';
+//Utils
 import { createUrl } from '../../utils/createQueryString';
 import { url } from '../../consts/serverUrl';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 //Redux
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   setTodoAction,
   addTodoAction,
@@ -18,36 +20,21 @@ import {
   updateTodoAction,
   changeFilter,
 } from '../../redux/actionCreators';
-import { ITodo, ITodoListState, IFilterMap } from '../../types/todo';
+import { ITodo, IFilterMap } from '../../types/todo';
 
-interface ITodoListProps {
-  todos: Array<ITodo>;
-  filter: string;
-  setTodoAction: (todoList: Array<ITodo>) => void;
-  addTodoAction: (todo: ITodo) => void;
-  deleteTodoAction: (todo: ITodo) => void;
-  updateTodoAction: (todo: ITodo) => void;
-  changeFilter: (filter: string) => void;
-}
+const TodosList = () => {
+  const { todos, filter } = useTypedSelector(state => state);
+  const dispatch = useDispatch();
 
-const TodosList: React.FC<ITodoListProps> = ({
-  todos,
-  filter,
-  setTodoAction,
-  addTodoAction,
-  deleteTodoAction,
-  updateTodoAction,
-  changeFilter,
-}) => {
   useEffect(() => {
     getTodos();
-  });
+  }, []);
 
   const getTodos = () => {
     fetch(url)
       .then(response => response.json())
       .then(response => {
-        return setTodoAction(response);
+        return dispatch(setTodoAction(response));
       });
   };
 
@@ -68,7 +55,7 @@ const TodosList: React.FC<ITodoListProps> = ({
           }
         })
         .then(newTodo => {
-          addTodoAction(newTodo);
+          dispatch(addTodoAction(newTodo));
         })
         .catch(err => {
           console.log(err);
@@ -89,7 +76,7 @@ const TodosList: React.FC<ITodoListProps> = ({
         }
       })
       .then(deletedTodo => {
-        deleteTodoAction(deletedTodo);
+        dispatch(deleteTodoAction(deletedTodo));
       })
       .catch(err => {
         console.log(err);
@@ -112,7 +99,7 @@ const TodosList: React.FC<ITodoListProps> = ({
         }
       })
       .then(updatedTodo => {
-        updateTodoAction(updatedTodo);
+        dispatch(updateTodoAction(updatedTodo));
       })
       .catch(err => {
         console.log(err);
@@ -132,7 +119,7 @@ const TodosList: React.FC<ITodoListProps> = ({
         }
       })
       .then(newTodoList => {
-        setTodoAction(newTodoList);
+        dispatch(setTodoAction(newTodoList));
       })
       .catch(err => {
         console.log(err);
@@ -155,7 +142,7 @@ const TodosList: React.FC<ITodoListProps> = ({
         }
       })
       .then(updatedList => {
-        setTodoAction(updatedList);
+        dispatch(setTodoAction(updatedList));
       })
       .catch(err => {
         console.log(err);
@@ -180,7 +167,9 @@ const TodosList: React.FC<ITodoListProps> = ({
     editedTodo.value = value;
     updateTodo(editedTodo);
   };
-
+  const handlechangeFilter = (value: string) => {
+    dispatch(changeFilter(value));
+  };
   const filterMap: IFilterMap = {
     all: item => item,
     active: item => !item.isDone,
@@ -206,23 +195,11 @@ const TodosList: React.FC<ITodoListProps> = ({
       <Footer
         todos={todos}
         activeFilter={filter}
-        onChangeFilter={changeFilter}
+        onChangeFilter={handlechangeFilter}
         onClearCompletedTodo={clearCompletedTodo}
       />
     </div>
   );
 };
 
-const mapDispatchToProps = {
-  setTodoAction,
-  addTodoAction,
-  deleteTodoAction,
-  updateTodoAction,
-  changeFilter,
-};
-const mapStateToProps = (state: ITodoListState) => ({
-  todos: state.todos,
-  filter: state.filter,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodosList);
+export default TodosList;
