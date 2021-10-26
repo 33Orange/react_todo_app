@@ -12,15 +12,15 @@ import { filterMap } from '../../constans/todos';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 //Redux
 import { useDispatch } from 'react-redux';
+import { changeFilter } from '../../redux/actionCreators';
 import {
-  changeFilter,
   asyncSetTodoAction,
   asyncAddTodoAction,
   asyncDeleteTodoAction,
   asyncUpdateTodoAction,
-  asyncClearCompleted,
-  asyncToggleStatusAllTodos,
-} from '../../redux/actionCreators';
+  asyncClearCompletedAction,
+  asyncToggleStatusAllTodosAction,
+} from '../../redux/actionCreators/asyncActions';
 import { ITodo } from '../../types/todo';
 
 const TodosList = () => {
@@ -44,11 +44,11 @@ const TodosList = () => {
   };
 
   const clearCompletedTodo = () => {
-    dispatch(asyncClearCompleted());
+    dispatch(asyncClearCompletedAction());
   };
 
   const toggleStatusAllTodos = (status: boolean) => {
-    dispatch(asyncToggleStatusAllTodos(status));
+    dispatch(asyncToggleStatusAllTodosAction(status));
   };
 
   const handleCompleteTodo = (todo: ITodo) => {

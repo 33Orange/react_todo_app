@@ -1,4 +1,4 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, takeEvery, call } from 'redux-saga/effects';
 import { ActionType } from '../../types/action';
 import {
   setTodoAction,
@@ -9,29 +9,54 @@ import {
 import ApiService from '../../ApiService';
 
 function* setTodoWorker() {
-  const todos = yield ApiService.getTodos().then(response => response.json());
-  yield put(setTodoAction(todos));
+  try {
+    const todos = yield call(ApiService.getTodos);
+    yield put(setTodoAction(todos));
+  } catch (e) {
+    console.log(e);
+  }
 }
 function* addTodoWorker({ payload }) {
-  const newTodo = yield ApiService.addTodo(payload).then(response => response.json());
-  yield put(addTodoAction(newTodo));
+  try {
+    const newTodo = yield call(ApiService.addTodo, payload);
+    yield put(addTodoAction(newTodo));
+  } catch (e) {
+    console.log(e);
+  }
 }
 function* deleteTodoWorker({ payload }) {
-  const deletedTodo = yield ApiService.deleteTodo(payload).then(response => response.json());
-  yield put(deleteTodoAction(deletedTodo));
+  try {
+    const deletedTodo = yield call(ApiService.deleteTodo, payload);
+    yield put(deleteTodoAction(deletedTodo));
+  } catch (e) {
+    console.log(e);
+  }
 }
 function* updateTodoWorker({ payload }) {
-  const updatedTodo = yield ApiService.updateTodo(payload).then(response => response.json());
-  yield put(updateTodoAction(updatedTodo));
+  try {
+    const updatedTodo = yield call(ApiService.updateTodo, payload);
+    yield put(updateTodoAction(updatedTodo));
+  } catch (e) {
+    console.log(e);
+  }
 }
 function* clearCompletedWorker() {
-  const newTodos = yield ApiService.clearCompletedTodo().then(response => response.json());
-  yield put(setTodoAction(newTodos));
+  try {
+    const newTodos = yield call(ApiService.clearCompletedTodo);
+    yield put(setTodoAction(newTodos));
+  } catch (e) {
+    console.log(e);
+  }
 }
 function* toggleStatusAllTodosWorker({ payload }) {
-  const newTodos = yield ApiService.toggleStatusAllTodos(payload).then(response => response.json());
-  yield put(setTodoAction(newTodos));
+  try {
+    const newTodos = yield call(ApiService.toggleStatusAllTodos, payload);
+    yield put(setTodoAction(newTodos));
+  } catch (e) {
+    console.log(e);
+  }
 }
+
 export function* todoWatcher() {
   yield takeEvery(ActionType.ASYNC_SET_TODOS, setTodoWorker);
   yield takeEvery(ActionType.ASYNC_ADD_TODO, addTodoWorker);

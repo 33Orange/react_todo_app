@@ -14,34 +14,34 @@ export enum ActionType {
   CHANGE_FILTER = 'CHANGE_FILTER',
 }
 
-export interface SetTodoAction {
+export interface ISetTodoAction {
   type: ActionType.SET_TODOS;
   payload: Array<ITodo>;
 }
 
-export interface AddTodoAction {
+export interface IAddTodoAction {
   type: ActionType.ADD_TODO;
   payload: ITodo;
 }
 
-export interface DeleteTodoAction {
+export interface IDeleteTodoAction {
   type: ActionType.DELETE_TODO;
   payload: ITodo;
 }
 
-export interface UpdateTodoAction {
+export interface IUpdateTodoAction {
   type: ActionType.UPDATE_TODO;
   payload: ITodo;
 }
 
-export interface ChangeFilter {
+export interface IChangeFilter {
   type: ActionType.CHANGE_FILTER;
   payload: string;
 }
 
 export type Action =
-  | SetTodoAction
-  | AddTodoAction
-  | DeleteTodoAction
-  | UpdateTodoAction
-  | ChangeFilter;
+  | ISetTodoAction
+  | IAddTodoAction
+  | IDeleteTodoAction
+  | IUpdateTodoAction
+  | IChangeFilter;
