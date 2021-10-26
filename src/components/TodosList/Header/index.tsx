@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({ onAddTodo, todos, onCompleteAllTodos })
       handleAddTodo();
     }
   };
-  const isAllDone = [...todos].some(item => !item.isDone);
+  const isAllDone = todos.some(item => !item.isDone);
 
   return (
     <div className="header">

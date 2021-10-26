@@ -9,22 +9,15 @@ interface TodoTitleProps {
   todo: ITodo;
 }
 
-interface TodoTitleState {
-  value: string;
-  isEdit: boolean;
-}
-
 const TodoTitle: React.FC<TodoTitleProps> = ({ todo, onEditTodo, onDeleteTodo }) => {
-  const [todoValue, setTodoValue] = useState('');
+  const [todoValue, setTodoValue] = useState(`${todo.value}`);
   const [isEdit, setIsEdit] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoValue(e.target.value);
   };
 
-  const openEditor = (e: React.MouseEvent<HTMLElement>) => {
-    const newValue = e.target as HTMLElement;
-    setTodoValue(newValue.textContent);
+  const openEditor = () => {
     setIsEdit(true);
   };
 
@@ -35,7 +28,6 @@ const TodoTitle: React.FC<TodoTitleProps> = ({ todo, onEditTodo, onDeleteTodo })
     const todoId = todo._id;
     const value = todoValue;
     todoValue.length > 0 ? onEditTodo(todoId, value) : onDeleteTodo(todoId);
-    setTodoValue('');
     setIsEdit(false);
   };
 

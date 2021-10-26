@@ -11,11 +11,10 @@ const FiltersButton: React.FC<FilterButtonProps> = ({ onChangeFilter, value, act
   const handleChangeFilter = () => {
     onChangeFilter(value);
   };
-  const filter = activeFilter;
   return (
     <span
       onClick={handleChangeFilter}
-      className={filter == value ? 'filters__button active' : 'filters__button'}
+      className={activeFilter == value ? 'filters__button active' : 'filters__button'}
     >
       {value[0].toUpperCase() + value.slice(1)}
     </span>
