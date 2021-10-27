@@ -21,7 +21,6 @@ import {
   toggleStatusTodosRequest,
   updateTodoRequest,
 } from '../../redux/actionCreators';
-import {} from '../../redux/actionCreators';
 import { ITodo } from '../../types/todo';
 
 const TodosList = () => {

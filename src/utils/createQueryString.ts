@@ -1,4 +1,4 @@
-export const createUrl = (url, params) => {
+export const createUrl = (url: string, params?: any): string => {
   let str = '?';
   if (params) {
     for (let key in params) {

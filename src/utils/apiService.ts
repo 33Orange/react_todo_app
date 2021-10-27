@@ -1,25 +1,5 @@
-import { baseUrl } from '../constans/serverUrl';
-import { createUrl } from '../utils/createQueryString';
 import { ITodo } from '../types/todo';
-
-interface ICallApiOptions {
-  method: string;
-  body?: any;
-}
-
-const callApi = async (endpoint: string, options: ICallApiOptions = { method: 'get' }) => {
-  const valueToSend = JSON.stringify(options.body);
-  const response = await fetch(createUrl(`${baseUrl}${endpoint}`), {
-    method: options.method,
-    headers: { 'Content-Type': 'application/json' },
-    body: valueToSend,
-  });
-  if (response.ok) {
-    return new Promise(res => res(response.json()));
-  } else {
-    throw new Error(response.statusText);
-  }
-};
+import { callApi } from './callApi';
 
 class ApiService {
   getTodos() {
