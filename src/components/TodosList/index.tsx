@@ -12,43 +12,44 @@ import { filterMap } from '../../constans/todos';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 //Redux
 import { useDispatch } from 'react-redux';
-import { changeFilter } from '../../redux/actionCreators';
 import {
-  asyncSetTodoAction,
-  asyncAddTodoAction,
-  asyncDeleteTodoAction,
-  asyncUpdateTodoAction,
-  asyncClearCompletedAction,
-  asyncToggleStatusAllTodosAction,
-} from '../../redux/actionCreators/asyncActions';
+  addTodoRequest,
+  changeFilter,
+  clearCompletedRequest,
+  deleteTodoRequest,
+  setTodosRequest,
+  toggleStatusTodosRequest,
+  updateTodoRequest,
+} from '../../redux/actionCreators';
+import {} from '../../redux/actionCreators';
 import { ITodo } from '../../types/todo';
 
 const TodosList = () => {
   useEffect(() => {
-    dispatch(asyncSetTodoAction());
+    dispatch(setTodosRequest());
   }, []);
 
   const { todos, filter } = useTypedSelector(state => state);
   const dispatch = useDispatch();
 
   const addTodo = (value: string) => {
-    dispatch(asyncAddTodoAction(value));
+    dispatch(addTodoRequest(value));
   };
 
   const deleteTodo = (todoId: string) => {
-    dispatch(asyncDeleteTodoAction(todoId));
+    dispatch(deleteTodoRequest(todoId));
   };
 
   const updateTodo = (todo: ITodo) => {
-    dispatch(asyncUpdateTodoAction(todo));
+    dispatch(updateTodoRequest(todo));
   };
 
   const clearCompletedTodo = () => {
-    dispatch(asyncClearCompletedAction());
+    dispatch(clearCompletedRequest());
   };
 
   const toggleStatusAllTodos = (status: boolean) => {
-    dispatch(asyncToggleStatusAllTodosAction(status));
+    dispatch(toggleStatusTodosRequest(status));
   };
 
   const handleCompleteTodo = (todo: ITodo) => {

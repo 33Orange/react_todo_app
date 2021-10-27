@@ -1,37 +1,103 @@
 import { ITodo } from './todo';
 
 export enum ActionType {
-  SET_TODOS = 'SET_TODOS',
-  ASYNC_SET_TODOS = 'ASYNC_SET_TODOS',
-  ADD_TODO = 'ADD_TODO',
-  ASYNC_ADD_TODO = 'ASYNC_ADD_TODO',
-  DELETE_TODO = 'DELETE_TODO',
-  ASYNC_DELETE_TODO = 'ASYNC_DELETE_TODO',
-  UPDATE_TODO = 'UPDATE_TODO',
-  ASYNC_UPDATE_TODO = 'ASYNC_UPDATE_TODO',
-  ASYNC_CLEAR_COMPLETED = 'ASYNC_CLEAR_COMPLETED',
-  ASYNC_TOGGLE_STATUS = 'ASYNC_TOGGLE_STATUS',
+  SET_TODOS_REQUEST = 'SET_TODOS_REQUEST',
+  SET_TODOS_SUCCESS = 'SET_TODOS_SUCCESS',
+  SET_TODOS_FAILED = 'SET_TODOS_FAILED',
+
+  ADD_TODO_REQUEST = 'ADD_TODO_REQUEST',
+  ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS',
+  ADD_TODO_FAILED = 'ADD_TODO_FAILED',
+
+  DELETE_TODO_REQUEST = 'DELETE_TODO_REQUEST',
+  DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS',
+  DELETE_TODO_FAILED = 'DELETE_TODO_FAILED',
+
+  UPDATE_TODO_REQUEST = 'UPDATE_TODO_REQUEST',
+  UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS',
+  UPDATE_TODO_FAILED = 'UPDATE_TODO_FAILED',
+
+  CLEAR_COMPLETED_TODO_REQUEST = 'CLEAR_TODO_REQUEST',
+  CLEAR_COMPLETED_TODO_SUCCESS = 'CLEAR_TODO_SUCCESS',
+  CLEAR_COMPLETED_TODO_FAILED = 'CLEAR_TODO_FAILED',
+
+  TOGGLE_STATUS_TODOS_REQUEST = 'TOGGLE_STATUS_TODOS_REQUEST',
+  TOGGLE_STATUS_TODOS_SUCCESS = 'TOGGLE_STATUS_TODOS_SUCCESS',
+  TOGGLE_STATUS_TODOS_FAILED = 'TOGGLE_STATUS_TODOS_FAILED',
+
   CHANGE_FILTER = 'CHANGE_FILTER',
 }
+export interface ISetTodosRequest {
+  type: ActionType.SET_TODOS_REQUEST;
+}
+export interface IAddTodoRequest {
+  type: ActionType.ADD_TODO_REQUEST;
+  payload: string;
+}
+export interface IDeleteTodoRequest {
+  type: ActionType.DELETE_TODO_REQUEST;
+  payload: string;
+}
+export interface IUpdateTodoRequest {
+  type: ActionType.UPDATE_TODO_REQUEST;
+  payload: ITodo;
+}
+export interface IClearCompletedTodoRequest {
+  type: ActionType.CLEAR_COMPLETED_TODO_REQUEST;
+}
+export interface IToggleStatusTodosRequest {
+  type: ActionType.TOGGLE_STATUS_TODOS_REQUEST;
+  payload: boolean;
+}
 
-export interface ISetTodoAction {
-  type: ActionType.SET_TODOS;
+export interface ISetTodosSuccess {
+  type: ActionType.SET_TODOS_SUCCESS;
+  payload: Array<ITodo>;
+}
+export interface IAddTodoSuccess {
+  type: ActionType.ADD_TODO_SUCCESS;
+  payload: ITodo;
+}
+export interface IDeleteTodoSuccess {
+  type: ActionType.DELETE_TODO_SUCCESS;
+  payload: ITodo;
+}
+export interface IUpdateTodoSuccess {
+  type: ActionType.UPDATE_TODO_SUCCESS;
+  payload: ITodo;
+}
+export interface IClearCompletedTodoSuccess {
+  type: ActionType.CLEAR_COMPLETED_TODO_SUCCESS;
+  payload: Array<ITodo>;
+}
+export interface IToggleStatusTodosSuccess {
+  type: ActionType.TOGGLE_STATUS_TODOS_SUCCESS;
   payload: Array<ITodo>;
 }
 
-export interface IAddTodoAction {
-  type: ActionType.ADD_TODO;
-  payload: ITodo;
+export interface ISetTodosFailed {
+  type: ActionType.SET_TODOS_FAILED;
+  payload: string;
 }
-
-export interface IDeleteTodoAction {
-  type: ActionType.DELETE_TODO;
-  payload: ITodo;
+export interface IAddTodoFailed {
+  type: ActionType.ADD_TODO_FAILED;
+  payload: string;
 }
-
-export interface IUpdateTodoAction {
-  type: ActionType.UPDATE_TODO;
-  payload: ITodo;
+export interface IDeleteTodoFailed {
+  type: ActionType.DELETE_TODO_FAILED;
+  payload: string;
+}
+export interface IUpdateTodoFailed {
+  type: ActionType.UPDATE_TODO_FAILED;
+  payload: string;
+}
+export interface IClearCompletedTodoFailed {
+  type: ActionType.CLEAR_COMPLETED_TODO_FAILED;
+  payload: string;
+}
+export interface IToggleStatusTodosFailed {
+  type: ActionType.TOGGLE_STATUS_TODOS_FAILED;
+  payload: string;
 }
 
 export interface IChangeFilter {
@@ -40,8 +106,10 @@ export interface IChangeFilter {
 }
 
 export type Action =
-  | ISetTodoAction
-  | IAddTodoAction
-  | IDeleteTodoAction
-  | IUpdateTodoAction
+  | ISetTodosSuccess
+  | IAddTodoSuccess
+  | IDeleteTodoSuccess
+  | IUpdateTodoSuccess
+  | IClearCompletedTodoSuccess
+  | IToggleStatusTodosSuccess
   | IChangeFilter;

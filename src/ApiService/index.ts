@@ -7,19 +7,18 @@ interface ICallApiOptions {
   body?: any;
 }
 
-const callApi = (endpoint: string, options: ICallApiOptions = { method: 'get' }) => {
+const callApi = async (endpoint: string, options: ICallApiOptions = { method: 'get' }) => {
   const valueToSend = JSON.stringify(options.body);
-  return fetch(createUrl(`${baseUrl}${endpoint}`), {
+  const response = await fetch(createUrl(`${baseUrl}${endpoint}`), {
     method: options.method,
     headers: { 'Content-Type': 'application/json' },
     body: valueToSend,
-  }).then(response => {
-    if (response.ok) {
-      return new Promise(res => res(response.json()));
-    } else {
-      throw new Error(response.statusText);
-    }
   });
+  if (response.ok) {
+    return new Promise(res => res(response.json()));
+  } else {
+    throw new Error(response.statusText);
+  }
 };
 
 class ApiService {
