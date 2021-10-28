@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import './style.scss';
+import { makeStyles } from '@mui/styles';
 //Header / Main Input and Complete all button
 import Header from './Header';
 //Todo UL
@@ -22,6 +23,28 @@ import {
   updateTodoRequest,
 } from '../../redux/actionCreators';
 import { ITodo } from '../../types/todo';
+
+const useStyles = makeStyles({
+  todolist: {
+    width: 450,
+    display: `flex`,
+    flexDirection: `column`,
+    justifyContent: `center`,
+  },
+  todolist__title: {
+    textAlign: `center`,
+    fontSize: 80,
+    fontWeight: 300,
+    color: `rgba(255, 0, 0, 0.2)`,
+    width: `100%`,
+    margin: `50px 0`,
+  },
+  main: {
+    width: `100%`,
+    background: `#fff`,
+    boxShadow: `1px 3px 5px rgba(0, 0, 0, 0.4)`,
+  },
+});
 
 const TodosList = () => {
   useEffect(() => {
@@ -74,12 +97,12 @@ const TodosList = () => {
   };
 
   const filteredTodoList = todos.filter(filterMap[filter]);
-
+  const classes = useStyles();
   return (
-    <div className="todolist">
-      <h1 className="todolist__title">todos</h1>
+    <div className={classes.todolist}>
+      <h1 className={classes.todolist__title}>todos</h1>
       <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
-      <div className="main">
+      <div className={classes.main}>
         {filteredTodoList.map((todo: ITodo) => (
           <Todo
             key={todo._id}

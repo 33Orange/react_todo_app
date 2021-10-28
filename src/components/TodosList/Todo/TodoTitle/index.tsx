@@ -1,8 +1,43 @@
 import * as React from 'react';
 import { useState } from 'react';
-import './style.scss';
+import { makeStyles } from '@mui/styles';
 import { ITodo } from '../../../../types/todo';
 
+const useStyles = makeStyles({
+  todoTitle: {
+    width: `87%`,
+    height: `100%`,
+    position: `relative`,
+  },
+  todoTitle__text: {
+    position: `absolute`,
+    left: 0,
+    top: 10,
+    fontSize: 25,
+    width: `100%`,
+    opacity: 0.8,
+    '&.active': {
+      opacity: 0.5,
+      textDecoration: `line-through`,
+    },
+  },
+  todoTitle__editInput: {
+    fontSize: 25,
+    fontWeight: 400,
+    position: `absolute`,
+    left: 0,
+    top: 0,
+    width: `100%`,
+    height: `100%`,
+    border: `none`,
+    background: `#fff`,
+    zIndex: 100,
+    '&:focus': {
+      outline: `1px solid rgba(0, 0, 0, 0.4);
+      box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.2)`,
+    },
+  },
+});
 interface TodoTitleProps {
   onEditTodo: (todoId: string, value: string) => void;
   onDeleteTodo: (todoId: string) => void;
@@ -36,12 +71,12 @@ const TodoTitle: React.FC<TodoTitleProps> = ({ todo, onEditTodo, onDeleteTodo })
       editTodo();
     }
   };
-
+  const classes = useStyles();
   return (
-    <div className="todo-title">
+    <div className={classes.todoTitle}>
       {isEdit ? (
         <input
-          className="todo-title__editInput"
+          className={classes.todoTitle__editInput}
           type="text"
           value={todoValue}
           onChange={handleChange}
@@ -51,7 +86,7 @@ const TodoTitle: React.FC<TodoTitleProps> = ({ todo, onEditTodo, onDeleteTodo })
         />
       ) : (
         <p
-          className={todo.isDone ? 'todo-title__text active' : 'todo-title__text'}
+          className={todo.isDone ? classes.todoTitle__text + ' active' : classes.todoTitle__text}
           onDoubleClick={openEditor}
         >
           {todo.value}

@@ -16,6 +16,7 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@mui/material": "^5.0.6",
+    "@mui/styles": "^5.0.2",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.3",
     "@types/react": "^17.0.31",

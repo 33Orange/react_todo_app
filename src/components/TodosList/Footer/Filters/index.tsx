@@ -1,6 +1,16 @@
 import * as React from 'react';
-import './style.scss';
 import Button from './Filters__button';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+  filters: {
+    width: '45%',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+});
 
 interface FiltersProps {
   activeFilter: string;
@@ -8,8 +18,9 @@ interface FiltersProps {
 }
 
 const Filters: React.FC<FiltersProps> = ({ activeFilter, onChangeFilter }) => {
+  const classes = useStyles();
   return (
-    <div className="filters">
+    <div className={classes.filters}>
       {['all', 'active', 'completed'].map((button: string, index: number) => (
         <Button
           key={button[index]}

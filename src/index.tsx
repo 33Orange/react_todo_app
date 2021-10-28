@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import './style.scss';
 
 import NavigationBar from './components/NavigationBar';
-import LoginPage from './components/LoginPage';
+import LoginPage from './components/Login';
 import TodosList from './components/TodosList';
 import { store } from './redux/store';
 

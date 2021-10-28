@@ -1,5 +1,19 @@
 import * as React from 'react';
-import './style.scss';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+  filters__button: {
+    cursor: 'pointer',
+    padding: '3px 5px',
+    borderRadius: '5px',
+    '&:hover': {
+      outline: '1px solid rgba(255, 0, 0, 0.2)',
+    },
+    '&.active': {
+      outline: '1px solid rgba(255, 0, 0, 0.4)',
+    },
+  },
+});
 
 interface FilterButtonProps {
   activeFilter: string;
@@ -11,10 +25,13 @@ const FiltersButton: React.FC<FilterButtonProps> = ({ onChangeFilter, value, act
   const handleChangeFilter = () => {
     onChangeFilter(value);
   };
+  const classes = useStyles();
   return (
     <span
       onClick={handleChangeFilter}
-      className={activeFilter == value ? 'filters__button active' : 'filters__button'}
+      className={
+        activeFilter == value ? classes.filters__button + ' active' : classes.filters__button
+      }
     >
       {value[0].toUpperCase() + value.slice(1)}
     </span>
