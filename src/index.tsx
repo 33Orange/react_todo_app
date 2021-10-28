@@ -1,17 +1,32 @@
 import * as React from 'react';
-import { render } from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import './style.scss';
 
+import NavigationBar from './components/NavigationBar';
+import LoginPage from './components/LoginPage';
 import TodosList from './components/TodosList';
 import { store } from './redux/store';
 
 class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <TodosList />
-      </Provider>
+      <Router>
+        <NavigationBar />
+        <Provider store={store}>
+          <Switch>
+            <Route exact path="/">
+              <LoginPage />
+            </Route>
+            <Route path="/todos">
+              <TodosList />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        </Provider>
+      </Router>
     );
   }
 }
-render(<App />, document.querySelector('#root'));
+ReactDOM.render(<App />, document.querySelector('#root'));
