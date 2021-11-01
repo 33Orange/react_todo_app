@@ -9,9 +9,9 @@ interface Props {
 const Page = ({ children, title }: Props) => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div>
       <h1 className={classes.title}>{title}</h1>
-      {children}
+      <div className={classes.root}>{children}</div>
     </div>
   );
 };

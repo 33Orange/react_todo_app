@@ -3,10 +3,14 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import TodosPage from './TodosPage';
 import LoginPage from './LoginPage';
 import NavigationBar from '../components/NavigationBar';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './style';
 
 const Pages = () => {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <NavigationBar />
       <Switch>
         <Route exact path="/">
@@ -19,7 +23,7 @@ const Pages = () => {
 
         <Redirect to="/" />
       </Switch>
-    </div>
+    </ThemeProvider>
   );
 };
 

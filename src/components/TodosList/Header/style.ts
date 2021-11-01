@@ -5,8 +5,6 @@ const useStyles = makeStyles({
     width: `100%`,
     borderBottom: `1px solid rgba(0, 0, 0, 0.4)`,
     height: 50,
-    background: `#fff`,
-    boxShadow: `1px 3px 5px rgba(0, 0, 0, 0.4)`,
   },
   inputContainer: {
     width: `100%`,
