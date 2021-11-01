@@ -1,31 +1,15 @@
 import * as React from 'react';
-import { makeStyles } from '@mui/styles';
+import useStyles from './style';
 
-const useStyles = makeStyles({
-  clearCompleted: {
-    width: '25%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginLeft: '3%',
-  },
-  clearCompleted__button: {
-    cursor: 'pointer',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-});
-
-interface ClearCompletedProps {
+interface Props {
   onClearCompletedTodo: (e: React.MouseEvent) => void;
 }
 
-const ClearCompleted: React.FC<ClearCompletedProps> = ({ onClearCompletedTodo }) => {
+const ClearCompleted = ({ onClearCompletedTodo }: Props) => {
   const classes = useStyles();
   return (
-    <div className={classes.clearCompleted}>
-      <span className={classes.clearCompleted__button} onClick={onClearCompletedTodo}>
+    <div className={classes.root}>
+      <span className={classes.button} onClick={onClearCompletedTodo}>
         Clear completed
       </span>
     </div>

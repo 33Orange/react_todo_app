@@ -2,16 +2,18 @@ import * as React from 'react';
 import useStyles from './style';
 
 interface Props {
-  count: number;
+  title: string;
+  children: React.ReactNode;
 }
 
-const Counter = ({ count }: Props) => {
+const Page = ({ children, title }: Props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <span>{count} items left</span>
+      <h1 className={classes.title}>{title}</h1>
+      {children}
     </div>
   );
 };
 
-export default Counter;
+export default Page;

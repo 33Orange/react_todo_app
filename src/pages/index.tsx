@@ -1,25 +1,20 @@
 import * as React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Page from './page';
-import TodoList from '../components/TodosList';
-import Login from '../components/Login';
+import TodosPage from './TodosPage';
+import LoginPage from './LoginPage';
+import NavigationBar from '../components/NavigationBar';
 
-interface PagesProps {}
-
-const Pages: React.FC<PagesProps> = () => {
+const Pages = () => {
   return (
     <div>
+      <NavigationBar />
       <Switch>
         <Route exact path="/">
-          <Page title="welcome">
-            <Login />
-          </Page>
+          <LoginPage />
         </Route>
 
         <Route path="/todos">
-          <Page title="todos">
-            <TodoList />
-          </Page>
+          <TodosPage />
         </Route>
 
         <Redirect to="/" />

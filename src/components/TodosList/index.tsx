@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import './style.scss';
-import { makeStyles } from '@mui/styles';
-//Header / Main Input and Complete all button
+import useStyles from './style';
+
 import Header from './Header';
-//Todo UL
 import Todo from './Todo';
-//Footer / Status Bar
 import Footer from './Footer';
-//Utils
+
 import { filterMap } from '../../constans/todos';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-//Redux
+
 import { useDispatch } from 'react-redux';
 import {
   addTodoRequest,
@@ -23,14 +20,6 @@ import {
   updateTodoRequest,
 } from '../../redux/actionCreators';
 import { ITodo } from '../../types/todo';
-
-const useStyles = makeStyles({
-  main: {
-    width: `100%`,
-    background: `#fff`,
-    boxShadow: `1px 3px 5px rgba(0, 0, 0, 0.4)`,
-  },
-});
 
 const TodosList = () => {
   useEffect(() => {
