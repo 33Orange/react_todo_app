@@ -17,11 +17,19 @@ const useStyles = makeStyles({
     margin: `50px 0`,
   },
 });
-interface PageProps {}
 
-const Page: React.FC<PageProps> = ({ children }) => {
+interface PageProps {
+  title: string;
+}
+
+const Page: React.FC<PageProps> = ({ children, title }) => {
   const classes = useStyles();
-  return <div className={classes.page}>{children}</div>;
+  return (
+    <div className={classes.page}>
+      <h1 className={classes.page__title}>{title}</h1>
+      {children}
+    </div>
+  );
 };
 
 export default Page;

@@ -25,20 +25,6 @@ import {
 import { ITodo } from '../../types/todo';
 
 const useStyles = makeStyles({
-  todolist: {
-    width: 450,
-    display: `flex`,
-    flexDirection: `column`,
-    justifyContent: `center`,
-  },
-  todolist__title: {
-    textAlign: `center`,
-    fontSize: 80,
-    fontWeight: 300,
-    color: `rgba(255, 0, 0, 0.2)`,
-    width: `100%`,
-    margin: `50px 0`,
-  },
   main: {
     width: `100%`,
     background: `#fff`,
@@ -99,8 +85,7 @@ const TodosList = () => {
   const filteredTodoList = todos.filter(filterMap[filter]);
   const classes = useStyles();
   return (
-    <div className={classes.todolist}>
-      <h1 className={classes.todolist__title}>todos</h1>
+    <div>
       <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
       <div className={classes.main}>
         {filteredTodoList.map((todo: ITodo) => (
