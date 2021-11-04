@@ -23,10 +23,12 @@ import { ITodo } from '../../types/todo';
 
 const TodosList = () => {
   useEffect(() => {
-    dispatch(setTodosRequest());
+    if (localStorage.getItem('token')) {
+      dispatch(setTodosRequest());
+    }
   }, []);
-
   const { todos, filter } = useTypedSelector(state => state);
+
   const dispatch = useDispatch();
 
   const addTodo = (value: string) => {
@@ -73,26 +75,29 @@ const TodosList = () => {
 
   const filteredTodoList = todos.filter(filterMap[filter]);
   const classes = useStyles();
+
   return (
     <div>
-      <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
-      <div className={classes.main}>
-        {filteredTodoList.map((todo: ITodo) => (
-          <Todo
-            key={todo._id}
-            todo={todo}
-            onDeleteTodo={deleteTodo}
-            onCompletetodo={handleCompleteTodo}
-            onEditTodo={handleEditTodo}
-          />
-        ))}
-      </div>
-      <Footer
-        todos={todos}
-        activeFilter={filter}
-        onChangeFilter={handlechangeFilter}
-        onClearCompletedTodo={clearCompletedTodo}
-      />
+      <React.Fragment>
+        <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
+        <div className={classes.main}>
+          {filteredTodoList.map((todo: ITodo) => (
+            <Todo
+              key={todo._id}
+              todo={todo}
+              onDeleteTodo={deleteTodo}
+              onCompletetodo={handleCompleteTodo}
+              onEditTodo={handleEditTodo}
+            />
+          ))}
+        </div>
+        <Footer
+          todos={todos}
+          activeFilter={filter}
+          onChangeFilter={handlechangeFilter}
+          onClearCompletedTodo={clearCompletedTodo}
+        />
+      </React.Fragment>
     </div>
   );
 };

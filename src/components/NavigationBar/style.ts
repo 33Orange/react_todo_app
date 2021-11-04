@@ -35,6 +35,15 @@ const useStyles = makeStyles({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
+  linkProfile: {
+    textDecoration: 'none',
+    color: '#a7a3a3',
+    opacity: '0.6',
+    transition: '0.3s',
+    '&:hover': {
+      opacity: '1',
+    },
+  },
 });
 
 export default useStyles;
