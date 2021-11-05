@@ -32,13 +32,7 @@ const NavigationBar = () => {
               </Link>
             </li>
           </React.Fragment>
-        ) : (
-          <li className={classes.button}>
-            <Link to="/" className={classes.link}>
-              Login
-            </Link>
-          </li>
-        )}
+        ) : null}
       </ul>
     </nav>
   );

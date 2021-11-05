@@ -14,9 +14,8 @@ function* register(action: { payload: { email: string; password: string } }) {
     );
     localStorage.setItem('token', response.accessToken);
     yield put(UserActionCreators.registerUserSuccess(response.user));
-    yield put(UserActionCreators.redirect(true));
   } catch (e) {
-    yield put(UserActionCreators.registerUserFailed(e));
+    yield put(UserActionCreators.authorizationError(e.message));
   }
 }
 
@@ -29,9 +28,9 @@ function* login(action: { payload: { email: string; password: string } }) {
     );
     localStorage.setItem('token', response.accessToken);
     yield put(UserActionCreators.loginUserSuccess(response.user));
-    yield put(UserActionCreators.redirect(true));
   } catch (e) {
-    yield put(UserActionCreators.loginUserFailed(e));
+    console.log(e);
+    yield put(UserActionCreators.authorizationError(e.message));
   }
 }
 function* logout() {

@@ -12,7 +12,7 @@ import {
   UserActionType,
   ICheckUserSuccess,
   ICheckUserFailed,
-  IRedirect,
+  IAuthorizationError,
 } from '../../types/userAction';
 import { IUser } from '../../types/user';
 
@@ -70,7 +70,7 @@ export const checkUserFailed = (payload: string): ICheckUserFailed => ({
   payload,
 });
 
-export const redirect = (payload: boolean): IRedirect => ({
-  type: UserActionType.REDIRECT,
+export const authorizationError = (payload: string): IAuthorizationError => ({
+  type: UserActionType.AUTHORIZATION_ERROR,
   payload,
 });

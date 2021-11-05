@@ -77,28 +77,26 @@ const TodosList = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <React.Fragment>
-        <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
-        <div className={classes.main}>
-          {filteredTodoList.map((todo: ITodo) => (
-            <Todo
-              key={todo._id}
-              todo={todo}
-              onDeleteTodo={deleteTodo}
-              onCompletetodo={handleCompleteTodo}
-              onEditTodo={handleEditTodo}
-            />
-          ))}
-        </div>
-        <Footer
-          todos={todos}
-          activeFilter={filter}
-          onChangeFilter={handlechangeFilter}
-          onClearCompletedTodo={clearCompletedTodo}
-        />
-      </React.Fragment>
-    </div>
+    <React.Fragment>
+      <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
+      <div className={classes.main}>
+        {filteredTodoList.map((todo: ITodo) => (
+          <Todo
+            key={todo._id}
+            todo={todo}
+            onDeleteTodo={deleteTodo}
+            onCompletetodo={handleCompleteTodo}
+            onEditTodo={handleEditTodo}
+          />
+        ))}
+      </div>
+      <Footer
+        todos={todos}
+        activeFilter={filter}
+        onChangeFilter={handlechangeFilter}
+        onClearCompletedTodo={clearCompletedTodo}
+      />
+    </React.Fragment>
   );
 };
 

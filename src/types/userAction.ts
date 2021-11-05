@@ -17,7 +17,7 @@ export enum UserActionType {
   CHECK_USER_SUCCESS = 'CHECK_USER_SUCCESS',
   CHECK_USER_FAILED = 'CHECK_USER_FAILED',
 
-  REDIRECT = 'REDIRECT',
+  AUTHORIZATION_ERROR = 'AUTHORIZATION_ERROR',
 }
 
 export interface IRegisterUserRequest {
@@ -74,9 +74,9 @@ export interface ICheckUserFailed {
   payload: string;
 }
 
-export interface IRedirect {
-  type: UserActionType.REDIRECT;
-  payload: boolean;
+export interface IAuthorizationError {
+  type: UserActionType.AUTHORIZATION_ERROR;
+  payload: string;
 }
 
 export type UserAction =
@@ -84,4 +84,4 @@ export type UserAction =
   | ILoginUserSuccess
   | ILogoutUserSuccess
   | ICheckUserSuccess
-  | IRedirect;
+  | IAuthorizationError;

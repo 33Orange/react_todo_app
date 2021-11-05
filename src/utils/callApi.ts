@@ -23,7 +23,10 @@ export const callApi = async (
   if (response.ok) {
     return response.json();
   }
-
+  if (response.status == 400) {
+    const error = await response.json();
+    throw Error(error.message);
+  }
   if (response.status == 401) {
     const newResponse = await fetch(createUrl(`${baseUrl}/refresh`), {
       method: 'get',
@@ -36,9 +39,7 @@ export const callApi = async (
     if (newResponse.ok) {
       const json = await newResponse.json();
       localStorage.setItem('token', json.accessToken);
-
-      const resp = await callApi(endpoint, options);
-      return resp;
+      return await callApi(endpoint, options);
     }
   }
 };

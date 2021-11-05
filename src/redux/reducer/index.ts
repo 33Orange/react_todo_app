@@ -3,14 +3,14 @@ import { todoReducer } from './todo';
 import { filterReducer } from './filter';
 import { userReducer } from './user';
 import { isLoadingReducer } from './isLoading';
-import { redirectReducer } from './redirect';
+import { authorizationErrorReducer } from './authorizationError';
 
 const reducers = combineReducers({
   todos: todoReducer,
   filter: filterReducer,
   user: userReducer,
   isLoading: isLoadingReducer,
-  redirectStatus: redirectReducer,
+  authorizationError: authorizationErrorReducer,
 });
 
 export default reducers;

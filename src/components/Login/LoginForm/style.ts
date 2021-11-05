@@ -4,19 +4,20 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
+    alignItems: 'center',
   },
-  inputCont: {
+  inputContainer: {
+    margin: '7px 0',
     display: 'flex',
-    margin: 2,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
-  buttonCont: {
-    margin: '15px 0',
-    width: '60%',
-    display: 'flex',
-    justifyContent: 'space-around',
+  validateError: {
+    fontSize: '12px',
+    alignText: 'center',
+    color: `rgba(255, 0, 0, 0.6)`,
   },
 });
+
 export default useStyles;
