@@ -68,7 +68,7 @@ const useStyles = makeStyles({
     backgroundPosition: `center`,
     backgroundSize: `cover`,
     backgroundRepeat: `no-repeat`,
-    opacity: 0.6,
+    opacity: 0.4,
     border: `1px solid rgba(0, 0, 0, 0.4)`,
     borderRadius: '4px',
   },
