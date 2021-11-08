@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   label: {
     fontSize: 25,
     width: `6%`,
-    marginLeft: `3%`,
+    marginLeft: `7%`,
     marginRight: `5%`,
     display: `inline-flex`,
     alignItems: `center`,

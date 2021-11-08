@@ -18,7 +18,6 @@ import {
 } from '../../redux/actionCreators';
 
 import { ITodo } from '../../types/todo';
-import { filterMap } from '../../constans/todos';
 
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
@@ -70,27 +69,27 @@ const TodosList = () => {
     editedTodo.value = value;
     updateTodo(editedTodo);
   };
-  const handlechangeFilter = (value: string) => {
+  const handleChangeFilter = (value: string) => {
     dispatch(changeFilter(value));
   };
 
+  const sortTodos = todos.sort((a, b) => a.sortIndex - b.sortIndex);
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
-    const newTodos = todos.sort((a, b) => a.sortIndex - b.sortIndex);
-    const destinationSortIndex = newTodos[destination.index].sortIndex;
-    let result;
-    if (destination.index > source.index) {
-      const nextToDestinationSortIndex = newTodos[destination.index + 1]?.sortIndex;
-      result = nextToDestinationSortIndex
-        ? (destinationSortIndex + nextToDestinationSortIndex) / 2
-        : destinationSortIndex + 1;
-    } else {
-      const prevToDestinationSortIndex = newTodos[destination.index - 1]?.sortIndex;
-      result = prevToDestinationSortIndex
-        ? (destinationSortIndex + prevToDestinationSortIndex) / 2
+    const destinationSortIndex = sortTodos[destination.index].sortIndex;
+    const nextToDestination = sortTodos[destination.index + 1]?.sortIndex;
+    let result = nextToDestination
+      ? (destinationSortIndex + nextToDestination) / 2
+      : destinationSortIndex + 1;
+
+    if (destination.index < source.index) {
+      const prevToDestination = sortTodos[destination.index - 1]?.sortIndex;
+      result = prevToDestination
+        ? (destinationSortIndex + prevToDestination) / 2
         : destinationSortIndex - 1;
     }
-    const editedTodo = newTodos[source.index];
+
+    const editedTodo = sortTodos[source.index];
     editedTodo.sortIndex = result;
     updateTodo(editedTodo);
   };
@@ -108,7 +107,7 @@ const TodosList = () => {
       <Footer
         todos={todos}
         activeFilter={filter}
-        onChangeFilter={handlechangeFilter}
+        onChangeFilter={handleChangeFilter}
         onClearCompletedTodo={clearCompletedTodo}
       />
     </React.Fragment>

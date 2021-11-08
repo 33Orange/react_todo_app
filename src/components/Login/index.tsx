@@ -2,15 +2,17 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
-
 import useStyles from './style';
+
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+
 import {
   registerUserRequest,
   loginUserRequest,
 } from '../../redux/actionCreators/userActionCreator';
-import LoginForm from './LoginForm';
+
 import { IFormValue } from '../../types/form';
-import RegisterForm from './RegisterForm';
 
 export default function Login() {
   const { authorizationError } = useTypedSelector(state => state);

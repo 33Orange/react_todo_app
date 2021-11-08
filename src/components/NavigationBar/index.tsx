@@ -16,18 +16,18 @@ const NavigationBar = () => {
   };
 
   return (
-    <nav className={classes.root}>
+    <nav tabIndex={-1} className={classes.root}>
       <h2 className={classes.logo}>todos app</h2>
       <ul className={classes.menu}>
         {isAuth ? (
           <React.Fragment>
             <li className={classes.button}>
-              <Link to="/" className={classes.linkProfile}>
+              <Link to="/" tabIndex={-1} className={classes.linkProfile}>
                 {user.email}
               </Link>
             </li>
             <li className={classes.button}>
-              <Link to="/" onClick={logout} className={classes.link}>
+              <Link to="/" tabIndex={-1} onClick={logout} className={classes.link}>
                 Logout
               </Link>
             </li>

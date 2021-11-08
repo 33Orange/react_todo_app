@@ -3,6 +3,8 @@ import { makeStyles } from '@mui/styles';
 import closeImage from '../../../../image/close.png';
 // @ts-ignore
 import checkImage from '../../../../image/checked.png';
+// @ts-ignore
+import draggableImage from '../../../../image/draggabledots.jpg';
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +20,7 @@ const useStyles = makeStyles({
     },
   },
   completeBtn: {
-    marginLeft: `3%`,
+    marginLeft: `1%`,
     width: 20,
     height: 20,
     backgroundColor: `white`,
@@ -56,6 +58,19 @@ const useStyles = makeStyles({
     '&:hover': {
       opacity: 0.9,
     },
+  },
+  draggableIcon: {
+    marginLeft: `1%`,
+    width: 20,
+    height: 20,
+    background: `none`,
+    backgroundImage: `url(${draggableImage})`,
+    backgroundPosition: `center`,
+    backgroundSize: `cover`,
+    backgroundRepeat: `no-repeat`,
+    opacity: 0.6,
+    border: `1px solid rgba(0, 0, 0, 0.4)`,
+    borderRadius: '4px',
   },
 });
 

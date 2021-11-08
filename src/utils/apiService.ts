@@ -1,8 +1,6 @@
 import { ITodo } from '../types/todo';
 import { callApi } from './callApi';
 
-const i = 1;
-
 class ApiService {
   getTodos() {
     return callApi('/todos');
