@@ -34,7 +34,6 @@ export const callApi = async (
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: valueToSend,
     });
     if (newResponse.ok) {
       const json = await newResponse.json();

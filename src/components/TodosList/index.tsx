@@ -22,7 +22,7 @@ import { ITodo } from '../../types/todo';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { nextSortIndex, prevSortIndex } from '../../utils/dndSortIndex';
 
-const TodosList = () => {
+export default function TodosList() {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(setTodosRequest());
@@ -106,6 +106,4 @@ const TodosList = () => {
       />
     </React.Fragment>
   );
-};
-
-export default TodosList;
+}

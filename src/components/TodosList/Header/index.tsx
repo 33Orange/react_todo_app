@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useStyles from './style';
 
 import { ITodo } from '../../../types/todo';
+import CompleteAllButton from './CompleteAllButton';
 
 interface Props {
   onAddTodo: (value: string) => void;
@@ -10,15 +11,17 @@ interface Props {
   todos: Array<ITodo>;
 }
 
-const Header = ({ onAddTodo, todos, onCompleteAllTodos }: Props) => {
+export default React.memo(function Header({ onAddTodo, todos, onCompleteAllTodos }: Props) {
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
   const handleAddTodo = () => {
-    onAddTodo(inputValue);
-    setInputValue('');
+    if (inputValue) {
+      onAddTodo(inputValue);
+      setInputValue('');
+    }
   };
 
   const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -31,16 +34,7 @@ const Header = ({ onAddTodo, todos, onCompleteAllTodos }: Props) => {
   return (
     <div className={classes.root}>
       <div className={classes.inputContainer}>
-        <input
-          type="checkbox"
-          className={classes.completeAllBtn}
-          id="completeAllBtn"
-          checked={!isAllDone}
-          onChange={onCompleteAllTodos}
-        />
-        <label htmlFor="completeAllBtn" className={classes.label}>
-          ❯
-        </label>
+        <CompleteAllButton onCompleteAllTodos={onCompleteAllTodos} isAllDone={isAllDone} />
         <input
           type="text"
           value={inputValue}
@@ -52,6 +46,4 @@ const Header = ({ onAddTodo, todos, onCompleteAllTodos }: Props) => {
       </div>
     </div>
   );
-};
-
-export default Header;
+});

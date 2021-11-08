@@ -5,13 +5,11 @@ interface Props {
   count: number;
 }
 
-const Counter = ({ count }: Props) => {
+export default React.memo(function Counter({ count }: Props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <span>{count} items left</span>
     </div>
   );
-};
-
-export default Counter;
+});

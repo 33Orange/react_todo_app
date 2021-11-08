@@ -16,7 +16,7 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { checkUserRequest } from '../redux/actionCreators/userActionCreator';
 
-const Pages = () => {
+export default React.memo(function Pages() {
   const dispatch = useDispatch();
   const { isAuth } = useTypedSelector(state => state.user);
   const { isLoading } = useTypedSelector(state => state);
@@ -58,6 +58,4 @@ const Pages = () => {
       )}
     </ThemeProvider>
   );
-};
-
-export default Pages;
+});

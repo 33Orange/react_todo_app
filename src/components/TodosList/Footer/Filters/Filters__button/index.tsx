@@ -7,7 +7,7 @@ interface Props {
   onChangeFilter: (filter: string) => void;
 }
 
-const FiltersButton = ({ onChangeFilter, value, activeFilter }: Props) => {
+export default React.memo(function FiltersButton({ onChangeFilter, value, activeFilter }: Props) {
   const handleChangeFilter = () => {
     onChangeFilter(value);
   };
@@ -20,6 +20,4 @@ const FiltersButton = ({ onChangeFilter, value, activeFilter }: Props) => {
       {value[0].toUpperCase() + value.slice(1)}
     </span>
   );
-};
-
-export default FiltersButton;
+});

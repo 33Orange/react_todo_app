@@ -16,7 +16,7 @@ interface Props {
   onDeleteTodo: (todoId: string) => void;
 }
 
-export default function Main({ onCompleteTodo, onEditTodo, onDeleteTodo }: Props) {
+export default React.memo(function Main({ onCompleteTodo, onEditTodo, onDeleteTodo }: Props) {
   const { todos, filter } = useTypedSelector(state => state);
 
   const filteredTodoList = todos
@@ -43,4 +43,4 @@ export default function Main({ onCompleteTodo, onEditTodo, onDeleteTodo }: Props
       )}
     </Droppable>
   );
-}
+});

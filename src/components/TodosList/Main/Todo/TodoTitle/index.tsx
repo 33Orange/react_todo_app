@@ -9,7 +9,7 @@ interface Props {
   todo: ITodo;
 }
 
-const TodoTitle = ({ todo, onEditTodo, onDeleteTodo }: Props) => {
+export default React.memo(function TodoTitle({ todo, onEditTodo, onDeleteTodo }: Props) {
   const [todoValue, setTodoValue] = useState(`${todo.value}`);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -59,6 +59,4 @@ const TodoTitle = ({ todo, onEditTodo, onDeleteTodo }: Props) => {
       )}
     </div>
   );
-};
-
-export default TodoTitle;
+});

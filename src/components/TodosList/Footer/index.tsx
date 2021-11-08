@@ -14,7 +14,12 @@ interface Props {
   onClearCompletedTodo: () => void;
 }
 
-function Footer({ todos, activeFilter, onChangeFilter, onClearCompletedTodo }: Props) {
+export default React.memo(function Footer({
+  todos,
+  activeFilter,
+  onChangeFilter,
+  onClearCompletedTodo,
+}: Props) {
   const isAnyCompleted = todos.some(item => item.isDone);
   const countActiveTodos = todos.filter(item => !item.isDone).length;
   const classes = useStyles();
@@ -25,6 +30,4 @@ function Footer({ todos, activeFilter, onChangeFilter, onClearCompletedTodo }: P
       {isAnyCompleted ? <ClearCompletedTodos onClearCompletedTodo={onClearCompletedTodo} /> : null}
     </div>
   );
-}
-
-export default Footer;
+});

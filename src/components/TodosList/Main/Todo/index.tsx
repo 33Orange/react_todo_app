@@ -12,7 +12,7 @@ interface Props {
   index: any;
 }
 
-const Todo = ({ todo, onCompletetodo, onDeleteTodo, onEditTodo, index }: Props) => {
+export default (function Todo({ todo, onCompletetodo, onDeleteTodo, onEditTodo, index }: Props) {
   const handleCompleteTodo = () => {
     onCompletetodo(todo);
   };
@@ -38,6 +38,4 @@ const Todo = ({ todo, onCompletetodo, onDeleteTodo, onEditTodo, index }: Props) 
       )}
     </Draggable>
   );
-};
-
-export default Todo;
+});
