@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import useStyles from './style';
 
 import Header from './Header';
-import Todo from './Todo';
 import Footer from './Footer';
+import Main from './Main';
 
-import { filterMap } from '../../constans/todos';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-
 import { useDispatch } from 'react-redux';
 import {
   addTodoRequest,
@@ -19,7 +16,11 @@ import {
   toggleStatusTodosRequest,
   updateTodoRequest,
 } from '../../redux/actionCreators';
+
 import { ITodo } from '../../types/todo';
+import { filterMap } from '../../constans/todos';
+
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 const TodosList = () => {
   useEffect(() => {
@@ -73,23 +74,37 @@ const TodosList = () => {
     dispatch(changeFilter(value));
   };
 
-  const filteredTodoList = todos.filter(filterMap[filter]);
-  const classes = useStyles();
+  const onDragEnd = ({ destination, source }: DropResult) => {
+    if (!destination) return;
+    const newTodos = todos.sort((a, b) => a.sortIndex - b.sortIndex);
+    const destinationSortIndex = newTodos[destination.index].sortIndex;
+    let result;
+    if (destination.index > source.index) {
+      const nextToDestinationSortIndex = newTodos[destination.index + 1]?.sortIndex;
+      result = nextToDestinationSortIndex
+        ? (destinationSortIndex + nextToDestinationSortIndex) / 2
+        : destinationSortIndex + 1;
+    } else {
+      const prevToDestinationSortIndex = newTodos[destination.index - 1]?.sortIndex;
+      result = prevToDestinationSortIndex
+        ? (destinationSortIndex + prevToDestinationSortIndex) / 2
+        : destinationSortIndex - 1;
+    }
+    const editedTodo = newTodos[source.index];
+    editedTodo.sortIndex = result;
+    updateTodo(editedTodo);
+  };
 
   return (
     <React.Fragment>
       <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
-      <div className={classes.main}>
-        {filteredTodoList.map((todo: ITodo) => (
-          <Todo
-            key={todo._id}
-            todo={todo}
-            onDeleteTodo={deleteTodo}
-            onCompletetodo={handleCompleteTodo}
-            onEditTodo={handleEditTodo}
-          />
-        ))}
-      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Main
+          onDeleteTodo={deleteTodo}
+          onCompleteTodo={handleCompleteTodo}
+          onEditTodo={handleEditTodo}
+        />
+      </DragDropContext>
       <Footer
         todos={todos}
         activeFilter={filter}

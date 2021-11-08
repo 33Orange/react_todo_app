@@ -1,6 +1,8 @@
 import { ITodo } from '../types/todo';
 import { callApi } from './callApi';
 
+const i = 1;
+
 class ApiService {
   getTodos() {
     return callApi('/todos');
@@ -8,7 +10,10 @@ class ApiService {
 
   addTodo(value: string) {
     if (value) {
-      return callApi('/todos', { method: 'post', body: { value, isDone: false } });
+      return callApi('/todos', {
+        method: 'post',
+        body: { value },
+      });
     }
   }
 

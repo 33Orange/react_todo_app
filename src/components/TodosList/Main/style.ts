@@ -1,12 +1,8 @@
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
-  main: {
+  root: {
     width: `100%`,
-  },
-  unauthorized: {
-    textAlign: 'center',
-    color: `rgba(255, 0, 0, 0.5)`,
   },
 });
 

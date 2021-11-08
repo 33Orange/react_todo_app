@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import useStyles from './style';
-import { ITodo } from '../../../../types/todo';
+import { ITodo } from '../../../../../types/todo';
 
 interface Props {
   onEditTodo: (todoId: string, value: string) => void;

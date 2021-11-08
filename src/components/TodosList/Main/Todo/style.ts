@@ -1,6 +1,8 @@
 import { makeStyles } from '@mui/styles';
-import checkImage from '../../../image/checked.png';
-import closeImage from '../../../image/close.png';
+// @ts-ignore
+import closeImage from '../../../../image/close.png';
+// @ts-ignore
+import checkImage from '../../../../image/checked.png';
 
 const useStyles = makeStyles({
   root: {
