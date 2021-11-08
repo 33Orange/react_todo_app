@@ -68,6 +68,7 @@ const useStyles = makeStyles({
     backgroundPosition: `center`,
     backgroundSize: `cover`,
     backgroundRepeat: `no-repeat`,
+    transform: `rotate(90deg)`,
     opacity: 0.4,
     border: `1px solid rgba(0, 0, 0, 0.4)`,
     borderRadius: '4px',

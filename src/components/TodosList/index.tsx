@@ -20,6 +20,7 @@ import {
 import { ITodo } from '../../types/todo';
 
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { nextSortIndex, prevSortIndex } from '../../utils/dndSortIndex';
 
 const TodosList = () => {
   useEffect(() => {
@@ -76,18 +77,11 @@ const TodosList = () => {
   const sortTodos = todos.sort((a, b) => a.sortIndex - b.sortIndex);
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
-    const destinationSortIndex = sortTodos[destination.index].sortIndex;
-    const nextToDestination = sortTodos[destination.index + 1]?.sortIndex;
-    let result = nextToDestination
-      ? (destinationSortIndex + nextToDestination) / 2
-      : destinationSortIndex + 1;
 
-    if (destination.index < source.index) {
-      const prevToDestination = sortTodos[destination.index - 1]?.sortIndex;
-      result = prevToDestination
-        ? (destinationSortIndex + prevToDestination) / 2
-        : destinationSortIndex - 1;
-    }
+    const result =
+      destination.index > source.index
+        ? nextSortIndex(destination.index, sortTodos)
+        : prevSortIndex(destination.index, sortTodos);
 
     const editedTodo = sortTodos[source.index];
     editedTodo.sortIndex = result;
