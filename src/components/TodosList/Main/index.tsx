@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useMemo } from 'react';
 import useStyles from './style';
 
 import Todo from './Todo';
@@ -19,9 +20,10 @@ interface Props {
 export default React.memo(function Main({ onCompleteTodo, onEditTodo, onDeleteTodo }: Props) {
   const { todos, filter } = useTypedSelector(state => state);
 
-  const filteredTodoList = todos
-    .filter(filterMap[filter])
-    .sort((a, b) => a.sortIndex - b.sortIndex);
+  const filteredTodoList = useMemo(
+    () => todos.filter(filterMap[filter]).sort((a, b) => a.sortIndex - b.sortIndex),
+    [todos, filter],
+  );
   const classes = useStyles();
 
   return (

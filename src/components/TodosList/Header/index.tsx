@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import useStyles from './style';
 
 import { ITodo } from '../../../types/todo';
@@ -17,19 +17,19 @@ export default React.memo(function Header({ onAddTodo, todos, onCompleteAllTodos
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
-  const handleAddTodo = () => {
+  const handleAddTodo = useCallback(() => {
     if (inputValue) {
       onAddTodo(inputValue);
       setInputValue('');
     }
-  };
+  }, [inputValue]);
 
   const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code == 'Enter') {
       handleAddTodo();
     }
   };
-  const isAllDone = todos.some(item => !item.isDone);
+  const isAllDone = useMemo(() => todos.some(item => !item.isDone), [todos]);
   const classes = useStyles();
   return (
     <div className={classes.root}>

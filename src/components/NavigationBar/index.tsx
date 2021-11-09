@@ -5,7 +5,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { logoutUserRequest } from '../../redux/actionCreators/userActionCreator';
 
-const NavigationBar = () => {
+export default React.memo(function NavigationBar() {
   const { isAuth, user } = useTypedSelector(state => state.user);
 
   const dispatch = useDispatch();
@@ -36,6 +36,4 @@ const NavigationBar = () => {
       </ul>
     </nav>
   );
-};
-
-export default React.memo(NavigationBar);
+});

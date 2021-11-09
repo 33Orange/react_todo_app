@@ -19,6 +19,7 @@ export default (function Todo({ todo, onCompletetodo, onDeleteTodo, onEditTodo, 
   const handleDeleteTodo = () => {
     onDeleteTodo(todo._id);
   };
+
   const classes = useStyles();
   return (
     <Draggable draggableId={todo._id} index={index}>

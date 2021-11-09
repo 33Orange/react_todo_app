@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -23,12 +23,13 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { nextSortIndex, prevSortIndex } from '../../utils/dndSortIndex';
 
 export default function TodosList() {
+  const { todos, filter } = useTypedSelector(state => state);
+
   useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(setTodosRequest());
     }
   }, []);
-  const { todos, filter } = useTypedSelector(state => state);
 
   const dispatch = useDispatch();
 
@@ -70,19 +71,18 @@ export default function TodosList() {
     editedTodo.value = value;
     updateTodo(editedTodo);
   };
+
   const handleChangeFilter = (value: string) => {
     dispatch(changeFilter(value));
   };
 
-  const sortTodos = todos.sort((a, b) => a.sortIndex - b.sortIndex);
+  const sortTodos = useMemo(() => todos.sort((a, b) => a.sortIndex - b.sortIndex), [todos]);
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
-
     const result =
       destination.index > source.index
         ? nextSortIndex(destination.index, sortTodos)
         : prevSortIndex(destination.index, sortTodos);
-
     const editedTodo = sortTodos[source.index];
     editedTodo.sortIndex = result;
     updateTodo(editedTodo);

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useCallback } from 'react';
 import { Form, Field } from 'react-final-form';
 import { IFormValue } from '../../../types/form';
 import { TextField, Button } from '@mui/material';
@@ -8,12 +9,12 @@ interface Props {
   handleRegister: (value: IFormValue) => void;
 }
 
-export default function RegisterForm({ handleRegister }: Props) {
-  const validateEmail = (email: string) => {
+export default React.memo(function RegisterForm({ handleRegister }: Props) {
+  const validateEmail = useCallback((email: string) => {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
-  };
+  }, []);
 
   const handleValidate = (values: any) => {
     const errors: any = {};
@@ -85,4 +86,4 @@ export default function RegisterForm({ handleRegister }: Props) {
       )}
     />
   );
-}
+});

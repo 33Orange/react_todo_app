@@ -14,7 +14,7 @@ import {
 
 import { IFormValue } from '../../types/form';
 
-export default function Login() {
+export default React.memo(function Login() {
   const { authorizationError } = useTypedSelector(state => state);
   const [isRegister, setIsRegister] = useState(true);
 
@@ -56,4 +56,4 @@ export default function Login() {
       <span className={classes.authorizationError}>{authorizationError}</span>
     </div>
   );
-}
+});
