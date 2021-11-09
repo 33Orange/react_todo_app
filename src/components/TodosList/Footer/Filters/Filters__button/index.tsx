@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useCallback } from 'react';
 import useStyles from './style';
 
 interface Props {
@@ -9,9 +8,9 @@ interface Props {
 }
 
 export default React.memo(function FiltersButton({ onChangeFilter, value, activeFilter }: Props) {
-  const handleChangeFilter = useCallback(() => {
+  const handleChangeFilter = () => {
     onChangeFilter(value);
-  }, []);
+  };
 
   const classes = useStyles();
   return (
