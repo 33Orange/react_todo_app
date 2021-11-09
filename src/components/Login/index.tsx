@@ -20,13 +20,13 @@ export default React.memo(function Login() {
 
   const dispatch = useDispatch();
 
-  const handleRedirectToRegister = useCallback(() => {
+  const handleRedirectToRegister = () => {
     setIsRegister(false);
-  }, []);
+  };
 
-  const handleRedirectToLogin = useCallback(() => {
+  const handleRedirectToLogin = () => {
     setIsRegister(true);
-  }, []);
+  };
 
   const handleRegister = useCallback((value: IFormValue) => {
     dispatch(registerUserRequest(value));

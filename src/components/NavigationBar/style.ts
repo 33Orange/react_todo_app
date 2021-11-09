@@ -40,6 +40,7 @@ const useStyles = makeStyles({
     color: '#a7a3a3',
     opacity: '0.6',
     transition: '0.3s',
+    cursor: 'pointer',
     '&:hover': {
       opacity: '1',
     },

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useCallback } from 'react';
 import useStyles from './style';
 import { Link } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -12,9 +11,9 @@ export default React.memo(function NavigationBar() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const logout = useCallback(() => {
+  const logout = () => {
     dispatch(logoutUserRequest());
-  }, []);
+  };
 
   return (
     <nav tabIndex={-1} className={classes.root}>
@@ -23,9 +22,9 @@ export default React.memo(function NavigationBar() {
         {isAuth ? (
           <React.Fragment>
             <li className={classes.button}>
-              <Link to="/" tabIndex={-1} className={classes.linkProfile}>
+              <a tabIndex={-1} className={classes.linkProfile}>
                 {user.email}
-              </Link>
+              </a>
             </li>
             <li className={classes.button}>
               <Link to="/" tabIndex={-1} onClick={logout} className={classes.link}>

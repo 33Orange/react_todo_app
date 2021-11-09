@@ -28,12 +28,8 @@ export default function TodosList() {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      getTodos();
+      dispatch(setTodosRequest());
     }
-  }, []);
-
-  const getTodos = useCallback(() => {
-    dispatch(setTodosRequest());
   }, []);
 
   const addTodo = useCallback((value: string) => {
@@ -103,8 +99,8 @@ export default function TodosList() {
       <DragDropContext onDragEnd={onDragEnd}>
         <Main
           onDeleteTodo={deleteTodo}
-          onCompleteTodo={handleCompleteTodo}
           onEditTodo={handleEditTodo}
+          onCompleteTodo={handleCompleteTodo}
         />
       </DragDropContext>
       <Footer

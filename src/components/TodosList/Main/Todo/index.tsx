@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useCallback } from 'react';
 import TodoTitle from './TodoTitle';
 import useStyles from './style';
 import { ITodo } from '../../../../types/todo';
@@ -14,13 +13,13 @@ interface Props {
 }
 
 export default (function Todo({ todo, onCompletetodo, onDeleteTodo, onEditTodo, index }: Props) {
-  const handleCompleteTodo = useCallback(() => {
+  const handleCompleteTodo = () => {
     onCompletetodo(todo);
-  }, []);
+  };
 
-  const handleDeleteTodo = useCallback(() => {
+  const handleDeleteTodo = () => {
     onDeleteTodo(todo._id);
-  }, []);
+  };
 
   const classes = useStyles();
   return (
