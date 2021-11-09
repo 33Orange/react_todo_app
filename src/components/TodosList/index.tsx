@@ -20,7 +20,6 @@ import {
 import { ITodo } from '../../types/todo';
 
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { nextSortIndex, prevSortIndex } from '../../utils/dndSortIndex';
 
 export default function TodosList() {
   const { todos, filter } = useTypedSelector(state => state);
@@ -82,10 +81,22 @@ export default function TodosList() {
   const onDragEnd = useCallback(
     ({ destination, source }: DropResult) => {
       if (!destination) return;
+      const destinationSortIndex = sortTodos[destination.index].sortIndex;
+
+      const nextToDestination =
+        destination.index > source.index
+          ? sortTodos[destination.index + 1]?.sortIndex
+          : sortTodos[destination.index - 1]?.sortIndex;
+
       const result =
         destination.index > source.index
-          ? nextSortIndex(destination.index, sortTodos)
-          : prevSortIndex(destination.index, sortTodos);
+          ? nextToDestination
+            ? (destinationSortIndex + nextToDestination) / 2
+            : destinationSortIndex + 1
+          : nextToDestination
+          ? (destinationSortIndex + nextToDestination) / 2
+          : destinationSortIndex - 1;
+
       const editedTodo = sortTodos[source.index];
       editedTodo.sortIndex = result;
       updateTodo(editedTodo);

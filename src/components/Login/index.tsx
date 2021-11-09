@@ -42,16 +42,16 @@ export default React.memo(function Login() {
       {isRegister ? (
         <React.Fragment>
           <LoginForm handleLogin={handleLogin} />
-          <a className={classes.link} onClick={handleRedirectToRegister}>
+          <span className={classes.link} onClick={handleRedirectToRegister}>
             Or u want register?
-          </a>
+          </span>
         </React.Fragment>
       ) : (
         <React.Fragment>
           <RegisterForm handleRegister={handleRegister} />
-          <a className={classes.link} onClick={handleRedirectToLogin}>
+          <span className={classes.link} onClick={handleRedirectToLogin}>
             Or u want login?
-          </a>
+          </span>
         </React.Fragment>
       )}
       <span className={classes.authorizationError}>{authorizationError}</span>

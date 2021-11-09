@@ -22,9 +22,9 @@ export default React.memo(function NavigationBar() {
         {isAuth ? (
           <React.Fragment>
             <li className={classes.button}>
-              <a tabIndex={-1} className={classes.linkProfile}>
+              <p tabIndex={-1} className={classes.linkProfile}>
                 {user.email}
-              </a>
+              </p>
             </li>
             <li className={classes.button}>
               <Link to="/" tabIndex={-1} onClick={logout} className={classes.link}>
