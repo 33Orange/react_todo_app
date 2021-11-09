@@ -16,7 +16,7 @@ export default React.memo(function RegisterForm({ handleRegister }: Props) {
     return re.test(String(email).toLowerCase());
   }, []);
 
-  const handleValidate = (values: any) => {
+  const handleValidate = useCallback((values: any) => {
     const errors: any = {};
     if (!values.email) {
       errors.email = 'Required';
@@ -37,7 +37,8 @@ export default React.memo(function RegisterForm({ handleRegister }: Props) {
       errors.confirm = 'Required';
     }
     return errors;
-  };
+  }, []);
+
   const classes = useStyles();
   return (
     <Form

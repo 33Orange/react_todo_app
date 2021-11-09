@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useCallback } from 'react';
 import useStyles from './style';
 import { Link } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -11,9 +12,9 @@ export default React.memo(function NavigationBar() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const logout = () => {
+  const logout = useCallback(() => {
     dispatch(logoutUserRequest());
-  };
+  }, []);
 
   return (
     <nav tabIndex={-1} className={classes.root}>

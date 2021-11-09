@@ -16,7 +16,7 @@ export default React.memo(function LoginForm({ handleLogin }: Props) {
     return re.test(String(email).toLowerCase());
   }, []);
 
-  const handleValidate = (values: any) => {
+  const handleValidate = useCallback((values: any) => {
     const errors: any = {};
     if (!values.email) {
       errors.email = 'Required';
@@ -34,7 +34,7 @@ export default React.memo(function LoginForm({ handleLogin }: Props) {
       errors.password = 'Min length: 3, Max length: 10';
     }
     return errors;
-  };
+  }, []);
 
   const classes = useStyles();
   return (

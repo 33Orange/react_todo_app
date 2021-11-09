@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -24,69 +24,78 @@ import { nextSortIndex, prevSortIndex } from '../../utils/dndSortIndex';
 
 export default function TodosList() {
   const { todos, filter } = useTypedSelector(state => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      dispatch(setTodosRequest());
+      getTodos();
     }
   }, []);
 
-  const dispatch = useDispatch();
+  const getTodos = useCallback(() => {
+    dispatch(setTodosRequest());
+  }, []);
 
-  const addTodo = (value: string) => {
+  const addTodo = useCallback((value: string) => {
     dispatch(addTodoRequest(value));
-  };
+  }, []);
 
-  const deleteTodo = (todoId: string) => {
+  const deleteTodo = useCallback((todoId: string) => {
     dispatch(deleteTodoRequest(todoId));
-  };
+  }, []);
 
-  const updateTodo = (todo: ITodo) => {
+  const updateTodo = useCallback((todo: ITodo) => {
     dispatch(updateTodoRequest(todo));
-  };
+  }, []);
 
-  const clearCompletedTodo = () => {
+  const clearCompletedTodo = useCallback(() => {
     dispatch(clearCompletedRequest());
-  };
+  }, []);
 
-  const toggleStatusAllTodos = (status: boolean) => {
+  const toggleStatusAllTodos = useCallback((status: boolean) => {
     dispatch(toggleStatusTodosRequest(status));
-  };
+  }, []);
 
-  const handleCompleteTodo = (todo: ITodo) => {
+  const handleCompleteTodo = useCallback((todo: ITodo) => {
     const newTodo = todo;
     newTodo.isDone = !todo.isDone;
     updateTodo(newTodo);
-  };
+  }, []);
 
-  const handleCompleteAllTodos = () => {
+  const handleCompleteAllTodos = useCallback(() => {
     const newTodos = [...todos];
     newTodos.some(item => !item.isDone) ? toggleStatusAllTodos(true) : toggleStatusAllTodos(false);
-  };
+  }, [todos]);
 
-  const handleEditTodo = (todoId: string, value: string) => {
-    const newTodos = [...todos];
-    const index = newTodos.findIndex(item => item._id == todoId);
-    const editedTodo = newTodos[index];
-    editedTodo.value = value;
-    updateTodo(editedTodo);
-  };
+  const handleEditTodo = useCallback(
+    (todoId: string, value: string) => {
+      const newTodos = [...todos];
+      const index = newTodos.findIndex(item => item._id == todoId);
+      const editedTodo = newTodos[index];
+      editedTodo.value = value;
+      updateTodo(editedTodo);
+    },
+    [todos],
+  );
 
-  const handleChangeFilter = (value: string) => {
+  const handleChangeFilter = useCallback((value: string) => {
     dispatch(changeFilter(value));
-  };
+  }, []);
 
   const sortTodos = useMemo(() => todos.sort((a, b) => a.sortIndex - b.sortIndex), [todos]);
-  const onDragEnd = ({ destination, source }: DropResult) => {
-    if (!destination) return;
-    const result =
-      destination.index > source.index
-        ? nextSortIndex(destination.index, sortTodos)
-        : prevSortIndex(destination.index, sortTodos);
-    const editedTodo = sortTodos[source.index];
-    editedTodo.sortIndex = result;
-    updateTodo(editedTodo);
-  };
+  const onDragEnd = useCallback(
+    ({ destination, source }: DropResult) => {
+      if (!destination) return;
+      const result =
+        destination.index > source.index
+          ? nextSortIndex(destination.index, sortTodos)
+          : prevSortIndex(destination.index, sortTodos);
+      const editedTodo = sortTodos[source.index];
+      editedTodo.sortIndex = result;
+      updateTodo(editedTodo);
+    },
+    [sortTodos],
+  );
 
   return (
     <React.Fragment>

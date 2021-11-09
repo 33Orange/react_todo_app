@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import useStyles from './style';
 import { ITodo } from '../../../../../types/todo';
 
@@ -13,29 +13,27 @@ export default React.memo(function TodoTitle({ todo, onEditTodo, onDeleteTodo }:
   const [todoValue, setTodoValue] = useState(`${todo.value}`);
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoValue(e.target.value);
-  };
+  }, []);
 
-  const openEditor = () => {
+  const openEditor = useCallback(() => {
     setIsEdit(true);
-  };
+  }, []);
 
-  const editTodo = () => {
-    if (!isEdit) {
-      return;
-    }
+  const editTodo = useCallback(() => {
+    if (!isEdit) return;
     const todoId = todo._id;
-    const value = todoValue;
-    todoValue.length > 0 ? onEditTodo(todoId, value) : onDeleteTodo(todoId);
+    todoValue.length > 0 ? onEditTodo(todoId, todoValue) : onDeleteTodo(todoId);
     setIsEdit(false);
-  };
+  }, [isEdit, todoValue]);
 
   const handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code == 'Enter') {
       editTodo();
     }
   };
+
   const classes = useStyles();
   return (
     <div className={classes.root}>

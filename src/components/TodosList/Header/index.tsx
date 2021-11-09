@@ -14,9 +14,10 @@ interface Props {
 export default React.memo(function Header({ onAddTodo, todos, onCompleteAllTodos }: Props) {
   const [inputValue, setInputValue] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-  };
+  }, []);
+
   const handleAddTodo = useCallback(() => {
     if (inputValue) {
       onAddTodo(inputValue);

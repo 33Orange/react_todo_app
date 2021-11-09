@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import useStyles from './style';
@@ -20,20 +20,21 @@ export default React.memo(function Login() {
 
   const dispatch = useDispatch();
 
-  const handleRedirectToRegister = () => {
+  const handleRedirectToRegister = useCallback(() => {
     setIsRegister(false);
-  };
-  const handleRedirectToLogin = () => {
+  }, []);
+
+  const handleRedirectToLogin = useCallback(() => {
     setIsRegister(true);
-  };
+  }, []);
 
-  const handleRegister = (value: IFormValue) => {
+  const handleRegister = useCallback((value: IFormValue) => {
     dispatch(registerUserRequest(value));
-  };
+  }, []);
 
-  const handleLogin = (value: IFormValue) => {
+  const handleLogin = useCallback((value: IFormValue) => {
     dispatch(loginUserRequest(value));
-  };
+  }, []);
 
   const classes = useStyles();
   return (
