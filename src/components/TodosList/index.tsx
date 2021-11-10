@@ -106,8 +106,8 @@ const TodosList = () => {
           ? (destinationSortIndex + nextToDestination) / 2
           : destinationSortIndex - 1;
 
-      const prevTodo = Object.assign({}, sortTodos[source.index]);
-      const newTodo = Object.assign({}, sortTodos[source.index]);
+      const prevTodo = { ...sortTodos[source.index] };
+      const newTodo = { ...sortTodos[source.index] };
       newTodo.sortIndex = result;
 
       updateTodoOnDragEnd({ newTodo, prevTodo });
