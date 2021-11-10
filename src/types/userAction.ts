@@ -37,9 +37,6 @@ export interface ILoginUserRequest {
 export interface ILogoutUserRequest {
   type: UserActionType.LOGOUT_USER_REQUEST;
 }
-export interface ICheckUserRequest {
-  type: UserActionType.CHECK_USER_REQUEST;
-}
 
 export interface IRegisterUserSuccess {
   type: UserActionType.REGISTER_USER_SUCCESS;
@@ -51,10 +48,6 @@ export interface ILoginUserSuccess {
 }
 export interface ILogoutUserSuccess {
   type: UserActionType.LOGOUT_USER_SUCCESS;
-}
-export interface ICheckUserSuccess {
-  type: UserActionType.CHECK_USER_SUCCESS;
-  payload: IUser;
 }
 
 export interface IRegisterUserFailed {
@@ -69,11 +62,6 @@ export interface ILogoutUserFailed {
   type: UserActionType.LOGOUT_USER_FAILED;
   payload: string;
 }
-export interface ICheckUserFailed {
-  type: UserActionType.CHECK_USER_FAILED;
-  payload: string;
-}
-
 export interface IAuthorizationError {
   type: UserActionType.AUTHORIZATION_ERROR;
   payload: string;
@@ -83,5 +71,4 @@ export type UserAction =
   | IRegisterUserSuccess
   | ILoginUserSuccess
   | ILogoutUserSuccess
-  | ICheckUserSuccess
   | IAuthorizationError;

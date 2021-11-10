@@ -8,13 +8,13 @@ interface Props {
   todo: ITodo;
   onCompletetodo: (todo: ITodo) => void;
   onDeleteTodo: (todoId: string) => void;
-  onEditTodo: (todoId: string, value: string) => void;
+  onEditTodo: (todo: ITodo) => void;
   index: any;
 }
 
 const Todo = ({ todo, onCompletetodo, onDeleteTodo, onEditTodo, index }: Props) => {
   const handleCompleteTodo = () => {
-    onCompletetodo(todo);
+    onCompletetodo({ ...todo, isDone: !todo.isDone });
   };
 
   const handleDeleteTodo = () => {

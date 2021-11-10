@@ -1,9 +1,10 @@
 import { ITodo } from '../../../types/todo';
 import { ActionType, Action } from '../../../types/action';
+import { combineReducers } from 'redux';
 
 const initialState: Array<ITodo> = [];
 
-export const todoReducer = (state: Array<ITodo> = initialState, action: Action) => {
+const todoReducer = (state: Array<ITodo> = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.SET_TODOS_SUCCESS:
       return [...action.payload];
@@ -32,3 +33,26 @@ export const todoReducer = (state: Array<ITodo> = initialState, action: Action) 
       return state;
   }
 };
+
+const initialStateLoader: boolean = false;
+
+const isLoadingReducer = (state = initialState, action: Action) => {
+  switch (action.type) {
+    case ActionType.SET_TODOS_REQUEST:
+      return true;
+
+    case ActionType.SET_TODOS_SUCCESS:
+      return false;
+
+    case ActionType.SET_TODOS_FAILED:
+      return false;
+
+    default:
+      return state;
+  }
+};
+
+export const todoReducers = combineReducers({
+  list: todoReducer,
+  isLoading: isLoadingReducer,
+});

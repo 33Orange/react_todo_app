@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { logoutUserRequest } from '../../redux/actionCreators/userActionCreator';
-import { userSelector, isAuthSelector } from '../../redux/selectors';
+import { isAuthSelector } from '../../redux/selectors';
 
 const NavigationBar = () => {
-  const user = useTypedSelector(userSelector);
   const isAuth = useTypedSelector(isAuthSelector);
 
   const dispatch = useDispatch();
@@ -23,11 +22,6 @@ const NavigationBar = () => {
       <ul className={classes.menu}>
         {isAuth ? (
           <React.Fragment>
-            <li className={classes.button}>
-              <p tabIndex={-1} className={classes.linkProfile}>
-                {user.email}
-              </p>
-            </li>
             <li className={classes.button}>
               <Link to="/" tabIndex={-1} onClick={logout} className={classes.link}>
                 Logout

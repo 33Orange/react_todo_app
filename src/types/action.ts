@@ -27,10 +27,8 @@ export enum ActionType {
   TOGGLE_STATUS_TODOS_FAILED = 'TOGGLE_STATUS_TODOS_FAILED',
 
   CHANGE_FILTER = 'CHANGE_FILTER',
-
-  IS_LOADING_TRUE = 'IS_LOADING_TRUE',
-  IS_LOADING_FALSE = 'IS_LOADING_FALSE',
 }
+
 export interface ISetTodosRequest {
   type: ActionType.SET_TODOS_REQUEST;
 }
@@ -110,17 +108,9 @@ export interface IToggleStatusTodosFailed {
   type: ActionType.TOGGLE_STATUS_TODOS_FAILED;
   payload: string;
 }
-
 export interface IChangeFilter {
   type: ActionType.CHANGE_FILTER;
   payload: string;
-}
-
-export interface IIsLoadingTrue {
-  type: ActionType.IS_LOADING_TRUE;
-}
-export interface IIsLoadingFalse {
-  type: ActionType.IS_LOADING_FALSE;
 }
 
 export type Action =
@@ -131,5 +121,5 @@ export type Action =
   | IClearCompletedTodoSuccess
   | IToggleStatusTodosSuccess
   | IChangeFilter
-  | IIsLoadingTrue
-  | IIsLoadingFalse;
+  | ISetTodosRequest
+  | ISetTodosFailed;

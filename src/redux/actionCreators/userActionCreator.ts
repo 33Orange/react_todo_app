@@ -8,10 +8,7 @@ import {
   IRegisterUserFailed,
   IRegisterUserRequest,
   IRegisterUserSuccess,
-  ICheckUserRequest,
   UserActionType,
-  ICheckUserSuccess,
-  ICheckUserFailed,
   IAuthorizationError,
 } from '../../types/userAction';
 import { IUser } from '../../types/user';
@@ -33,9 +30,6 @@ export const loginUserRequest = (payload: {
 export const logoutUserRequest = (): ILogoutUserRequest => ({
   type: UserActionType.LOGOUT_USER_REQUEST,
 });
-export const checkUserRequest = (): ICheckUserRequest => ({
-  type: UserActionType.CHECK_USER_REQUEST,
-});
 
 export const registerUserSuccess = (payload: IUser): IRegisterUserSuccess => ({
   type: UserActionType.REGISTER_USER_SUCCESS,
@@ -47,10 +41,6 @@ export const loginUserSuccess = (payload: IUser): ILoginUserSuccess => ({
 });
 export const logoutUserSuccess = (): ILogoutUserSuccess => ({
   type: UserActionType.LOGOUT_USER_SUCCESS,
-});
-export const checkUserSuccess = (payload: IUser): ICheckUserSuccess => ({
-  type: UserActionType.CHECK_USER_SUCCESS,
-  payload,
 });
 
 export const registerUserFailed = (payload: string): IRegisterUserFailed => ({
@@ -65,11 +55,6 @@ export const logoutUserFailed = (payload: string): ILogoutUserFailed => ({
   type: UserActionType.LOGOUT_USER_FAILED,
   payload,
 });
-export const checkUserFailed = (payload: string): ICheckUserFailed => ({
-  type: UserActionType.CHECK_USER_FAILED,
-  payload,
-});
-
 export const authorizationError = (payload: string): IAuthorizationError => ({
   type: UserActionType.AUTHORIZATION_ERROR,
   payload,

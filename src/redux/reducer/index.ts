@@ -1,15 +1,13 @@
 import { combineReducers } from 'redux';
-import { todoReducer } from './todo';
+import { todoReducers } from './todo';
 import { filterReducer } from './filter';
 import { userReducer } from './user';
-import { isLoadingReducer } from './isLoading';
 import { authorizationErrorReducer } from './authorizationError';
 
 const reducers = combineReducers({
-  todos: todoReducer,
+  todos: todoReducers,
   filter: filterReducer,
   user: userReducer,
-  isLoading: isLoadingReducer,
   authorizationError: authorizationErrorReducer,
 });
 

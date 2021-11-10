@@ -3,7 +3,6 @@ import { UserActionType } from '../../../types/userAction';
 import * as UserActionCreators from '../../actionCreators/userActionCreator';
 import AuthorizationService from '../../../utils/authorizationService';
 import { IResponse } from '../../../types/user';
-import { isLoadingFalse, isLoadingTrue } from '../../actionCreators';
 
 function* register(action: { payload: { email: string; password: string } }) {
   try {
@@ -43,22 +42,8 @@ function* logout() {
   }
 }
 
-function* checkAuth() {
-  yield put(isLoadingTrue());
-  try {
-    const response: IResponse = yield call(AuthorizationService.checkAuth);
-    localStorage.setItem('token', response.accessToken);
-    yield put(UserActionCreators.checkUserSuccess(response.user));
-  } catch (e) {
-    yield put(UserActionCreators.checkUserFailed(e));
-  } finally {
-    yield put(isLoadingFalse());
-  }
-}
-
 export function* userWatcher() {
   yield takeEvery(UserActionType.REGISTER_USER_REQUEST as any, register);
   yield takeEvery(UserActionType.LOGIN_USER_REQUEST as any, login);
   yield takeEvery(UserActionType.LOGOUT_USER_REQUEST as any, logout);
-  yield takeEvery(UserActionType.CHECK_USER_REQUEST as any, checkAuth);
 }

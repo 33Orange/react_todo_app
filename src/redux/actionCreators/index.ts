@@ -10,8 +10,6 @@ import {
   IDeleteTodoFailed,
   IDeleteTodoRequest,
   IDeleteTodoSuccess,
-  IIsLoadingFalse,
-  IIsLoadingTrue,
   ISetTodosFailed,
   ISetTodosRequest,
   ISetTodosSuccess,
@@ -105,6 +103,3 @@ export const toggleStatusTodosFailed = (payload: string): IToggleStatusTodosFail
 });
 
 export const changeFilter = (payload: string) => ({ type: ActionType.CHANGE_FILTER, payload });
-
-export const isLoadingTrue = (): IIsLoadingTrue => ({ type: ActionType.IS_LOADING_TRUE });
-export const isLoadingFalse = (): IIsLoadingFalse => ({ type: ActionType.IS_LOADING_FALSE });

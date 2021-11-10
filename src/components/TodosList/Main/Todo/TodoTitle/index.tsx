@@ -4,13 +4,13 @@ import useStyles from './style';
 import { ITodo } from '../../../../../types/todo';
 
 interface Props {
-  onEditTodo: (todoId: string, value: string) => void;
+  onEditTodo: (todo: ITodo) => void;
   onDeleteTodo: (todoId: string) => void;
   todo: ITodo;
 }
 
 const TodoTitle = ({ todo, onEditTodo, onDeleteTodo }: Props) => {
-  const [todoValue, setTodoValue] = useState(`${todo.value}`);
+  const [todoValue, setTodoValue] = useState(todo.value);
   const [isEdit, setIsEdit] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,9 +22,10 @@ const TodoTitle = ({ todo, onEditTodo, onDeleteTodo }: Props) => {
   };
 
   const editTodo = () => {
-    if (!isEdit) return;
-    const todoId = todo._id;
-    todoValue.length > 0 ? onEditTodo(todoId, todoValue) : onDeleteTodo(todoId);
+    if (!isEdit) {
+      return;
+    }
+    todoValue.length > 0 ? onEditTodo({ ...todo, value: todoValue }) : onDeleteTodo(todo._id);
     setIsEdit(false);
   };
 

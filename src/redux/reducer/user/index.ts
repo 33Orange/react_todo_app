@@ -5,13 +5,12 @@ interface State {
   user: IUser;
   isAuth: boolean;
 }
-
 const initialState: State = {
   user: {
     email: ' ',
     id: ' ',
   },
-  isAuth: false,
+  isAuth: !!localStorage.getItem('token'),
 };
 
 export const userReducer = (state: State = initialState, action: UserAction) => {
@@ -38,13 +37,6 @@ export const userReducer = (state: State = initialState, action: UserAction) => 
           id: '',
         },
         isAuth: false,
-      };
-
-    case UserActionType.CHECK_USER_SUCCESS:
-      return {
-        ...state,
-        user: action.payload,
-        isAuth: true,
       };
 
     default:

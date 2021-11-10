@@ -10,7 +10,7 @@ import { Droppable } from 'react-beautiful-dnd';
 
 interface Props {
   onCompleteTodo: (todo: ITodo) => void;
-  onEditTodo: (todoId: string, value: string) => void;
+  onEditTodo: (todo: ITodo) => void;
   onDeleteTodo: (todoId: string) => void;
   todos: ITodo[];
   filter: string;
