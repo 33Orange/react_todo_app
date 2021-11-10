@@ -5,7 +5,7 @@ interface Props {
   onClearCompletedTodo: (e: React.MouseEvent) => void;
 }
 
-export default React.memo(function ClearCompleted({ onClearCompletedTodo }: Props) {
+const ClearCompleted = ({ onClearCompletedTodo }: Props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -14,4 +14,6 @@ export default React.memo(function ClearCompleted({ onClearCompletedTodo }: Prop
       </span>
     </div>
   );
-});
+};
+
+export default React.memo(ClearCompleted);

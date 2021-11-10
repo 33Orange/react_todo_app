@@ -13,9 +13,10 @@ import {
 } from '../../redux/actionCreators/userActionCreator';
 
 import { IFormValue } from '../../types/form';
+import { authorizationErrorSelector } from '../../redux/selectors';
 
-export default React.memo(function Login() {
-  const { authorizationError } = useTypedSelector(state => state);
+const Login = () => {
+  const authorizationError = useTypedSelector(authorizationErrorSelector);
   const [isRegister, setIsRegister] = useState(true);
 
   const dispatch = useDispatch();
@@ -57,4 +58,6 @@ export default React.memo(function Login() {
       <span className={classes.authorizationError}>{authorizationError}</span>
     </div>
   );
-});
+};
+
+export default React.memo(Login);

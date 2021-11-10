@@ -18,6 +18,7 @@ import {
   IToggleStatusTodosFailed,
   IToggleStatusTodosRequest,
   IToggleStatusTodosSuccess,
+  IUpdateTodoAfterDragRequest,
   IUpdateTodoFailed,
   IUpdateTodoRequest,
   IUpdateTodoSuccess,
@@ -36,6 +37,13 @@ export const deleteTodoRequest = (payload: string): IDeleteTodoRequest => ({
 });
 export const updateTodoRequest = (payload: ITodo): IUpdateTodoRequest => ({
   type: ActionType.UPDATE_TODO_REQUEST,
+  payload,
+});
+export const updateTodoAfterDrag = (payload: {
+  newTodo: ITodo;
+  prevTodo: ITodo;
+}): IUpdateTodoAfterDragRequest => ({
+  type: ActionType.UPDATE_TODO_AFTER_DRAG_REQUEST,
   payload,
 });
 export const clearCompletedRequest = (): IClearCompletedTodoRequest => ({

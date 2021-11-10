@@ -1,4 +1,4 @@
-import { baseUrl } from '../constans/serverUrl';
+import { baseUrl } from '../constants/serverUrl';
 import { createUrl } from './createQueryString';
 
 interface ICallApiOptions {
@@ -27,6 +27,11 @@ export const callApi = async (
     const error = await response.json();
     throw Error(error.message);
   }
+  if (response.status == 419) {
+    console.log(response.status);
+    throw response.status;
+  }
+
   if (response.status == 401) {
     const newResponse = await fetch(createUrl(`${baseUrl}/refresh`), {
       method: 'get',

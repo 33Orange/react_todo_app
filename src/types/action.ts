@@ -13,6 +13,7 @@ export enum ActionType {
   DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS',
   DELETE_TODO_FAILED = 'DELETE_TODO_FAILED',
 
+  UPDATE_TODO_AFTER_DRAG_REQUEST = 'UPDATE_TODO_AFTER_DRAG',
   UPDATE_TODO_REQUEST = 'UPDATE_TODO_REQUEST',
   UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS',
   UPDATE_TODO_FAILED = 'UPDATE_TODO_FAILED',
@@ -44,6 +45,13 @@ export interface IDeleteTodoRequest {
 export interface IUpdateTodoRequest {
   type: ActionType.UPDATE_TODO_REQUEST;
   payload: ITodo;
+}
+export interface IUpdateTodoAfterDragRequest {
+  type: ActionType.UPDATE_TODO_AFTER_DRAG_REQUEST;
+  payload: {
+    newTodo: ITodo;
+    prevTodo: ITodo;
+  };
 }
 export interface IClearCompletedTodoRequest {
   type: ActionType.CLEAR_COMPLETED_TODO_REQUEST;

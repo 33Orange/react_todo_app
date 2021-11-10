@@ -11,7 +11,7 @@ interface Props {
   todos: Array<ITodo>;
 }
 
-export default React.memo(function Header({ onAddTodo, todos, onCompleteAllTodos }: Props) {
+const Header = ({ onAddTodo, todos, onCompleteAllTodos }: Props) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,4 +47,6 @@ export default React.memo(function Header({ onAddTodo, todos, onCompleteAllTodos
       </div>
     </div>
   );
-});
+};
+
+export default React.memo(Header);

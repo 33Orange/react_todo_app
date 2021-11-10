@@ -18,30 +18,26 @@ import { checkUserRequest } from '../redux/actionCreators/userActionCreator';
 
 export default React.memo(function Pages() {
   const dispatch = useDispatch();
-  const { isAuth } = useTypedSelector(state => state.user);
-  const { isLoading } = useTypedSelector(state => state);
+  const isAuth = useTypedSelector(state => state.user.isAuth);
+  const isLoading = useTypedSelector(state => state.isLoading);
 
   useEffect(() => {
     dispatch(checkUserRequest());
   }, []);
 
-  if (isLoading) {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <NavigationBar />
-        <Page title="loading">
-          <LinearProgress />
-        </Page>
-      </ThemeProvider>
-    );
-  }
+  const loader = (
+    <Page title="loading">
+      <LinearProgress />
+    </Page>
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <NavigationBar />
-      {!isAuth ? (
+      {isLoading ? (
+        loader
+      ) : !isAuth ? (
         <Switch>
           <Route exact path="/">
             <LoginPage />

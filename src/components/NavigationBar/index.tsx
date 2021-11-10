@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { logoutUserRequest } from '../../redux/actionCreators/userActionCreator';
+import { userSelector, isAuthSelector } from '../../redux/selectors';
 
-export default React.memo(function NavigationBar() {
-  const { isAuth, user } = useTypedSelector(state => state.user);
+const NavigationBar = () => {
+  const user = useTypedSelector(userSelector);
+  const isAuth = useTypedSelector(isAuthSelector);
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -36,4 +38,6 @@ export default React.memo(function NavigationBar() {
       </ul>
     </nav>
   );
-});
+};
+
+export default React.memo(NavigationBar);

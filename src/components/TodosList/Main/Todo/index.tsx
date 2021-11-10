@@ -12,7 +12,7 @@ interface Props {
   index: any;
 }
 
-export default (function Todo({ todo, onCompletetodo, onDeleteTodo, onEditTodo, index }: Props) {
+const Todo = ({ todo, onCompletetodo, onDeleteTodo, onEditTodo, index }: Props) => {
   const handleCompleteTodo = () => {
     onCompletetodo(todo);
   };
@@ -40,4 +40,6 @@ export default (function Todo({ todo, onCompletetodo, onDeleteTodo, onEditTodo, 
       )}
     </Draggable>
   );
-});
+};
+
+export default React.memo(Todo);

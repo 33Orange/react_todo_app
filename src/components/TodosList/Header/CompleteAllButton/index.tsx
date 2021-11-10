@@ -6,7 +6,7 @@ interface Props {
   isAllDone: boolean;
 }
 
-export default React.memo(function CompleteAllButton({ onCompleteAllTodos, isAllDone }: Props) {
+const CompleteAllButton = ({ onCompleteAllTodos, isAllDone }: Props) => {
   const classes = useStyles();
 
   return (
@@ -23,4 +23,6 @@ export default React.memo(function CompleteAllButton({ onCompleteAllTodos, isAll
       </label>
     </React.Fragment>
   );
-});
+};
+
+export default React.memo(CompleteAllButton);

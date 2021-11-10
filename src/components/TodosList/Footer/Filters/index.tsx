@@ -7,7 +7,7 @@ interface Props {
   onChangeFilter: (filter: string) => void;
 }
 
-export default React.memo(function Filters({ activeFilter, onChangeFilter }: Props) {
+const Filters = ({ activeFilter, onChangeFilter }: Props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -21,4 +21,6 @@ export default React.memo(function Filters({ activeFilter, onChangeFilter }: Pro
       ))}
     </div>
   );
-});
+};
+
+export default React.memo(Filters);

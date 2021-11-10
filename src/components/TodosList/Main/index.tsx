@@ -4,22 +4,19 @@ import useStyles from './style';
 
 import Todo from './Todo';
 
-import { filterMap } from '../../../constans/todos';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
-
+import { filterMap } from '../../../constants/todos';
 import { ITodo } from '../../../types/todo';
-
 import { Droppable } from 'react-beautiful-dnd';
 
 interface Props {
   onCompleteTodo: (todo: ITodo) => void;
   onEditTodo: (todoId: string, value: string) => void;
   onDeleteTodo: (todoId: string) => void;
+  todos: ITodo[];
+  filter: string;
 }
 
-export default React.memo(function Main({ onCompleteTodo, onEditTodo, onDeleteTodo }: Props) {
-  const { todos, filter } = useTypedSelector(state => state);
-
+const Main = ({ onCompleteTodo, onEditTodo, onDeleteTodo, todos, filter }: Props) => {
   const filteredTodoList = useMemo(
     () => todos.filter(filterMap[filter]).sort((a, b) => a.sortIndex - b.sortIndex),
     [todos, filter],
@@ -45,4 +42,6 @@ export default React.memo(function Main({ onCompleteTodo, onEditTodo, onDeleteTo
       )}
     </Droppable>
   );
-});
+};
+
+export default React.memo(Main);

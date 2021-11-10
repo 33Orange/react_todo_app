@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback, useState } from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -15,21 +15,21 @@ import {
   setTodosRequest,
   toggleStatusTodosRequest,
   updateTodoRequest,
+  updateTodoAfterDrag,
 } from '../../redux/actionCreators';
 
 import { ITodo } from '../../types/todo';
 
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { todosSelector, filterSelector } from '../../redux/selectors';
 
-export default function TodosList() {
-  const { todos, filter } = useTypedSelector(state => state);
+const TodosList = () => {
+  const todos = useTypedSelector(todosSelector);
+  const filter = useTypedSelector(filterSelector);
+
+  const [localTodos, setLocalTodos] = useState(todos);
+
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(setTodosRequest());
-    }
-  }, []);
 
   const addTodo = useCallback((value: string) => {
     dispatch(addTodoRequest(value));
@@ -41,6 +41,10 @@ export default function TodosList() {
 
   const updateTodo = useCallback((todo: ITodo) => {
     dispatch(updateTodoRequest(todo));
+  }, []);
+
+  const updateTodoOnDragEnd = useCallback((payload: { newTodo: ITodo; prevTodo: ITodo }) => {
+    dispatch(updateTodoAfterDrag(payload));
   }, []);
 
   const clearCompletedTodo = useCallback(() => {
@@ -77,10 +81,15 @@ export default function TodosList() {
     dispatch(changeFilter(value));
   }, []);
 
-  const sortTodos = useMemo(() => todos.sort((a, b) => a.sortIndex - b.sortIndex), [todos]);
+  const sortTodos = useMemo(
+    () => [...localTodos].sort((a, b) => a.sortIndex - b.sortIndex),
+    [localTodos],
+  );
   const onDragEnd = useCallback(
     ({ destination, source }: DropResult) => {
-      if (!destination) return;
+      if (!destination) {
+        return;
+      }
       const destinationSortIndex = sortTodos[destination.index].sortIndex;
 
       const nextToDestination =
@@ -97,29 +106,46 @@ export default function TodosList() {
           ? (destinationSortIndex + nextToDestination) / 2
           : destinationSortIndex - 1;
 
-      const editedTodo = sortTodos[source.index];
-      editedTodo.sortIndex = result;
-      updateTodo(editedTodo);
+      const prevTodo = Object.assign({}, sortTodos[source.index]);
+      const newTodo = Object.assign({}, sortTodos[source.index]);
+      newTodo.sortIndex = result;
+
+      updateTodoOnDragEnd({ newTodo, prevTodo });
+      setLocalTodos(localTodos.map(item => (item._id === newTodo._id ? newTodo : item)));
     },
     [sortTodos],
   );
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(setTodosRequest());
+    }
+  }, []);
+
+  useEffect(() => {
+    setLocalTodos(todos);
+  }, [todos]);
+
   return (
     <React.Fragment>
-      <Header todos={todos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
+      <Header todos={localTodos} onAddTodo={addTodo} onCompleteAllTodos={handleCompleteAllTodos} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Main
+          todos={localTodos}
+          filter={filter}
           onDeleteTodo={deleteTodo}
           onEditTodo={handleEditTodo}
           onCompleteTodo={handleCompleteTodo}
         />
       </DragDropContext>
       <Footer
-        todos={todos}
+        todos={localTodos}
         activeFilter={filter}
         onChangeFilter={handleChangeFilter}
         onClearCompletedTodo={clearCompletedTodo}
       />
     </React.Fragment>
   );
-}
+};
+
+export default React.memo(TodosList);

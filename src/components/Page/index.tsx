@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default React.memo(function Page({ children, title }: Props) {
+const Page = ({ children, title }: Props) => {
   const classes = useStyles();
   return (
     <div>
@@ -14,4 +14,6 @@ export default React.memo(function Page({ children, title }: Props) {
       <div className={classes.root}>{children}</div>
     </div>
   );
-});
+};
+
+export default React.memo(Page);
