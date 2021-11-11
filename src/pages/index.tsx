@@ -12,6 +12,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { isAuthSelector } from '../redux/selectors';
+import { I18nContextProvider } from '../i18n';
 
 export default React.memo(function Pages() {
   const isAuth = useTypedSelector(isAuthSelector);
@@ -19,22 +20,24 @@ export default React.memo(function Pages() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavigationBar />
-      {!isAuth ? (
-        <Switch>
-          <Route exact path="/">
-            <LoginPage />
-          </Route>
-          <Redirect to="/" />
-        </Switch>
-      ) : (
-        <Switch>
-          <Route path="/todos">
-            <TodosPage />
-          </Route>
-          <Redirect to="/todos" />
-        </Switch>
-      )}
+      <I18nContextProvider>
+        <NavigationBar />
+        {!isAuth ? (
+          <Switch>
+            <Route exact path="/">
+              <LoginPage />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        ) : (
+          <Switch>
+            <Route path="/todos">
+              <TodosPage />
+            </Route>
+            <Redirect to="/todos" />
+          </Switch>
+        )}
+      </I18nContextProvider>
     </ThemeProvider>
   );
 });

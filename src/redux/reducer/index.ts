@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
 import { todoReducers } from './todo';
 import { filterReducer } from './filter';
-import { userReducer } from './user';
-import { authorizationErrorReducer } from './authorizationError';
+import { userReducers } from './user';
 
 const reducers = combineReducers({
   todos: todoReducers,
   filter: filterReducer,
-  user: userReducer,
-  authorizationError: authorizationErrorReducer,
+  user: userReducers,
 });
 
 export default reducers;

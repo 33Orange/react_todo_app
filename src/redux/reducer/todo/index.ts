@@ -1,21 +1,31 @@
 import { ITodo } from '../../../types/todo';
 import { ActionType, Action } from '../../../types/action';
 import { combineReducers } from 'redux';
+import {
+  fetchTodoActions,
+  addTodoActions,
+  deleteTodoActions,
+  updateTodoActions,
+  updateTodoOnDragActions,
+  clearCompletedTodoActions,
+  toggleCompletedTodoActions,
+  ActionTodo,
+} from '../../actionCreators';
 
 const initialState: Array<ITodo> = [];
 
-const todoReducer = (state: Array<ITodo> = initialState, action: Action) => {
+const todoReducer = (state: Array<ITodo> = initialState, action: ActionTodo) => {
   switch (action.type) {
-    case ActionType.SET_TODOS_SUCCESS:
+    case fetchTodoActions.types.success:
       return [...action.payload];
 
-    case ActionType.ADD_TODO_SUCCESS:
+    case addTodoActions.types.success:
       return [...state, action.payload];
 
-    case ActionType.DELETE_TODO_SUCCESS:
+    case deleteTodoActions.types.success:
       return state.filter(item => item._id != action.payload._id);
 
-    case ActionType.UPDATE_TODO_SUCCESS:
+    case updateTodoActions.types.success:
       return state.map(item => {
         if (item._id == action.payload._id) {
           item = action.payload;
@@ -23,10 +33,10 @@ const todoReducer = (state: Array<ITodo> = initialState, action: Action) => {
         return item;
       });
 
-    case ActionType.CLEAR_COMPLETED_TODO_SUCCESS:
+    case clearCompletedTodoActions.types.success:
       return [...action.payload];
 
-    case ActionType.TOGGLE_STATUS_TODOS_SUCCESS:
+    case toggleCompletedTodoActions.types.success:
       return [...action.payload];
 
     default:
@@ -36,15 +46,15 @@ const todoReducer = (state: Array<ITodo> = initialState, action: Action) => {
 
 const initialStateLoader: boolean = false;
 
-const isLoadingReducer = (state = initialState, action: Action) => {
+const isLoadingReducer = (state = initialState, action: ActionTodo) => {
   switch (action.type) {
-    case ActionType.SET_TODOS_REQUEST:
+    case fetchTodoActions.types.request:
       return true;
 
-    case ActionType.SET_TODOS_SUCCESS:
+    case fetchTodoActions.types.success:
       return false;
 
-    case ActionType.SET_TODOS_FAILED:
+    case fetchTodoActions.types.failed:
       return false;
 
     default:

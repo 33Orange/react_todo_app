@@ -1,11 +1,18 @@
 import { UserAction, UserActionType } from '../../../types/userAction';
 import { IUser } from '../../../types/user';
+import { combineReducers } from 'redux';
+import {
+  ActionUser,
+  registerUserAction,
+  loginUserAction,
+  logoutUserAction,
+} from '../../actionCreators/userActionCreator';
 
-interface State {
+interface UserState {
   user: IUser;
   isAuth: boolean;
 }
-const initialState: State = {
+const UserInitialState: UserState = {
   user: {
     email: ' ',
     id: ' ',
@@ -13,23 +20,23 @@ const initialState: State = {
   isAuth: !!localStorage.getItem('token'),
 };
 
-export const userReducer = (state: State = initialState, action: UserAction) => {
+const userReducer = (state: UserState = UserInitialState, action: ActionUser) => {
   switch (action.type) {
-    case UserActionType.REGISTER_USER_SUCCESS:
+    case registerUserAction.types.success:
       return {
         ...state,
         user: action.payload,
         isAuth: true,
       };
 
-    case UserActionType.LOGIN_USER_SUCCESS:
+    case loginUserAction.types.success:
       return {
         ...state,
         user: action.payload,
         isAuth: true,
       };
 
-    case UserActionType.LOGOUT_USER_SUCCESS:
+    case logoutUserAction.types.success:
       return {
         ...state,
         user: {
@@ -43,3 +50,20 @@ export const userReducer = (state: State = initialState, action: UserAction) => 
       return state;
   }
 };
+
+const initialStateAuthorizationError: string = '';
+
+const authorizationErrorReducer = (state = initialStateAuthorizationError, action: UserAction) => {
+  switch (action.type) {
+    case UserActionType.AUTHORIZATION_ERROR:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
+export const userReducers = combineReducers({
+  user: userReducer,
+  authorizationError: authorizationErrorReducer,
+});

@@ -7,15 +7,14 @@ import useStyles from './style';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
-import {
-  registerUserRequest,
-  loginUserRequest,
-} from '../../redux/actionCreators/userActionCreator';
+import { registerUserAction, loginUserAction } from '../../redux/actionCreators/userActionCreator';
 
 import { IFormValue } from '../../types/form';
 import { authorizationErrorSelector } from '../../redux/selectors';
+import { I18nContext } from '../../i18n';
 
 const Login = () => {
+  const { translate } = React.useContext(I18nContext);
   const authorizationError = useTypedSelector(authorizationErrorSelector);
   const [isRegister, setIsRegister] = useState(true);
 
@@ -30,11 +29,11 @@ const Login = () => {
   };
 
   const handleRegister = useCallback((value: IFormValue) => {
-    dispatch(registerUserRequest(value));
+    dispatch(registerUserAction.request(value));
   }, []);
 
   const handleLogin = useCallback((value: IFormValue) => {
-    dispatch(loginUserRequest(value));
+    dispatch(loginUserAction.request(value));
   }, []);
 
   const classes = useStyles();
@@ -44,14 +43,14 @@ const Login = () => {
         <React.Fragment>
           <LoginForm handleLogin={handleLogin} />
           <span className={classes.link} onClick={handleRedirectToRegister}>
-            Or u want register?
+            {translate('or_register')}
           </span>
         </React.Fragment>
       ) : (
         <React.Fragment>
           <RegisterForm handleRegister={handleRegister} />
           <span className={classes.link} onClick={handleRedirectToLogin}>
-            Or u want login?
+            {translate('or_login')}
           </span>
         </React.Fragment>
       )}

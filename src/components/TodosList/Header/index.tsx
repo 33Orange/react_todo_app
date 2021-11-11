@@ -4,6 +4,7 @@ import useStyles from './style';
 
 import { ITodo } from '../../../types/todo';
 import CompleteAllButton from './CompleteAllButton';
+import { I18nContext } from '../../../i18n';
 
 interface Props {
   onAddTodo: (value: string) => void;
@@ -13,6 +14,7 @@ interface Props {
 
 const Header = ({ onAddTodo, todos, onCompleteAllTodos }: Props) => {
   const [inputValue, setInputValue] = useState('');
+  const { translate } = React.useContext(I18nContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -42,7 +44,7 @@ const Header = ({ onAddTodo, todos, onCompleteAllTodos }: Props) => {
           onChange={handleChange}
           onKeyPress={handleEnterPress}
           className={classes.input}
-          placeholder="What needs to be done?"
+          placeholder={translate('todo_placeholder')}
         />
       </div>
     </div>

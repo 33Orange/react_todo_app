@@ -8,6 +8,7 @@ const theme = createTheme({
           display: `flex`,
           justifyContent: `center`,
           height: `100vh`,
+          width: `100%`,
           background: `rgba(0, 0, 0, 0.15)`,
         },
       },

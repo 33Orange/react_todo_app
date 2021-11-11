@@ -1,0 +1,22 @@
+{
+  "todo_placeholder": "What needs to be done ?",
+  "todos": "todos",
+  "logout": "Logout",
+  "all": "all",
+  "active": "active",
+  "completed": "completed",
+  "clear_completed": "Clear completed",
+  "items_left": "items left",
+  "logo": "todos",
+  "welcome": "welcome",
+  "email": "Email",
+  "password": "Password",
+  "confirm": "Confirm password",
+  "login": "Login",
+  "register": "Register",
+  "or_register": "Or u want register?",
+  "or_login": "Or u want login?",
+  "required": "Required",
+  "not_valid_email": "Not valid email",
+  "min_max_length_pass": "Min length: 3, Max length: 10"
+}

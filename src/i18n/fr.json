@@ -1,0 +1,22 @@
+{
+  "todo_placeholder": "Ce qui doit être fait ?",
+  "todos": "à faire",
+  "logout": "Se déconnecter",
+  "all": "tout",
+  "active": "actif",
+  "completed": "complété",
+  "clear_completed": "Effacer terminé",
+  "items_left": "la gauche",
+  "logo": "à faire",
+  "welcome": "bienvenue",
+  "email": "Email",
+  "password": "Le mot de passe",
+  "confirm": "Confirmez le mot de passe",
+  "login": "Connexion",
+  "register": "S'inscrire",
+  "or_register": "Ou tu veux t'inscrire ?",
+  "or_login": "Ou tu veux te connecter ?",
+  "required": "Obligatoire",
+  "not_valid_email": "Email non valide",
+  "min_max_length_pass": "Longueur min : 3, longueur max : 10"
+}

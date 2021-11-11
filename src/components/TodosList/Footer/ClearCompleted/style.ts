@@ -10,6 +10,7 @@ const useStyles = makeStyles({
   },
   button: {
     cursor: 'pointer',
+    textAlign: 'end',
     '&:hover': {
       textDecoration: 'underline',
     },

@@ -4,40 +4,43 @@ import { Form, Field } from 'react-final-form';
 import { IFormValue } from '../../../types/form';
 import { TextField, Button } from '@mui/material';
 import useStyles from './style';
+import { I18nContext } from '../../../i18n';
 
 interface Props {
   handleRegister: (value: IFormValue) => void;
 }
 
 const RegisterForm = ({ handleRegister }: Props) => {
+  const { translate } = React.useContext(I18nContext);
+
   const validateEmail = useCallback((email: string) => {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   }, []);
 
-  const handleValidate = useCallback((values: any) => {
+  const handleValidate = (values: any) => {
     const errors: any = {};
     if (!values.email) {
-      errors.email = 'Required';
+      errors.email = translate('required');
     }
     if (values.email && !validateEmail(values.email)) {
-      errors.email = 'Not valid email';
+      errors.email = translate('not_valid_email');
     }
     if (!values.password) {
-      errors.password = 'Required';
+      errors.password = translate('required');
     }
     if (
       (values.password && values.password.length < 3) ||
       (values.password && values.password.length > 10)
     ) {
-      errors.password = 'Min length: 3, Max length: 10';
+      errors.password = translate('min_max_length_pass');
     }
     if (!values.confirm) {
-      errors.confirm = 'Required';
+      errors.confirm = translate('required');
     }
     return errors;
-  }, []);
+  };
 
   const classes = useStyles();
   return (
@@ -53,7 +56,7 @@ const RegisterForm = ({ handleRegister }: Props) => {
           <Field name="email">
             {({ input, meta }) => (
               <div className={classes.inputContainer}>
-                <TextField {...input} label="Email" variant="outlined" type="email" />
+                <TextField {...input} label={translate('email')} variant="outlined" type="email" />
                 {meta.error && meta.touched && (
                   <label className={classes.validateError}>{meta.error}</label>
                 )}
@@ -63,7 +66,12 @@ const RegisterForm = ({ handleRegister }: Props) => {
           <Field name="password">
             {({ input, meta }) => (
               <div className={classes.inputContainer}>
-                <TextField {...input} label="Password" variant="outlined" type="password" />
+                <TextField
+                  {...input}
+                  label={translate('password')}
+                  variant="outlined"
+                  type="password"
+                />
                 {meta.error && meta.touched && (
                   <label className={classes.validateError}>{meta.error}</label>
                 )}
@@ -73,7 +81,12 @@ const RegisterForm = ({ handleRegister }: Props) => {
           <Field name="confirm">
             {({ input, meta }) => (
               <div className={classes.inputContainer}>
-                <TextField {...input} label="Confirm password" variant="outlined" type="password" />
+                <TextField
+                  {...input}
+                  label={translate('confirm')}
+                  variant="outlined"
+                  type="password"
+                />
                 {meta.error && meta.touched && (
                   <label className={classes.validateError}>{meta.error}</label>
                 )}
@@ -81,7 +94,7 @@ const RegisterForm = ({ handleRegister }: Props) => {
             )}
           </Field>
           <Button variant="contained" type="submit">
-            Register
+            {translate('register')}
           </Button>
         </form>
       )}

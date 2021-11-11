@@ -1,5 +1,6 @@
 import * as React from 'react';
 import useStyles from './style';
+import { I18nContext } from '../../../../../i18n';
 
 interface Props {
   activeFilter: string;
@@ -11,14 +12,14 @@ const FiltersButton = ({ onChangeFilter, value, activeFilter }: Props) => {
   const handleChangeFilter = () => {
     onChangeFilter(value);
   };
-
+  const { translate } = React.useContext(I18nContext);
   const classes = useStyles();
   return (
     <span
       onClick={handleChangeFilter}
       className={activeFilter == value ? classes.button + ' active' : classes.button}
     >
-      {value[0].toUpperCase() + value.slice(1)}
+      {translate(value)[0].toUpperCase() + translate(value).slice(1)}
     </span>
   );
 };

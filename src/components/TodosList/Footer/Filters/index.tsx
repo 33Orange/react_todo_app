@@ -9,6 +9,7 @@ interface Props {
 
 const Filters = ({ activeFilter, onChangeFilter }: Props) => {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       {['all', 'active', 'completed'].map((button: string, index: number) => (

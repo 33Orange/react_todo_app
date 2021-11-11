@@ -1,0 +1,22 @@
+{
+  "todo_placeholder": "¿lo que hay que hacer?",
+  "todos": "quehaceres",
+  "logout": "Cerrar sesión",
+  "all": "todos",
+  "active": "active",
+  "completed": "activo",
+  "clear_completed": "Despejado completo",
+  "items_left": "izquierda",
+  "logo": "quehaceres",
+  "welcome": "bienvenida",
+  "email": "Email",
+  "password": "Contraseña",
+  "confirm": "Confirmar contraseña",
+  "login": "Acceso",
+  "register": "Registrarse",
+  "or_register": "¿O quieres registrarte?",
+  "or_login": "¿O quieres iniciar sesión?",
+  "required": "Requerido",
+  "not_valid_email": "Correo electrónico no válido",
+  "min_max_length_pass": "Longitud mínima: 3, longitud máxima: 10"
+}

@@ -1,10 +1,15 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
-import { UserActionType } from '../../../types/userAction';
-import * as UserActionCreators from '../../actionCreators/userActionCreator';
+import { ILoginRequestAction, IRegisterRequestAction } from '../../../types/userAction';
+import {
+  registerUserAction,
+  loginUserAction,
+  logoutUserAction,
+  authorizationError,
+} from '../../actionCreators/userActionCreator';
 import AuthorizationService from '../../../utils/authorizationService';
 import { IResponse } from '../../../types/user';
 
-function* register(action: { payload: { email: string; password: string } }) {
+function* register(action: IRegisterRequestAction) {
   try {
     const response: IResponse = yield call(
       AuthorizationService.register,
@@ -12,38 +17,34 @@ function* register(action: { payload: { email: string; password: string } }) {
       action.payload.password,
     );
     localStorage.setItem('token', response.accessToken);
-    yield put(UserActionCreators.registerUserSuccess(response.user));
+    yield put(registerUserAction.success(response.user));
   } catch (e) {
-    yield put(UserActionCreators.authorizationError(e.message));
+    yield put(authorizationError(e.message));
   }
 }
 
-function* login(action: { payload: { email: string; password: string } }) {
+function* login(action: ILoginRequestAction) {
   try {
-    const response: IResponse = yield call(
-      AuthorizationService.login,
-      action.payload.email,
-      action.payload.password,
-    );
+    const response: IResponse = yield call(AuthorizationService.login, action.payload.email, action.payload.password);
     localStorage.setItem('token', response.accessToken);
-    yield put(UserActionCreators.loginUserSuccess(response.user));
+    yield put(loginUserAction.success(response.user));
   } catch (e) {
     console.log(e);
-    yield put(UserActionCreators.authorizationError(e.message));
+    yield put(authorizationError(e.message));
   }
 }
 function* logout() {
   try {
     yield call(AuthorizationService.logout);
     localStorage.removeItem('token');
-    yield put(UserActionCreators.logoutUserSuccess());
+    yield put(logoutUserAction.success());
   } catch (e) {
-    yield put(UserActionCreators.logoutUserFailed(e));
+    yield put(authorizationError(e));
   }
 }
 
 export function* userWatcher() {
-  yield takeEvery(UserActionType.REGISTER_USER_REQUEST as any, register);
-  yield takeEvery(UserActionType.LOGIN_USER_REQUEST as any, login);
-  yield takeEvery(UserActionType.LOGOUT_USER_REQUEST as any, logout);
+  yield takeEvery(registerUserAction.types.request, register);
+  yield takeEvery(loginUserAction.types.request, login);
+  yield takeEvery(logoutUserAction.types.request, logout);
 }
