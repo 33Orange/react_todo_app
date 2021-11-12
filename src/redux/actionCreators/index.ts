@@ -1,5 +1,5 @@
 import { ITodo } from '../../types/todo';
-import { ActionType } from '../../types/action';
+import { ActionType, IUpdateOnDragPayload } from '../../types/action';
 import { createAsyncActions } from '../../utils/createAsyncActions';
 
 export const fetchTodoActions = createAsyncActions<void, Array<ITodo>, string, 'FETCH_TODO'>('FETCH_TODO');
@@ -9,12 +9,9 @@ export const updateTodoActions = createAsyncActions<ITodo, ITodo, string, 'UPDAT
 export const clearCompletedTodoActions = createAsyncActions<void, Array<ITodo>, string, 'CLEAR_COMPLETED_TODO'>(
   'CLEAR_COMPLETED_TODO',
 );
-export const updateTodoOnDragActions = createAsyncActions<
-  { newTodo: ITodo; prevTodo: ITodo },
-  ITodo,
-  string,
-  'UPDATE_TODO_ONDRAG'
->('UPDATE_TODO_ONDRAG');
+export const updateTodoOnDragActions = createAsyncActions<IUpdateOnDragPayload, ITodo, string, 'UPDATE_TODO_ONDRAG'>(
+  'UPDATE_TODO_ONDRAG',
+);
 
 export const toggleCompletedTodoActions = createAsyncActions<boolean, Array<ITodo>, string, 'TOGGLE_COMPLETED_TODO'>(
   'TOGGLE_COMPLETED_TODO',

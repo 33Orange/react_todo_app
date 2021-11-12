@@ -81,12 +81,8 @@ const TodosList = () => {
 
       const result =
         destination.index > source.index
-          ? nextToDestination
-            ? (destinationSortIndex + nextToDestination) / 2
-            : destinationSortIndex + 1
-          : nextToDestination
-          ? (destinationSortIndex + nextToDestination) / 2
-          : destinationSortIndex - 1;
+          ? (destinationSortIndex + nextToDestination) / 2 || destinationSortIndex + 1
+          : (destinationSortIndex + nextToDestination) / 2 || destinationSortIndex - 1;
 
       const prevTodo = { ...sortTodos[source.index] };
       const newTodo = { ...sortTodos[source.index] };
