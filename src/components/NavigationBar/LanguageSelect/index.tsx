@@ -3,6 +3,8 @@ import { useContext, useState } from 'react';
 import useStyles from './style';
 import { I18nContext } from '../../../i18n';
 
+// useTranslation -> { trnslate, language, setLanguage }
+
 const LanguageSelect = () => {
   const { langCode, dispatch } = useContext(I18nContext);
 

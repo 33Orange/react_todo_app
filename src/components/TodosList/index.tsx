@@ -11,10 +11,10 @@ import { useDispatch } from 'react-redux';
 import {
   addTodoActions,
   changeFilter,
-  clearCompletedTodoActions,
+  deleteCompletedTodosActions,
   deleteTodoActions,
   fetchTodoActions,
-  toggleCompletedTodoActions,
+  toggleTodosActions,
   updateTodoActions,
   updateTodoOnDragActions,
 } from '../../redux/actionCreators';
@@ -41,8 +41,8 @@ const TodosList = () => {
     dispatch(deleteTodoActions.request(todoId));
   }, []);
 
-  const handleClearCompletedTodo = useCallback(() => {
-    dispatch(clearCompletedTodoActions.request());
+  const handleDeleteCompletedTodos = useCallback(() => {
+    dispatch(deleteCompletedTodosActions.request());
   }, []);
 
   const handleCompleteTodo = useCallback((todo: ITodo) => {
@@ -51,8 +51,8 @@ const TodosList = () => {
 
   const handleCompleteAllTodos = useCallback(() => {
     todos.some(item => !item.isDone)
-      ? dispatch(toggleCompletedTodoActions.request(true))
-      : dispatch(toggleCompletedTodoActions.request(false));
+      ? dispatch(toggleTodosActions.request(true))
+      : dispatch(toggleTodosActions.request(false));
   }, [todos]);
 
   const handleEditTodo = useCallback(
@@ -122,7 +122,7 @@ const TodosList = () => {
             todos={localTodos}
             activeFilter={filter}
             onChangeFilter={handleChangeFilter}
-            onClearCompletedTodo={handleClearCompletedTodo}
+            onClearCompletedTodo={handleDeleteCompletedTodos}
           />
         </>
       )}

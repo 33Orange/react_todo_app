@@ -1,6 +1,5 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
-import { ActionType, Action } from '../../../types/action';
-// import * as actionCreators from '../../actionCreators';
+import { eventChannel } from 'redux-saga';
 import ApiService from '../../../utils/apiService';
 import { ITodo } from '../../../types/todo';
 import {
@@ -9,9 +8,10 @@ import {
   deleteTodoActions,
   updateTodoActions,
   updateTodoOnDragActions,
-  clearCompletedTodoActions,
-  toggleCompletedTodoActions,
+  deleteCompletedTodosActions,
+  toggleTodosActions,
 } from '../../actionCreators';
+
 function* fetchTodo() {
   try {
     const todos: Array<ITodo> = yield call(ApiService.getTodos);
@@ -44,7 +44,7 @@ function* updateTodo(action: { payload: ITodo; type: typeof updateTodoActions.ty
     yield put(updateTodoActions.failed(error));
   }
 }
-function* updateTodoAfterDrag(action: {
+function* updateTodoOnDrag(action: {
   payload: {
     newTodo: ITodo;
     prevTodo: ITodo;
@@ -61,20 +61,20 @@ function* updateTodoAfterDrag(action: {
     }
   }
 }
-function* clearCompleted() {
+function* deleteCompleted() {
   try {
     const newTodos: Array<ITodo> = yield call(ApiService.clearCompletedTodo);
-    yield put(clearCompletedTodoActions.success(newTodos));
+    yield put(deleteCompletedTodosActions.success(newTodos));
   } catch (error) {
-    yield put(clearCompletedTodoActions.failed(error));
+    yield put(deleteCompletedTodosActions.failed(error));
   }
 }
-function* toggleStatusAllTodos(action: { payload: boolean; type: typeof toggleCompletedTodoActions.types.request }) {
+function* toggleTodos(action: { payload: boolean; type: typeof toggleTodosActions.types.request }) {
   try {
     const newTodos: Array<ITodo> = yield call(ApiService.toggleStatusAllTodos, action.payload);
-    yield put(toggleCompletedTodoActions.success(newTodos));
+    yield put(toggleTodosActions.success(newTodos));
   } catch (error) {
-    yield put(toggleCompletedTodoActions.failed(error));
+    yield put(toggleTodosActions.failed(error));
   }
 }
 
@@ -83,7 +83,7 @@ export function* todoWatcher() {
   yield takeEvery(addTodoActions.types.request, addTodo);
   yield takeEvery(deleteTodoActions.types.request, deleteTodo);
   yield takeEvery(updateTodoActions.types.request, updateTodo);
-  yield takeEvery(updateTodoOnDragActions.types.request, updateTodoAfterDrag);
-  yield takeEvery(clearCompletedTodoActions.types.request, clearCompleted);
-  yield takeEvery(toggleCompletedTodoActions.types.request, toggleStatusAllTodos);
+  yield takeEvery(updateTodoOnDragActions.types.request, updateTodoOnDrag);
+  yield takeEvery(deleteCompletedTodosActions.types.request, deleteCompleted);
+  yield takeEvery(toggleTodosActions.types.request, toggleTodos);
 }

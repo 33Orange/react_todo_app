@@ -1,14 +1,13 @@
 import { ITodo } from '../../../types/todo';
-import { ActionType, Action } from '../../../types/action';
+import { ActionType } from '../../../types/action';
 import { combineReducers } from 'redux';
 import {
   fetchTodoActions,
   addTodoActions,
   deleteTodoActions,
   updateTodoActions,
-  updateTodoOnDragActions,
-  clearCompletedTodoActions,
-  toggleCompletedTodoActions,
+  deleteCompletedTodosActions,
+  toggleTodosActions,
   ActionTodo,
 } from '../../actionCreators';
 
@@ -19,12 +18,15 @@ const todoReducer = (state: Array<ITodo> = initialState, action: ActionTodo) => 
     case fetchTodoActions.types.success:
       return [...action.payload];
 
+    case ActionType.ADD_TODO_SYNC:
     case addTodoActions.types.success:
       return [...state, action.payload];
 
+    case ActionType.DELETE_TODO_SYNC:
     case deleteTodoActions.types.success:
       return state.filter(item => item._id != action.payload._id);
 
+    case ActionType.UPDATE_TODO_SYNC:
     case updateTodoActions.types.success:
       return state.map(item => {
         if (item._id == action.payload._id) {
@@ -33,10 +35,12 @@ const todoReducer = (state: Array<ITodo> = initialState, action: ActionTodo) => 
         return item;
       });
 
-    case clearCompletedTodoActions.types.success:
+    case ActionType.DELETE_COMPLETED_TODOS_SYNC:
+    case deleteCompletedTodosActions.types.success:
       return [...action.payload];
 
-    case toggleCompletedTodoActions.types.success:
+    case ActionType.TOGGLE_STATUS_ALL_TODOS_SYNC:
+    case toggleTodosActions.types.success:
       return [...action.payload];
 
     default:
@@ -44,9 +48,9 @@ const todoReducer = (state: Array<ITodo> = initialState, action: ActionTodo) => 
   }
 };
 
-const initialStateLoader: boolean = false;
+const initialStateLoader: boolean = true;
 
-const isLoadingReducer = (state = initialState, action: ActionTodo) => {
+const isLoadingReducer = (state = initialStateLoader, action: ActionTodo) => {
   switch (action.type) {
     case fetchTodoActions.types.request:
       return true;

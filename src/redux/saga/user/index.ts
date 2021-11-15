@@ -29,7 +29,6 @@ function* login(action: ILoginRequestAction) {
     localStorage.setItem('token', response.accessToken);
     yield put(loginUserAction.success(response.user));
   } catch (e) {
-    console.log(e);
     yield put(authorizationError(e.message));
   }
 }
