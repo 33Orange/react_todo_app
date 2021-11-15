@@ -16,10 +16,13 @@ import {
   deleteCompletedTodosActions,
   toggleTodosActions,
 } from '../../actionCreators';
-import { loginUserAction } from '../../actionCreators/userActionCreator';
+import { loginUserAction, logoutUserAction } from '../../actionCreators/userActionCreator';
 
 function connect() {
-  const socket = io(baseUrl);
+  const connectionSettings = {
+    withCredentials: true,
+  };
+  const socket = io(baseUrl, connectionSettings);
   return new Promise(resolve => {
     socket.on('connect', () => {
       resolve(socket);
@@ -110,6 +113,5 @@ export default function* flow() {
     const { payload }: ReturnType<typeof loginUserAction.success> = yield take(loginUserAction.types.success);
     socket.emit('login', payload);
   }
-
   yield fork(handleIO, socket);
 }

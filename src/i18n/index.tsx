@@ -22,7 +22,7 @@ const translations: any = {
 const getTranslate = (langCode: string) => (key: string) => translations[langCode][key] || key;
 const initialState: IInitialState = {
   langCode: localStorage.getItem('lang') || 'en',
-  translate: getTranslate(localStorage.getItem('lang')),
+  translate: getTranslate(localStorage.getItem('lang') || 'en'),
 };
 
 export const I18nContext = React.createContext(initialState);

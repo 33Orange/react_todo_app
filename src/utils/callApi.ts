@@ -6,10 +6,7 @@ interface ICallApiOptions {
   body?: {};
 }
 
-export const callApi = async (
-  endpoint: string,
-  options: ICallApiOptions = { method: 'get' },
-): Promise<any> => {
+export const callApi = async (endpoint: string, options: ICallApiOptions = { method: 'get' }): Promise<any> => {
   const valueToSend = JSON.stringify(options.body);
   const response = await fetch(createUrl(`${baseUrl}${endpoint}`), {
     method: options.method,
