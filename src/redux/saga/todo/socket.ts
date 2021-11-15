@@ -16,7 +16,7 @@ import {
   deleteCompletedTodosActions,
   toggleTodosActions,
 } from '../../actionCreators';
-import { loginUserAction, logoutUserAction } from '../../actionCreators/userActionCreator';
+import { ActionUser, loginUserAction, logoutUserAction } from '../../actionCreators/userActionCreator';
 
 function connect() {
   const connectionSettings = {
@@ -98,10 +98,28 @@ function* write(socket: Socket) {
     }
   }
 }
+function* authorization(socket: Socket) {
+  while (true) {
+    const actionResponse: ActionUser = yield take([loginUserAction.types.success, logoutUserAction.types.success]);
 
+    switch (actionResponse.type) {
+      case loginUserAction.types.success: {
+        const { payload } = actionResponse;
+        const token = localStorage.getItem('token');
+        socket.emit('login', token);
+        break;
+      }
+      case logoutUserAction.types.success: {
+        socket.emit('logout');
+        break;
+      }
+    }
+  }
+}
 function* handleIO(socket: Socket) {
   yield fork(read, socket);
   yield fork(write, socket);
+  yield fork(authorization, socket);
 }
 
 export default function* flow() {
