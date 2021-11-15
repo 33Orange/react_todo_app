@@ -19,10 +19,7 @@ import {
 import { ActionUser, loginUserAction, logoutUserAction } from '../../actionCreators/userActionCreator';
 
 function connect() {
-  const connectionSettings = {
-    withCredentials: true,
-  };
-  const socket = io(baseUrl, connectionSettings);
+  const socket = io(baseUrl);
   return new Promise(resolve => {
     socket.on('connect', () => {
       resolve(socket);
