@@ -10,4 +10,4 @@
 - [socket.io](https://socket.io/)
 - [jwt](https://jwt.io/)
 
-[*Backend code here*](https://github.com/33Orange/backendProject)
+[*Backend code here*](https://github.com/33Orange/todos_app_backend)
